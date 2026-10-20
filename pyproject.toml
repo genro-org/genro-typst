@@ -58,3 +58,8 @@ mypy_path = "src"
 target-version = "py310"
 line-length = 100
 src = ["src", "tests"]
+
+[tool.ruff.lint]
+ignore = [
+    "PIE790",   # `...` body of the @element declarations, as in genro-builders
+]
