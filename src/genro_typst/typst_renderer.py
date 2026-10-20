@@ -25,6 +25,7 @@ from pathlib import Path
 from typing import Any
 
 import typst
+from genro_bag import Bag
 from genro_builders.renderer import RendererBase
 
 from genro_typst.typst_values import (
@@ -122,6 +123,61 @@ class TypstRenderer(RendererBase):
         if align is not None:
             params.append(f"align: {align}")
         return f"grid.cell({', '.join([*params, body])})"
+
+    def render_table(self, node: Any, children: list[str], attrs: dict[str, Any]) -> str:
+        columns = self.child_attrs(node)
+        rows = attrs["data"]
+        if not isinstance(rows, Bag):
+            raise TypeError(f"table data must resolve to a Bag, got {type(rows).__name__}")
+        widths = ", ".join(typst_width(column["width"]) for column in columns)
+        aligns = ", ".join(typst_align(column["align"], None) or "auto" for column in columns)
+        header = ", ".join(f"strong({typst_string(column['name'])})" for column in columns)
+        body = []
+        for row in rows.values():
+            for column in columns:
+                value = row[column["field"]]
+                body.append(typst_string("" if value is None else value))
+        parts = [
+            f"columns: ({widths},)",
+            f"align: ({aligns},)",
+            f"stroke: {typst_stroke(attrs['border_width'], attrs['border_color'])}",
+            f"inset: {typst_length(attrs['inset'])}",
+            "fill: (x, y) => if y == 0 { luma(230) }",
+            f"table.header(repeat: {typst_bool(attrs['headerRepeat'])}, {header})",
+            *body,
+        ]
+        if attrs["totalize_footer"] is not False:
+            parts.append(self.total_footer(columns, rows, attrs["totalize_footer"]))
+        return f"table({', '.join(parts)})"
+
+    def render_column(self, node: Any, children: list[str], attrs: dict[str, Any]) -> str:
+        """Columns are read by their ``table``; they emit nothing themselves."""
+        return ""
+
+    def total_footer(self, columns: list[dict[str, Any]], rows: Bag, caption: bool | str) -> str:
+        """``table.footer`` with the column totals.
+
+        Each run of columns without ``totalize`` becomes one cell spanning
+        the run; the first run carries the caption (GenroPy
+        ``runningTotalsDefaults``).
+        """
+        cells = []
+        run = 0
+        captioned = False
+        for column in [*columns, None]:
+            if column is not None and not column["totalize"]:
+                run += 1
+                continue
+            if run:
+                text = caption if isinstance(caption, str) and not captioned else ""
+                captioned = True
+                cells.append(f"table.cell(colspan: {run}, strong({typst_string(text)}))")
+                run = 0
+            if column is not None:
+                values = [row[column["field"]] for row in rows.values()]
+                total = sum(value for value in values if value is not None)
+                cells.append(f"strong({typst_string(total)})")
+        return f"table.footer(repeat: false, {', '.join(cells)})"
 
     def render_paragraph(self, node: Any, children: list[str], attrs: dict[str, Any]) -> str:
         return f"par({typst_string(attrs['content'])})"

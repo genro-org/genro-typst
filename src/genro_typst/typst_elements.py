@@ -16,7 +16,7 @@ from genro_builders.builder import element
 class TypstElements:
     """Mixin defining the print elements for TypstBuilder."""
 
-    @element(sub_tags="layout,paragraph,pageNumber")
+    @element(sub_tags="layout,table,paragraph,pageNumber")
     def document(
         self,
         paper: str = "a4",
@@ -91,6 +91,53 @@ class TypstElements:
             align: ``left``, ``center``, ``right``.
             valign: ``top``, ``middle``, ``bottom``.
             background: Fill color (``'#rrggbb'`` or a Typst color name).
+        """
+        ...
+
+    @element(sub_tags="column")
+    def table(
+        self,
+        data: str = "",
+        headerRepeat: bool = True,
+        totalize_footer: bool | str = False,
+        border_width: str = "0.5pt",
+        border_color: str = "black",
+        inset: str = "1mm",
+    ) -> None:
+        """Data table: one row per child of the ``data`` Bag.
+
+        The columns come from the ``column`` children (GenroPy grid struct).
+
+        Args:
+            data: Pointer to a Bag whose children are the rows (each a Bag
+                of fields).
+            headerRepeat: Repeat the header on every page.
+            totalize_footer: Total row after the last row. A string is the
+                caption, shown across the columns before the first total
+                (GenroPy ``totalize_footer``). ``True`` shows no caption.
+            border_width: Width of the table lines.
+            border_color: Color of the table lines.
+            inset: Padding inside every cell.
+        """
+        ...
+
+    @element(sub_tags="")
+    def column(
+        self,
+        field: str = "",
+        name: str = "",
+        width: float | str = 0,
+        align: str | None = None,
+        totalize: bool = False,
+    ) -> None:
+        """Column of a data table.
+
+        Args:
+            field: Field of the row Bag shown in the column.
+            name: Header text.
+            width: Number (fraction, ``0`` = ``1fr``) or length string.
+            align: ``left``, ``center``, ``right``.
+            totalize: Sum the column in the total row.
         """
         ...
 

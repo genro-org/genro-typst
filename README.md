@@ -4,8 +4,9 @@ Print documents (invoices, delivery notes, quotes, labels, schemas) described
 with a genro-builders grammar and typeset by [Typst](https://typst.app).
 
 Status: prototype. The grammar has `document`, `layout`, `row`, `cell`,
-`paragraph`, `pageNumber`. Two render modes: `typst` (source code) and
-`pdf`. Example: `examples/01_invoice_header/`.
+`table`, `column`, `paragraph`, `pageNumber`. Two render modes: `typst`
+(source code) and `pdf`. Examples: `examples/01_invoice_header/`,
+`examples/02_invoice_lines/`.
 The design proposal is in `xmldocs/proposal/typst-backend.md`.
 
 ## Pinned versions
