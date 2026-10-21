@@ -1,0 +1,793 @@
+{
+  "typst_version": "0.15.0",
+  "native_elements": [
+    {
+      "tag": "text",
+      "function": "text",
+      "mode": "body",
+      "section": "text"
+    },
+    {
+      "tag": "underline",
+      "function": "underline",
+      "mode": "body",
+      "section": "text"
+    },
+    {
+      "tag": "overline",
+      "function": "overline",
+      "mode": "body",
+      "section": "text"
+    },
+    {
+      "tag": "strike",
+      "function": "strike",
+      "mode": "body",
+      "section": "text"
+    },
+    {
+      "tag": "highlight",
+      "function": "highlight",
+      "mode": "body",
+      "section": "text"
+    },
+    {
+      "tag": "smallcaps",
+      "function": "smallcaps",
+      "mode": "body",
+      "section": "text"
+    },
+    {
+      "tag": "sub",
+      "function": "sub",
+      "mode": "body",
+      "section": "text"
+    },
+    {
+      "tag": "super",
+      "function": "super",
+      "mode": "body",
+      "section": "text"
+    },
+    {
+      "tag": "lower",
+      "function": "lower",
+      "mode": "body",
+      "section": "text"
+    },
+    {
+      "tag": "upper",
+      "function": "upper",
+      "mode": "body",
+      "section": "text"
+    },
+    {
+      "tag": "raw",
+      "function": "raw",
+      "mode": "value",
+      "section": "text"
+    },
+    {
+      "tag": "lorem",
+      "function": "lorem",
+      "mode": "value",
+      "section": "text"
+    },
+    {
+      "tag": "linebreak",
+      "function": "linebreak",
+      "mode": "leaf",
+      "section": "text"
+    },
+    {
+      "tag": "smartquote",
+      "function": "smartquote",
+      "mode": "leaf",
+      "section": "text"
+    },
+    {
+      "tag": "heading",
+      "function": "heading",
+      "mode": "body",
+      "section": "model"
+    },
+    {
+      "tag": "strong",
+      "function": "strong",
+      "mode": "body",
+      "section": "model"
+    },
+    {
+      "tag": "emph",
+      "function": "emph",
+      "mode": "body",
+      "section": "model"
+    },
+    {
+      "tag": "par",
+      "function": "par",
+      "mode": "body",
+      "section": "model"
+    },
+    {
+      "tag": "quote",
+      "function": "quote",
+      "mode": "body",
+      "section": "model"
+    },
+    {
+      "tag": "figure",
+      "function": "figure",
+      "mode": "body",
+      "section": "model"
+    },
+    {
+      "tag": "footnote",
+      "function": "footnote",
+      "mode": "body",
+      "section": "model"
+    },
+    {
+      "tag": "title",
+      "function": "title",
+      "mode": "body",
+      "section": "model"
+    },
+    {
+      "tag": "list",
+      "function": "list",
+      "mode": "items",
+      "section": "model"
+    },
+    {
+      "tag": "enum",
+      "function": "enum",
+      "mode": "items",
+      "section": "model"
+    },
+    {
+      "tag": "terms",
+      "function": "terms",
+      "mode": "items",
+      "section": "model"
+    },
+    {
+      "tag": "list_item",
+      "function": "list.item",
+      "mode": "body",
+      "section": "model"
+    },
+    {
+      "tag": "enum_item",
+      "function": "enum.item",
+      "mode": "body",
+      "section": "model"
+    },
+    {
+      "tag": "terms_item",
+      "function": "terms.item",
+      "mode": "args",
+      "section": "model"
+    },
+    {
+      "tag": "link",
+      "function": "link",
+      "mode": "value",
+      "section": "model"
+    },
+    {
+      "tag": "ref",
+      "function": "ref",
+      "mode": "value",
+      "section": "model"
+    },
+    {
+      "tag": "cite",
+      "function": "cite",
+      "mode": "value",
+      "section": "model"
+    },
+    {
+      "tag": "bibliography",
+      "function": "bibliography",
+      "mode": "value",
+      "section": "model"
+    },
+    {
+      "tag": "numbering",
+      "function": "numbering",
+      "mode": "value",
+      "section": "model"
+    },
+    {
+      "tag": "outline",
+      "function": "outline",
+      "mode": "leaf",
+      "section": "model"
+    },
+    {
+      "tag": "parbreak",
+      "function": "parbreak",
+      "mode": "leaf",
+      "section": "model"
+    },
+    {
+      "tag": "divider",
+      "function": "divider",
+      "mode": "leaf",
+      "section": "model"
+    },
+    {
+      "tag": "table_header",
+      "function": "table.header",
+      "mode": "items",
+      "section": "model"
+    },
+    {
+      "tag": "table_footer",
+      "function": "table.footer",
+      "mode": "items",
+      "section": "model"
+    },
+    {
+      "tag": "table_cell",
+      "function": "table.cell",
+      "mode": "body",
+      "section": "model"
+    },
+    {
+      "tag": "table_hline",
+      "function": "table.hline",
+      "mode": "leaf",
+      "section": "model"
+    },
+    {
+      "tag": "table_vline",
+      "function": "table.vline",
+      "mode": "leaf",
+      "section": "model"
+    },
+    {
+      "tag": "native_table",
+      "function": "table",
+      "mode": "items",
+      "section": "model"
+    },
+    {
+      "tag": "align",
+      "function": "align",
+      "mode": "body",
+      "section": "layout"
+    },
+    {
+      "tag": "block",
+      "function": "block",
+      "mode": "body",
+      "section": "layout"
+    },
+    {
+      "tag": "box",
+      "function": "box",
+      "mode": "body",
+      "section": "layout"
+    },
+    {
+      "tag": "columns",
+      "function": "columns",
+      "mode": "body",
+      "section": "layout"
+    },
+    {
+      "tag": "hide",
+      "function": "hide",
+      "mode": "body",
+      "section": "layout"
+    },
+    {
+      "tag": "move",
+      "function": "move",
+      "mode": "body",
+      "section": "layout"
+    },
+    {
+      "tag": "pad",
+      "function": "pad",
+      "mode": "body",
+      "section": "layout"
+    },
+    {
+      "tag": "page",
+      "function": "page",
+      "mode": "body",
+      "section": "layout"
+    },
+    {
+      "tag": "place",
+      "function": "place",
+      "mode": "body",
+      "section": "layout"
+    },
+    {
+      "tag": "repeat",
+      "function": "repeat",
+      "mode": "body",
+      "section": "layout"
+    },
+    {
+      "tag": "rotate",
+      "function": "rotate",
+      "mode": "body",
+      "section": "layout"
+    },
+    {
+      "tag": "scale",
+      "function": "scale",
+      "mode": "body",
+      "section": "layout"
+    },
+    {
+      "tag": "skew",
+      "function": "skew",
+      "mode": "body",
+      "section": "layout"
+    },
+    {
+      "tag": "grid",
+      "function": "grid",
+      "mode": "items",
+      "section": "layout"
+    },
+    {
+      "tag": "stack",
+      "function": "stack",
+      "mode": "items",
+      "section": "layout"
+    },
+    {
+      "tag": "grid_header",
+      "function": "grid.header",
+      "mode": "items",
+      "section": "layout"
+    },
+    {
+      "tag": "grid_footer",
+      "function": "grid.footer",
+      "mode": "items",
+      "section": "layout"
+    },
+    {
+      "tag": "grid_cell",
+      "function": "grid.cell",
+      "mode": "body",
+      "section": "layout"
+    },
+    {
+      "tag": "pagebreak",
+      "function": "pagebreak",
+      "mode": "leaf",
+      "section": "layout"
+    },
+    {
+      "tag": "colbreak",
+      "function": "colbreak",
+      "mode": "leaf",
+      "section": "layout"
+    },
+    {
+      "tag": "grid_hline",
+      "function": "grid.hline",
+      "mode": "leaf",
+      "section": "layout"
+    },
+    {
+      "tag": "grid_vline",
+      "function": "grid.vline",
+      "mode": "leaf",
+      "section": "layout"
+    },
+    {
+      "tag": "h",
+      "function": "h",
+      "mode": "value",
+      "section": "layout"
+    },
+    {
+      "tag": "v",
+      "function": "v",
+      "mode": "value",
+      "section": "layout"
+    },
+    {
+      "tag": "measure",
+      "function": "measure",
+      "mode": "value",
+      "section": "layout"
+    },
+    {
+      "tag": "native_layout",
+      "function": "layout",
+      "mode": "value",
+      "section": "layout"
+    },
+    {
+      "tag": "circle",
+      "function": "circle",
+      "mode": "body",
+      "section": "visualize"
+    },
+    {
+      "tag": "ellipse",
+      "function": "ellipse",
+      "mode": "body",
+      "section": "visualize"
+    },
+    {
+      "tag": "rect",
+      "function": "rect",
+      "mode": "body",
+      "section": "visualize"
+    },
+    {
+      "tag": "square",
+      "function": "square",
+      "mode": "body",
+      "section": "visualize"
+    },
+    {
+      "tag": "image",
+      "function": "image",
+      "mode": "value",
+      "section": "visualize"
+    },
+    {
+      "tag": "line",
+      "function": "line",
+      "mode": "args",
+      "section": "visualize"
+    },
+    {
+      "tag": "polygon",
+      "function": "polygon",
+      "mode": "args",
+      "section": "visualize"
+    },
+    {
+      "tag": "curve",
+      "function": "curve",
+      "mode": "args",
+      "section": "visualize"
+    },
+    {
+      "tag": "curve_move",
+      "function": "curve.move",
+      "mode": "args",
+      "section": "visualize"
+    },
+    {
+      "tag": "curve_line",
+      "function": "curve.line",
+      "mode": "args",
+      "section": "visualize"
+    },
+    {
+      "tag": "curve_quad",
+      "function": "curve.quad",
+      "mode": "args",
+      "section": "visualize"
+    },
+    {
+      "tag": "curve_cubic",
+      "function": "curve.cubic",
+      "mode": "args",
+      "section": "visualize"
+    },
+    {
+      "tag": "curve_close",
+      "function": "curve.close",
+      "mode": "args",
+      "section": "visualize"
+    },
+    {
+      "tag": "math_equation",
+      "function": "math.equation",
+      "mode": "body",
+      "section": "math"
+    },
+    {
+      "tag": "math_upright",
+      "function": "math.upright",
+      "mode": "body",
+      "section": "math"
+    },
+    {
+      "tag": "math_italic",
+      "function": "math.italic",
+      "mode": "body",
+      "section": "math"
+    },
+    {
+      "tag": "math_bold",
+      "function": "math.bold",
+      "mode": "body",
+      "section": "math"
+    },
+    {
+      "tag": "math_serif",
+      "function": "math.serif",
+      "mode": "body",
+      "section": "math"
+    },
+    {
+      "tag": "math_sans",
+      "function": "math.sans",
+      "mode": "body",
+      "section": "math"
+    },
+    {
+      "tag": "math_cal",
+      "function": "math.cal",
+      "mode": "body",
+      "section": "math"
+    },
+    {
+      "tag": "math_frak",
+      "function": "math.frak",
+      "mode": "body",
+      "section": "math"
+    },
+    {
+      "tag": "math_mono",
+      "function": "math.mono",
+      "mode": "body",
+      "section": "math"
+    },
+    {
+      "tag": "math_bb",
+      "function": "math.bb",
+      "mode": "body",
+      "section": "math"
+    },
+    {
+      "tag": "math_display",
+      "function": "math.display",
+      "mode": "body",
+      "section": "math"
+    },
+    {
+      "tag": "math_inline",
+      "function": "math.inline",
+      "mode": "body",
+      "section": "math"
+    },
+    {
+      "tag": "math_script",
+      "function": "math.script",
+      "mode": "body",
+      "section": "math"
+    },
+    {
+      "tag": "math_sscript",
+      "function": "math.sscript",
+      "mode": "body",
+      "section": "math"
+    },
+    {
+      "tag": "math_frac",
+      "function": "math.frac",
+      "mode": "args",
+      "section": "math"
+    },
+    {
+      "tag": "math_root",
+      "function": "math.root",
+      "mode": "args",
+      "section": "math"
+    },
+    {
+      "tag": "math_sqrt",
+      "function": "math.sqrt",
+      "mode": "args",
+      "section": "math"
+    },
+    {
+      "tag": "math_binom",
+      "function": "math.binom",
+      "mode": "args",
+      "section": "math"
+    },
+    {
+      "tag": "math_vec",
+      "function": "math.vec",
+      "mode": "args",
+      "section": "math"
+    },
+    {
+      "tag": "math_mat",
+      "function": "math.mat",
+      "mode": "args",
+      "section": "math"
+    },
+    {
+      "tag": "math_cases",
+      "function": "math.cases",
+      "mode": "args",
+      "section": "math"
+    },
+    {
+      "tag": "math_lr",
+      "function": "math.lr",
+      "mode": "args",
+      "section": "math"
+    },
+    {
+      "tag": "math_attach",
+      "function": "math.attach",
+      "mode": "args",
+      "section": "math"
+    },
+    {
+      "tag": "math_accent",
+      "function": "math.accent",
+      "mode": "args",
+      "section": "math"
+    },
+    {
+      "tag": "math_cancel",
+      "function": "math.cancel",
+      "mode": "args",
+      "section": "math"
+    },
+    {
+      "tag": "math_class",
+      "function": "math.class",
+      "mode": "args",
+      "section": "math"
+    },
+    {
+      "tag": "math_op",
+      "function": "math.op",
+      "mode": "args",
+      "section": "math"
+    },
+    {
+      "tag": "math_limits",
+      "function": "math.limits",
+      "mode": "args",
+      "section": "math"
+    },
+    {
+      "tag": "math_scripts",
+      "function": "math.scripts",
+      "mode": "args",
+      "section": "math"
+    },
+    {
+      "tag": "math_abs",
+      "function": "math.abs",
+      "mode": "args",
+      "section": "math"
+    },
+    {
+      "tag": "math_norm",
+      "function": "math.norm",
+      "mode": "args",
+      "section": "math"
+    },
+    {
+      "tag": "math_floor",
+      "function": "math.floor",
+      "mode": "args",
+      "section": "math"
+    },
+    {
+      "tag": "math_ceil",
+      "function": "math.ceil",
+      "mode": "args",
+      "section": "math"
+    },
+    {
+      "tag": "math_round",
+      "function": "math.round",
+      "mode": "args",
+      "section": "math"
+    },
+    {
+      "tag": "math_stretch",
+      "function": "math.stretch",
+      "mode": "args",
+      "section": "math"
+    },
+    {
+      "tag": "math_underbrace",
+      "function": "math.underbrace",
+      "mode": "args",
+      "section": "math"
+    },
+    {
+      "tag": "math_overbrace",
+      "function": "math.overbrace",
+      "mode": "args",
+      "section": "math"
+    },
+    {
+      "tag": "math_underbracket",
+      "function": "math.underbracket",
+      "mode": "args",
+      "section": "math"
+    },
+    {
+      "tag": "math_overbracket",
+      "function": "math.overbracket",
+      "mode": "args",
+      "section": "math"
+    },
+    {
+      "tag": "math_underline",
+      "function": "math.underline",
+      "mode": "args",
+      "section": "math"
+    },
+    {
+      "tag": "math_overline",
+      "function": "math.overline",
+      "mode": "args",
+      "section": "math"
+    },
+    {
+      "tag": "math_underparen",
+      "function": "math.underparen",
+      "mode": "args",
+      "section": "math"
+    },
+    {
+      "tag": "math_overparen",
+      "function": "math.overparen",
+      "mode": "args",
+      "section": "math"
+    },
+    {
+      "tag": "math_undershell",
+      "function": "math.undershell",
+      "mode": "args",
+      "section": "math"
+    },
+    {
+      "tag": "math_overshell",
+      "function": "math.overshell",
+      "mode": "args",
+      "section": "math"
+    },
+    {
+      "tag": "math_primes",
+      "function": "math.primes",
+      "mode": "args",
+      "section": "math"
+    },
+    {
+      "tag": "metadata",
+      "function": "metadata",
+      "mode": "value",
+      "section": "introspection"
+    },
+    {
+      "tag": "pdf_artifact",
+      "function": "pdf.artifact",
+      "mode": "body",
+      "section": "pdf"
+    }
+  ],
+  "language_elements": [
+    "call",
+    "set_rule",
+    "show_rule",
+    "scope",
+    "context",
+    "equation",
+    "label",
+    "let",
+    "import_module",
+    "include",
+    "typst_code",
+    "typst_markup"
+  ]
+}

@@ -10,23 +10,29 @@ a numeric width is a fraction.
 
 from __future__ import annotations
 
+from typing import Any
+
 from genro_builders.builder import element
+
+from genro_typst.native_catalog import CONTENT_TAGS
 
 
 class TypstElements:
     """Mixin defining the print elements for TypstBuilder."""
 
-    @element(sub_tags="layout,table,paragraph,pageNumber")
+    @element(sub_tags=CONTENT_TAGS)
     def document(
         self,
         paper: str = "a4",
         flipped: bool = False,
         margin: str = "15mm",
+        page_options: dict[str, Any] | None = None,
+        metadata: dict[str, Any] | None = None,
     ) -> None:
         """Document root: page format, orientation and margins.
 
         Args:
-            paper: Typst paper name (``a4``, ``a5``, ``us-letter``...).
+            paper: Paper name (``a4``, ``a5``, ``us-letter``...).
             flipped: Landscape orientation.
             margin: Page margin on every side.
         """
@@ -70,7 +76,7 @@ class TypstElements:
         """
         ...
 
-    @element(sub_tags="layout,paragraph,pageNumber")
+    @element(sub_tags=CONTENT_TAGS)
     def cell(
         self,
         content: str | None = None,
@@ -141,7 +147,7 @@ class TypstElements:
         """
         ...
 
-    @element(sub_tags="")
+    @element(sub_tags=CONTENT_TAGS)
     def paragraph(self, content: str = "") -> None:
         """Paragraph of plain text."""
         ...
@@ -150,3 +156,7 @@ class TypstElements:
     def pageNumber(self, template: str = "{page} / {total}") -> None:
         """Page number. ``{page}`` is the current page, ``{total}`` the last."""
         ...
+
+
+# Compatibility for clients of the early shared-grammar prototype.
+DocumentElements = TypstElements

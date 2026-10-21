@@ -24,10 +24,12 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Any
 
-import typst
 from genro_bag import Bag
-from genro_builders.renderer import RendererBase
 
+from genro_typst.compiler import TypstEngine
+from genro_typst.native_catalog import NATIVE
+from genro_typst.native_renderer import content_block, render_native
+from genro_typst.renderer import DocumentRenderer
 from genro_typst.typst_values import (
     typst_align,
     typst_bool,
@@ -37,11 +39,12 @@ from genro_typst.typst_values import (
     typst_stroke,
     typst_width,
 )
+from genro_typst.values import named_arguments
 
 LABEL_STYLE = "size: 0.7em, fill: luma(90)"
 
 
-class TypstRenderer(RendererBase):
+class TypstRenderer(DocumentRenderer):
     """Renderer producing Typst source code."""
 
     mode = "typst"
@@ -53,12 +56,19 @@ class TypstRenderer(RendererBase):
         runtime_attrs: dict[str, Any],
         *,
         tag: str,
-        **_opts: Any,
+        **opts: Any,
     ) -> str:
         """Dispatch to ``render_<tag>``; ``item`` holds the children fragments."""
         children = item if isinstance(item, list) else []
-        method = getattr(self, f"render_{tag}")
-        return str(method(node, children, self.with_defaults(node, runtime_attrs)))
+        attrs = self.with_defaults(node, runtime_attrs)
+        if (tag in NATIVE or tag == "call") and item is not None and not isinstance(item, list):
+            if attrs.get("content") is not None:
+                raise ValueError("Use either positional content or content=, not both")
+            attrs["content"] = item
+        method = getattr(self, f"render_{tag}", None)
+        if method is None:
+            return render_native(tag, children, attrs)
+        return str(method(node, children, attrs))
 
     # ------------------------------------------------------------------
     # Elements
@@ -70,7 +80,12 @@ class TypstRenderer(RendererBase):
             f"flipped: {typst_bool(attrs['flipped'])}, "
             f"margin: {typst_length(attrs['margin'])})"
         )
-        return "\n".join([page, *(f"#{child}" for child in children)]) + "\n"
+        settings = [page]
+        if attrs.get("page_options"):
+            settings.append("#set page(" + ", ".join(named_arguments(attrs["page_options"])) + ")")
+        if attrs.get("metadata"):
+            settings.append("#set document(" + ", ".join(named_arguments(attrs["metadata"])) + ")")
+        return "\n".join([*settings, *(f"#{child}" for child in children)]) + "\n"
 
     def render_layout(self, node: Any, children: list[str], attrs: dict[str, Any]) -> str:
         stroke = self.layout_stroke(attrs)
@@ -87,6 +102,8 @@ class TypstRenderer(RendererBase):
         return f"block(width: 100%, stroke: {stroke}, {body})"
 
     def render_row(self, node: Any, children: list[str], attrs: dict[str, Any]) -> str:
+        if not children:
+            return "[]"
         layout_attrs = self.parent_attrs(node)
         stroke = self.layout_stroke(layout_attrs)
         cells = self.child_attrs(node)
@@ -126,6 +143,8 @@ class TypstRenderer(RendererBase):
 
     def render_table(self, node: Any, children: list[str], attrs: dict[str, Any]) -> str:
         columns = self.child_attrs(node)
+        if not columns:
+            raise ValueError("A table needs at least one column")
         rows = attrs["data"]
         if not isinstance(rows, Bag):
             raise TypeError(f"table data must resolve to a Bag, got {type(rows).__name__}")
@@ -180,10 +199,15 @@ class TypstRenderer(RendererBase):
         return f"table.footer(repeat: false, {', '.join(cells)})"
 
     def render_paragraph(self, node: Any, children: list[str], attrs: dict[str, Any]) -> str:
+        if children:
+            return f"par({content_block(children, attrs['content'])})"
         return f"par({typst_string(attrs['content'])})"
 
     def render_pageNumber(
-        self, node: Any, children: list[str], attrs: dict[str, Any],
+        self,
+        node: Any,
+        children: list[str],
+        attrs: dict[str, Any],
     ) -> str:
         template = attrs["template"]
         markers = {
@@ -201,7 +225,7 @@ class TypstRenderer(RendererBase):
             if position:
                 parts.append(f"#{typst_string(rest[:position])}")
             parts.append(markers[marker])
-            rest = rest[position + len(marker):]
+            rest = rest[position + len(marker) :]
         return f"context [{''.join(parts)}]"
 
     # ------------------------------------------------------------------
@@ -214,36 +238,6 @@ class TypstRenderer(RendererBase):
             return None
         return typst_stroke(layout_attrs["border_width"], layout_attrs["border_color"])
 
-    def with_defaults(self, node: Any, attrs: dict[str, Any]) -> dict[str, Any]:
-        """Runtime attributes completed with the defaults of the signature.
-
-        The source keeps only the attributes the author wrote; the defaults
-        declared by the element signature are read from the grammar.
-        """
-        validations = node.builder._get_schema_info(node.node_tag)["call_args_validations"]
-        defaults = {name: spec[2] for name, spec in validations.items()}
-        return {**defaults, **attrs}
-
-    def child_attrs(self, node: Any) -> list[dict[str, Any]]:
-        """Runtime attributes, with defaults, of the children of ``node``."""
-        return [
-            self.with_defaults(child, child.builder.runtime_values(child)[1])
-            for child in node.value
-        ]
-
-    def parent_attrs(self, node: Any) -> dict[str, Any]:
-        """Runtime attributes, with defaults, of the parent node of ``node``."""
-        parent = node.parent_node
-        return self.with_defaults(parent, parent.builder.runtime_values(parent)[1])
-
-    def inherited(self, *levels: dict[str, Any], key: str) -> bool:
-        """First non-``None`` value of ``key`` from the innermost level out."""
-        for level in levels:
-            value = level.get(key)
-            if value is not None:
-                return bool(value)
-        raise ValueError(f"no level defines {key!r}")
-
 
 class TypstPdfRenderer(TypstRenderer):
     """Same walk as TypstRenderer; finalize compiles the code to PDF bytes."""
@@ -251,14 +245,17 @@ class TypstPdfRenderer(TypstRenderer):
     mode = "pdf"
     render_type = "object"
 
-    def finalize(self, result: Any, target: Any, **_opts: Any) -> Any:
+    def finalize(self, result: Any, target: Any, **opts: Any) -> Any:
         """Compile the Typst code and deliver the PDF bytes to ``target``.
 
         ``None`` returns the bytes; a ``str``/``Path`` writes the file;
         an object with ``.write`` receives the bytes.
         """
         code = "".join(result) if isinstance(result, list) else result
-        pdf = typst.compile(code.encode("utf-8"), format="pdf")
+        if opts.get("engine", "typst") != "typst":
+            raise ValueError("TypstBuilder requires the typst engine.")
+        root = Path(opts["root"]) if opts.get("root") else None
+        pdf = TypstEngine().compile(code, root=root).pdf
         if target is None:
             return pdf
         if isinstance(target, (str, Path)):

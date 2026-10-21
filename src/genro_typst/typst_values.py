@@ -16,11 +16,28 @@ _LENGTH_RE = re.compile(r"^-?\d+(\.\d+)?(mm|cm|pt|in|em|%|fr)$")
 _HEX_COLOR_RE = re.compile(r"^#([0-9a-fA-F]{6}|[0-9a-fA-F]{3})$")
 
 #: Typst predefined color names accepted as they are.
-NAMED_COLORS = frozenset({
-    "black", "gray", "silver", "white", "navy", "blue", "aqua", "teal",
-    "eastern", "purple", "fuchsia", "maroon", "red", "orange", "yellow",
-    "olive", "green", "lime",
-})
+NAMED_COLORS = frozenset(
+    {
+        "black",
+        "gray",
+        "silver",
+        "white",
+        "navy",
+        "blue",
+        "aqua",
+        "teal",
+        "eastern",
+        "purple",
+        "fuchsia",
+        "maroon",
+        "red",
+        "orange",
+        "yellow",
+        "olive",
+        "green",
+        "lime",
+    }
+)
 
 #: Grammar alignment words and their Typst alignment.
 HORIZONTAL_ALIGN = {"left": "left", "center": "center", "right": "right"}
@@ -51,8 +68,7 @@ def typst_length(value: object) -> str:
     if value == "auto" or _LENGTH_RE.match(value):
         return value
     raise ValueError(
-        f"length {value!r}: expected a number with mm, cm, pt, in, em, %, fr, "
-        "or 'auto'",
+        f"length {value!r}: expected a number with mm, cm, pt, in, em, %, fr, or 'auto'",
     )
 
 
@@ -78,8 +94,7 @@ def typst_color(value: object) -> str:
         if value in NAMED_COLORS:
             return value
     raise ValueError(
-        f"color {value!r}: expected '#rrggbb', '#rgb' or one of "
-        f"{', '.join(sorted(NAMED_COLORS))}",
+        f"color {value!r}: expected '#rrggbb', '#rgb' or one of {', '.join(sorted(NAMED_COLORS))}",
     )
 
 
