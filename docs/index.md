@@ -75,6 +75,7 @@ acknowledgements
 :hidden:
 
 api
+javascript
 grammar-api
 native-reference
 ```

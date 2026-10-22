@@ -1,0 +1,669 @@
+{
+  "native": {
+    "text": [
+      "text",
+      "body",
+      "text"
+    ],
+    "underline": [
+      "underline",
+      "body",
+      "text"
+    ],
+    "overline": [
+      "overline",
+      "body",
+      "text"
+    ],
+    "strike": [
+      "strike",
+      "body",
+      "text"
+    ],
+    "highlight": [
+      "highlight",
+      "body",
+      "text"
+    ],
+    "smallcaps": [
+      "smallcaps",
+      "body",
+      "text"
+    ],
+    "sub": [
+      "sub",
+      "body",
+      "text"
+    ],
+    "super": [
+      "super",
+      "body",
+      "text"
+    ],
+    "lower": [
+      "lower",
+      "body",
+      "text"
+    ],
+    "upper": [
+      "upper",
+      "body",
+      "text"
+    ],
+    "raw": [
+      "raw",
+      "value",
+      "text"
+    ],
+    "lorem": [
+      "lorem",
+      "value",
+      "text"
+    ],
+    "linebreak": [
+      "linebreak",
+      "leaf",
+      "text"
+    ],
+    "smartquote": [
+      "smartquote",
+      "leaf",
+      "text"
+    ],
+    "heading": [
+      "heading",
+      "body",
+      "model"
+    ],
+    "strong": [
+      "strong",
+      "body",
+      "model"
+    ],
+    "emph": [
+      "emph",
+      "body",
+      "model"
+    ],
+    "par": [
+      "par",
+      "body",
+      "model"
+    ],
+    "quote": [
+      "quote",
+      "body",
+      "model"
+    ],
+    "figure": [
+      "figure",
+      "body",
+      "model"
+    ],
+    "footnote": [
+      "footnote",
+      "body",
+      "model"
+    ],
+    "title": [
+      "title",
+      "body",
+      "model"
+    ],
+    "list": [
+      "list",
+      "items",
+      "model"
+    ],
+    "enum": [
+      "enum",
+      "items",
+      "model"
+    ],
+    "terms": [
+      "terms",
+      "items",
+      "model"
+    ],
+    "list_item": [
+      "list.item",
+      "body",
+      "model"
+    ],
+    "enum_item": [
+      "enum.item",
+      "body",
+      "model"
+    ],
+    "terms_item": [
+      "terms.item",
+      "args",
+      "model"
+    ],
+    "link": [
+      "link",
+      "value",
+      "model"
+    ],
+    "ref": [
+      "ref",
+      "value",
+      "model"
+    ],
+    "cite": [
+      "cite",
+      "value",
+      "model"
+    ],
+    "bibliography": [
+      "bibliography",
+      "value",
+      "model"
+    ],
+    "numbering": [
+      "numbering",
+      "value",
+      "model"
+    ],
+    "outline": [
+      "outline",
+      "leaf",
+      "model"
+    ],
+    "parbreak": [
+      "parbreak",
+      "leaf",
+      "model"
+    ],
+    "divider": [
+      "divider",
+      "leaf",
+      "model"
+    ],
+    "table_header": [
+      "table.header",
+      "items",
+      "model"
+    ],
+    "table_footer": [
+      "table.footer",
+      "items",
+      "model"
+    ],
+    "table_cell": [
+      "table.cell",
+      "body",
+      "model"
+    ],
+    "table_hline": [
+      "table.hline",
+      "leaf",
+      "model"
+    ],
+    "table_vline": [
+      "table.vline",
+      "leaf",
+      "model"
+    ],
+    "native_table": [
+      "table",
+      "items",
+      "model"
+    ],
+    "align": [
+      "align",
+      "body",
+      "layout"
+    ],
+    "block": [
+      "block",
+      "body",
+      "layout"
+    ],
+    "box": [
+      "box",
+      "body",
+      "layout"
+    ],
+    "columns": [
+      "columns",
+      "body",
+      "layout"
+    ],
+    "hide": [
+      "hide",
+      "body",
+      "layout"
+    ],
+    "move": [
+      "move",
+      "body",
+      "layout"
+    ],
+    "pad": [
+      "pad",
+      "body",
+      "layout"
+    ],
+    "page": [
+      "page",
+      "body",
+      "layout"
+    ],
+    "place": [
+      "place",
+      "body",
+      "layout"
+    ],
+    "repeat": [
+      "repeat",
+      "body",
+      "layout"
+    ],
+    "rotate": [
+      "rotate",
+      "body",
+      "layout"
+    ],
+    "scale": [
+      "scale",
+      "body",
+      "layout"
+    ],
+    "skew": [
+      "skew",
+      "body",
+      "layout"
+    ],
+    "grid": [
+      "grid",
+      "items",
+      "layout"
+    ],
+    "stack": [
+      "stack",
+      "items",
+      "layout"
+    ],
+    "grid_header": [
+      "grid.header",
+      "items",
+      "layout"
+    ],
+    "grid_footer": [
+      "grid.footer",
+      "items",
+      "layout"
+    ],
+    "grid_cell": [
+      "grid.cell",
+      "body",
+      "layout"
+    ],
+    "pagebreak": [
+      "pagebreak",
+      "leaf",
+      "layout"
+    ],
+    "colbreak": [
+      "colbreak",
+      "leaf",
+      "layout"
+    ],
+    "grid_hline": [
+      "grid.hline",
+      "leaf",
+      "layout"
+    ],
+    "grid_vline": [
+      "grid.vline",
+      "leaf",
+      "layout"
+    ],
+    "h": [
+      "h",
+      "value",
+      "layout"
+    ],
+    "v": [
+      "v",
+      "value",
+      "layout"
+    ],
+    "measure": [
+      "measure",
+      "value",
+      "layout"
+    ],
+    "native_layout": [
+      "layout",
+      "value",
+      "layout"
+    ],
+    "circle": [
+      "circle",
+      "body",
+      "visualize"
+    ],
+    "ellipse": [
+      "ellipse",
+      "body",
+      "visualize"
+    ],
+    "rect": [
+      "rect",
+      "body",
+      "visualize"
+    ],
+    "square": [
+      "square",
+      "body",
+      "visualize"
+    ],
+    "image": [
+      "image",
+      "value",
+      "visualize"
+    ],
+    "line": [
+      "line",
+      "args",
+      "visualize"
+    ],
+    "polygon": [
+      "polygon",
+      "args",
+      "visualize"
+    ],
+    "curve": [
+      "curve",
+      "args",
+      "visualize"
+    ],
+    "curve_move": [
+      "curve.move",
+      "args",
+      "visualize"
+    ],
+    "curve_line": [
+      "curve.line",
+      "args",
+      "visualize"
+    ],
+    "curve_quad": [
+      "curve.quad",
+      "args",
+      "visualize"
+    ],
+    "curve_cubic": [
+      "curve.cubic",
+      "args",
+      "visualize"
+    ],
+    "curve_close": [
+      "curve.close",
+      "args",
+      "visualize"
+    ],
+    "math_equation": [
+      "math.equation",
+      "body",
+      "math"
+    ],
+    "math_upright": [
+      "math.upright",
+      "body",
+      "math"
+    ],
+    "math_italic": [
+      "math.italic",
+      "body",
+      "math"
+    ],
+    "math_bold": [
+      "math.bold",
+      "body",
+      "math"
+    ],
+    "math_serif": [
+      "math.serif",
+      "body",
+      "math"
+    ],
+    "math_sans": [
+      "math.sans",
+      "body",
+      "math"
+    ],
+    "math_cal": [
+      "math.cal",
+      "body",
+      "math"
+    ],
+    "math_frak": [
+      "math.frak",
+      "body",
+      "math"
+    ],
+    "math_mono": [
+      "math.mono",
+      "body",
+      "math"
+    ],
+    "math_bb": [
+      "math.bb",
+      "body",
+      "math"
+    ],
+    "math_display": [
+      "math.display",
+      "body",
+      "math"
+    ],
+    "math_inline": [
+      "math.inline",
+      "body",
+      "math"
+    ],
+    "math_script": [
+      "math.script",
+      "body",
+      "math"
+    ],
+    "math_sscript": [
+      "math.sscript",
+      "body",
+      "math"
+    ],
+    "math_frac": [
+      "math.frac",
+      "args",
+      "math"
+    ],
+    "math_root": [
+      "math.root",
+      "args",
+      "math"
+    ],
+    "math_sqrt": [
+      "math.sqrt",
+      "args",
+      "math"
+    ],
+    "math_binom": [
+      "math.binom",
+      "args",
+      "math"
+    ],
+    "math_vec": [
+      "math.vec",
+      "args",
+      "math"
+    ],
+    "math_mat": [
+      "math.mat",
+      "args",
+      "math"
+    ],
+    "math_cases": [
+      "math.cases",
+      "args",
+      "math"
+    ],
+    "math_lr": [
+      "math.lr",
+      "args",
+      "math"
+    ],
+    "math_attach": [
+      "math.attach",
+      "args",
+      "math"
+    ],
+    "math_accent": [
+      "math.accent",
+      "args",
+      "math"
+    ],
+    "math_cancel": [
+      "math.cancel",
+      "args",
+      "math"
+    ],
+    "math_class": [
+      "math.class",
+      "args",
+      "math"
+    ],
+    "math_op": [
+      "math.op",
+      "args",
+      "math"
+    ],
+    "math_limits": [
+      "math.limits",
+      "args",
+      "math"
+    ],
+    "math_scripts": [
+      "math.scripts",
+      "args",
+      "math"
+    ],
+    "math_abs": [
+      "math.abs",
+      "args",
+      "math"
+    ],
+    "math_norm": [
+      "math.norm",
+      "args",
+      "math"
+    ],
+    "math_floor": [
+      "math.floor",
+      "args",
+      "math"
+    ],
+    "math_ceil": [
+      "math.ceil",
+      "args",
+      "math"
+    ],
+    "math_round": [
+      "math.round",
+      "args",
+      "math"
+    ],
+    "math_stretch": [
+      "math.stretch",
+      "args",
+      "math"
+    ],
+    "math_underbrace": [
+      "math.underbrace",
+      "args",
+      "math"
+    ],
+    "math_overbrace": [
+      "math.overbrace",
+      "args",
+      "math"
+    ],
+    "math_underbracket": [
+      "math.underbracket",
+      "args",
+      "math"
+    ],
+    "math_overbracket": [
+      "math.overbracket",
+      "args",
+      "math"
+    ],
+    "math_underline": [
+      "math.underline",
+      "args",
+      "math"
+    ],
+    "math_overline": [
+      "math.overline",
+      "args",
+      "math"
+    ],
+    "math_underparen": [
+      "math.underparen",
+      "args",
+      "math"
+    ],
+    "math_overparen": [
+      "math.overparen",
+      "args",
+      "math"
+    ],
+    "math_undershell": [
+      "math.undershell",
+      "args",
+      "math"
+    ],
+    "math_overshell": [
+      "math.overshell",
+      "args",
+      "math"
+    ],
+    "math_primes": [
+      "math.primes",
+      "args",
+      "math"
+    ],
+    "metadata": [
+      "metadata",
+      "value",
+      "introspection"
+    ],
+    "pdf_artifact": [
+      "pdf.artifact",
+      "body",
+      "pdf"
+    ]
+  },
+  "namedColors": [
+    "aqua",
+    "black",
+    "blue",
+    "eastern",
+    "fuchsia",
+    "gray",
+    "green",
+    "lime",
+    "maroon",
+    "navy",
+    "olive",
+    "orange",
+    "purple",
+    "red",
+    "silver",
+    "teal",
+    "white",
+    "yellow"
+  ]
+}

@@ -113,6 +113,7 @@ every parameter combination or every future Typst feature.
 
 - [Getting started and guide](https://genro-typst.readthedocs.io/en/latest/typst-guide.html)
 - [Python API](https://genro-typst.readthedocs.io/en/latest/api.html)
+- [JavaScript builder](https://genro-typst.readthedocs.io/en/latest/javascript.html)
 - [Native call reference](https://genro-typst.readthedocs.io/en/latest/native-reference.html)
 - [Executable Python and Typst examples](https://genro-typst.readthedocs.io/en/latest/catalog-examples.html)
 - [Verification and limits](https://genro-typst.readthedocs.io/en/latest/verification.html)
@@ -123,6 +124,25 @@ a [multipage invoice](examples/02_invoice_lines/invoice_lines.py) and a
 [native report](examples/03_native_report/report.py) with styles, table spans,
 SVG graphics, mathematics and references. Each includes Python, generated
 Typst and PDF files.
+
+## JavaScript builder
+
+The [`js/`](js/README.md) package provides a JavaScript authoring layer built on
+`@genrojs/builders`. Its grammar is exported directly from `TypstBuilder`;
+the JavaScript renderer produces ordinary Typst source. Tests compare it with
+Python for every native element, language construct and legacy element.
+
+From a checkout with Node.js 22 or later:
+
+```bash
+npm ci --prefix js
+npm test --prefix js
+node js/examples/report.typ.mjs /tmp/report.typ
+```
+
+Typst remains responsible for compilation. See the
+[JavaScript guide](https://genro-typst.readthedocs.io/en/latest/javascript.html)
+for usage, regeneration and differences between Python and JavaScript values.
 
 ## Architecture
 

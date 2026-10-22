@@ -1,0 +1,29 @@
+name: JavaScript and Python equivalence
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  equivalence:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: js/package-lock.json
+      - run: python -m pip install -e '.[dev]'
+      - run: npm ci --prefix js --ignore-scripts
+      - run: python tools/export_js.py --check
+      - run: python tools/export_js_fixtures.py --check
+      - run: pytest -q
+      - run: npm test --prefix js

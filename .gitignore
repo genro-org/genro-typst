@@ -13,3 +13,4 @@ temp/
 
 # Sphinx output
 docs/_build/
+node_modules/

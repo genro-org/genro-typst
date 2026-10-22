@@ -1,0 +1,21 @@
+genro-typst
+Copyright 2026 Softwell S.r.l.
+
+This product includes software developed at
+Softwell S.r.l. (https://www.softwell.it/).
+
+Licensed under the Apache License, Version 2.0.
+
+Acknowledgement of upstream work
+-------------------------------
+Genro Typst provides a Python authoring interface that generates Typst source.
+The Typst language, typesetting engine and document compilation are the work
+of Typst's authors and contributors, including Laurenz Mädje and Martin Haug.
+We gratefully acknowledge the Typst team and its contributor community.
+
+Typst project: https://typst.app/
+Typst source and license: https://github.com/typst/typst
+
+The optional PDF/SVG compilation feature uses Typst through its Python binding.
+Genro Typst is an independent Softwell project, not an official Typst product
+and not affiliated with or endorsed by Typst's authors.
