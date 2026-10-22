@@ -1,43 +1,43 @@
-# Riferimento degli elementi nativi
+# Native element reference
 
-Generato da `native_catalog.py` con `tools/generate_reference.py`. Non modificare a mano.
+Generated from `native_catalog.py` by `tools/generate_reference.py`. Do not edit by hand.
 
-**129 chiamate native**, verificate su Typst **0.15.0**, oltre ai costrutti
-di linguaggio elencati sotto e agli otto elementi storici per documenti commerciali.
+**129 native calls**, verified with Typst **0.15.0**, alongside the language
+constructs below and the eight legacy business-document elements.
 
-Per i tipi dei parametri e i relativi valori predefiniti, seguire i collegamenti
-alla documentazione ufficiale. Le pagine online possono descrivere versioni più
-recenti: il riferimento eseguibile di questo progetto resta Typst 0.15.0.
+For parameter types and defaults, follow the links
+to the official documentation. Online pages may describe newer
+versions: this project's executable reference remains Typst 0.15.0.
 
-## Firma comune
+## Common signature
 
 ```python
-node.heading(content=None, args=None, options=None, **parametri_typst)
+node.heading(content=None, args=None, options=None, **typst_parameters)
 ```
 
-`content` accetta anche la prima posizione (`node.heading('Titolo')`).
-`args` è una lista di argomenti posizionali Typst; `options` permette nomi che
-collidono con quelli del builder. I parametri aggiuntivi sono inoltrati a Typst:
-i loro nomi e tipi vengono verificati dal compilatore, non tutti dallo schema Python.
+`content` also accepts the first positional argument (`node.heading('Title')`).
+`args` is a list of Typst positional arguments; `options` supports names that
+collide with builder parameters. Additional parameters are forwarded to Typst:
+the compiler validates names and types beyond the checks in the Python schema.
 
-| Modalità | Significato |
+| Mode | Meaning |
 |---|---|
-| `body` | Testo iniziale e figli formano un unico contenuto; nessuno spazio implicito tra figli. |
-| `items` | Ogni figlio diventa un argomento distinto, ad esempio una cella. |
-| `args` | Argomenti e figli sono passati separatamente; segue i tipi della funzione. |
-| `value` | Il contenuto iniziale è un valore posizionale, ad esempio URL o percorso; i figli formano un eventuale corpo. |
-| `leaf` | Senza contenuto/figli; restano disponibili `args` e parametri nominati. |
+| `body` | Initial text and children form one content value; no implicit spaces between children. |
+| `items` | Each child becomes a separate argument, such as a cell. |
+| `args` | Arguments and children are passed separately, following the function's types. |
+| `value` | Initial content is a positional value, such as a URL or path; children form an optional body. |
+| `leaf` | No content or children; `args` and named parameters remain available. |
 
-Le stringhe restano stringhe. Usare `length`, `color`, `label`, `expr` e `markup`
-per valori Typst non testuali. I metodi con underscore corrispondono ai percorsi
-puntati di Typst (`table_cell` → `table.cell`); gli underscore nei parametri
-diventano trattini (`column_gutter` → `column-gutter`).
+Strings remain strings. Use `length`, `color`, `label`, `expr` and `markup`
+for non-text Typst values. Underscored methods map to dotted
+Typst paths (`table_cell` → `table.cell`); parameter underscores
+become hyphens (`column_gutter` → `column-gutter`).
 
 ## text
 
-[Riferimento ufficiale](https://typst.app/docs/reference/text/)
+[Official reference](https://typst.app/docs/reference/text/)
 
-| Metodo builder (esempio verificato) | Funzione Typst | Modalità |
+| Builder method (verified example) | Typst function | Mode |
 |---|---|---|
 | [`text`](catalog-examples.md#text) | `text` | `body` |
 | [`underline`](catalog-examples.md#underline) | `underline` | `body` |
@@ -56,9 +56,9 @@ diventano trattini (`column_gutter` → `column-gutter`).
 
 ## model
 
-[Riferimento ufficiale](https://typst.app/docs/reference/model/)
+[Official reference](https://typst.app/docs/reference/model/)
 
-| Metodo builder (esempio verificato) | Funzione Typst | Modalità |
+| Builder method (verified example) | Typst function | Mode |
 |---|---|---|
 | [`heading`](catalog-examples.md#heading) | `heading` | `body` |
 | [`strong`](catalog-examples.md#strong) | `strong` | `body` |
@@ -91,9 +91,9 @@ diventano trattini (`column_gutter` → `column-gutter`).
 
 ## layout
 
-[Riferimento ufficiale](https://typst.app/docs/reference/layout/)
+[Official reference](https://typst.app/docs/reference/layout/)
 
-| Metodo builder (esempio verificato) | Funzione Typst | Modalità |
+| Builder method (verified example) | Typst function | Mode |
 |---|---|---|
 | [`align`](catalog-examples.md#align) | `align` | `body` |
 | [`block`](catalog-examples.md#block) | `block` | `body` |
@@ -124,9 +124,9 @@ diventano trattini (`column_gutter` → `column-gutter`).
 
 ## visualize
 
-[Riferimento ufficiale](https://typst.app/docs/reference/visualize/)
+[Official reference](https://typst.app/docs/reference/visualize/)
 
-| Metodo builder (esempio verificato) | Funzione Typst | Modalità |
+| Builder method (verified example) | Typst function | Mode |
 |---|---|---|
 | [`circle`](catalog-examples.md#circle) | `circle` | `body` |
 | [`ellipse`](catalog-examples.md#ellipse) | `ellipse` | `body` |
@@ -144,9 +144,9 @@ diventano trattini (`column_gutter` → `column-gutter`).
 
 ## math
 
-[Riferimento ufficiale](https://typst.app/docs/reference/math/)
+[Official reference](https://typst.app/docs/reference/math/)
 
-| Metodo builder (esempio verificato) | Funzione Typst | Modalità |
+| Builder method (verified example) | Typst function | Mode |
 |---|---|---|
 | [`math_equation`](catalog-examples.md#math_equation) | `math.equation` | `body` |
 | [`math_upright`](catalog-examples.md#math_upright) | `math.upright` | `body` |
@@ -197,22 +197,22 @@ diventano trattini (`column_gutter` → `column-gutter`).
 
 ## introspection
 
-[Riferimento ufficiale](https://typst.app/docs/reference/introspection/)
+[Official reference](https://typst.app/docs/reference/introspection/)
 
-| Metodo builder (esempio verificato) | Funzione Typst | Modalità |
+| Builder method (verified example) | Typst function | Mode |
 |---|---|---|
 | [`metadata`](catalog-examples.md#metadata) | `metadata` | `value` |
 
 ## pdf
 
-[Riferimento ufficiale](https://typst.app/docs/reference/pdf/)
+[Official reference](https://typst.app/docs/reference/pdf/)
 
-| Metodo builder (esempio verificato) | Funzione Typst | Modalità |
+| Builder method (verified example) | Typst function | Mode |
 |---|---|---|
 | [`pdf_artifact`](catalog-examples.md#pdf_artifact) | `pdf.artifact` | `body` |
 
-## Costrutti del linguaggio
+## Language constructs
 
 `call`, `set_rule`, `show_rule`, `scope`, `context`, `equation`, `label`, `let`, `import_module`, `include`, `typst_code`, `typst_markup`
 
-Firme, esempi e limiti sono descritti nella [guida](typst-guide.md).
+Signatures, examples and limits are described in the [guide](typst-guide.md).

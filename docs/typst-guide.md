@@ -1,14 +1,16 @@
-# Guida a Genro Typst
+# Genro Typst guide
 
-Genro Typst costruisce un albero di documento in Python e produce sorgente Typst.
-Il compilatore di riferimento è **Typst 0.15.0**. Il catalogo comprende testo,
-struttura, layout, tabelle native, grafica, matematica e costrutti del linguaggio.
+Genro Typst builds a document tree in Python and produces Typst source.
+The reference compiler is **Typst 0.15.0**. The catalog covers text, document
+structure, layout, native tables, graphics, mathematics and language constructs.
 
-La [tabella completa](native-reference.md) è generata dallo stesso catalogo usato
-per registrare la grammatica e scegliere le funzioni da emettere. Il
-[catalogo JSON](native-catalog.json) è disponibile per strumenti esterni.
+The [complete reference](native-reference.md) is generated from the catalog
+that registers the grammar and selects the emitted functions. The
+[JSON catalog](native-catalog.json) is available for external tools.
 
-## Installazione e primo documento
+## Installation and first document
+
+From a repository checkout:
 
 ```bash
 python -m pip install -e ".[pdf]"
@@ -21,13 +23,13 @@ from genro_typst import TypstBuilder, length, color
 class Report(TypstBuilder):
     def main(self, root):
         doc = root.document(paper="a4", margin="18mm")
-        doc.set_rule(target="text", size=length("11pt"), lang="it")
-        doc.heading("Relazione", level=1)
+        doc.set_rule(target="text", size=length("11pt"), lang="en")
+        doc.heading("Report", level=1)
         p = doc.par(justify=True)
-        p.text("Un paragrafo con ")
-        p.strong("testo importante")
-        p.text(" e altro testo.")
-        doc.rect("Nota", fill=color("#eeeeee"), inset=length("3mm"))
+        p.text("A paragraph with ")
+        p.strong("important text")
+        p.text(" and more text.")
+        doc.rect("Note", fill=color("#eeeeee"), inset=length("3mm"))
 
 report = Report()
 report.create()
@@ -35,170 +37,167 @@ report.render(target="report.typ")
 report.render(mode="pdf", target="report.pdf")
 ```
 
-`setup(self, data)` prepara i dati, `main(self, root)` costruisce il documento e
-`create()` esegue entrambi. Tutti i normali cicli, funzioni e condizioni Python
-restano disponibili. Gli attributi `^percorso` mantengono il binding Genro Bag;
-per testi che iniziano letteralmente con `^`, consultare le regole di binding di
-`genro-builders` anziché usarli come puntatori involontari.
+`setup(self, data)` prepares data, `main(self, root)` builds the document, and
+`create()` runs both. Ordinary Python loops, functions and conditions remain
+available. Attributes containing `^path` retain Genro Bag data binding; for
+literal text starting with `^`, consult the `genro-builders` binding rules
+rather than accidentally creating a data pointer.
 
-I metodi nativi accettano `content=...` o una sola prima posizione equivalente.
-Ulteriori argomenti posizionali Typst vanno in `args=[...]`. Gli elementi di
-linguaggio (`set_rule`, `equation`, `import_module`, ecc.) usano i parametri
-nominati della loro firma. Se un nome collide con proprietà di Bag/SourceNode,
-il prefisso `typst_` forza la grammatica: `doc.typst_label(name="intro")`. Per le collisioni attuali usare anche
-`typst_columns(...)` e `typst_move(...)`.
+Native methods accept `content=...` or one equivalent positional argument.
+Pass additional Typst positional arguments through `args=[...]`. Language
+elements (`set_rule`, `equation`, `import_module`, etc.) use their declared
+keyword parameters. If a name collides with a Bag/SourceNode property, the
+`typst_` prefix selects the grammar: `doc.typst_label(name="intro")`.
+The other current collisions require `typst_columns(...)` and `typst_move(...)`.
 
-## Valori: testo, lunghezze, colori ed espressioni
+## Values: text, lengths, colors and expressions
 
-Le stringhe Python sono sempre letterali: `"12pt"` non diventa automaticamente
-una lunghezza e `"red"` non diventa un colore. Questo distingue il testo dei dati
-dalle espressioni del linguaggio.
+Python strings are always literals: `"12pt"` does not automatically become a
+length, and `"red"` does not become a color. This separates data from code.
 
-| Python | Sorgente Typst |
+| Python | Typst source |
 |---|---|
-| `"Testo #non_codice"` | stringa con escaping |
+| `"Text #not_code"` | Escaped string |
 | `True`, `False`, `None` | `true`, `false`, `none` |
-| `12`, `1.5` | numero; NaN e infinito sono rifiutati |
-| `["a", "b"]` | array `("a", "b",)` |
-| `{"left": length("10mm")}` | dizionario con chiavi letterali |
+| `12`, `1.5` | Number; NaN and infinity are rejected |
+| `["a", "b"]` | Array `("a", "b",)` |
+| `{"left": length("10mm")}` | Dictionary with literal keys |
 | `length("12pt")` | `12pt` |
 | `color("#167665")` | `rgb("#167665")` |
 | `label("intro")` | `label("intro")` |
-| `expr("center + horizon")` | espressione esplicita |
-| `markup("*Titolo*")` | contenuto Typst con markup |
+| `expr("center + horizon")` | Explicit expression |
+| `markup("*Title*")` | Typst markup content |
 
-Importare questi helper da `genro_typst`. `length` accetta `mm`, `cm`, `pt`, `in`,
-`em`, `%`, `fr` e `auto`. Per angoli, combinazioni di unità, funzioni, simboli,
-selettori, gradienti, stroke e valori più complessi usare `expr`, per esempio
-`expr('1pt + red')`, `expr('10deg')` o `expr('gradient.linear(red, blue)')`.
+Import these helpers from `genro_typst`. `length` accepts `mm`, `cm`, `pt`, `in`,
+`em`, `%`, `fr` and `auto`. For angles, combined units, functions, symbols,
+selectors, gradients, strokes and more complex values, use `expr`, for example
+`expr('1pt + red')`, `expr('10deg')` or `expr('gradient.linear(red, blue)')`.
 
-Gli helper restituiscono dizionari JSON/TYTX con la chiave riservata `$typst`;
-non dipendono da oggetti Python personalizzati e conservano il tipo espressione
-quando il documento viene serializzato. Quella chiave non va usata nei normali
-dizionari di dati passati come valori Typst. `expr`, `markup`, formule e sorgenti
-espliciti sono codice fidato; non usarli per convertire automaticamente testo
-non fidato. Per tale testo basta una stringa normale.
+Helpers return JSON/TYTX dictionaries with the reserved `$typst` key, without
+custom Python objects. Expression values survive document serialization.
+Do not use that key in ordinary data dictionaries passed as Typst values.
+`expr`, `markup`, formulas and explicit source are trusted code; do not use
+them to convert untrusted text automatically. Ordinary strings handle such text.
 
-I parametri nativi possono essere passati come keyword (`level=2`, `block=True`)
-o con `options={...}`. Un underscore diventa un trattino e un underscore finale
-può evitare una parola riservata Python. I nomi duplicati dopo questa conversione
-sono rifiutati. `options` serve anche per nomi che coincidono con `content`,
-`args`, `function` o `mode` del builder.
+Native parameters can be supplied as keywords (`level=2`, `block=True`) or
+through `options={...}`. Underscores become hyphens; a trailing underscore can
+escape a Python keyword. Duplicate names after conversion are rejected.
+`options` also handles names colliding with the builder's `content`, `args`,
+`function` or `mode` parameters.
 
-## Testo e stili
+## Text and styles
 
-Le funzioni native includono `text`, `heading`, `par`, `strong`, `emph`, `quote`,
-`raw`, `underline`, `highlight`, `smallcaps`, `sub`, `super` e le altre elencate
-nel riferimento. `raw` mostra codice come testo, con eventuale `lang="python"`:
-non lo esegue.
+Native functions include `text`, `heading`, `par`, `strong`, `emph`, `quote`,
+`raw`, `underline`, `highlight`, `smallcaps`, `sub`, `super` and the other calls
+in the reference. `raw` displays code as text, optionally with `lang="python"`;
+it does not execute it.
 
-Un contenitore raccoglie `content` iniziale e figli nell'ordine di inserimento.
-Aggiungere un figlio non cancella il contenuto iniziale. Tra figli inline non
-vengono aggiunti spazi: sono intenzionali nelle stringhe dell'esempio iniziale.
+A container collects its initial `content` and children in insertion order.
+Adding a child preserves the initial content. No spaces are inserted between
+inline children; the spaces in the first example are intentional.
 
 ```python
 doc.set_rule(target="heading", numbering="1.")
 doc.show_rule(selector="heading", target="text", fill=color("navy"))
 local = doc.scope()
 local.set_rule(target="text", size=length("14pt"))
-local.text("Questo stile è locale")
-doc.text("Qui torna lo stile precedente")
+local.text("This style is local")
+doc.text("The previous style applies here")
 ```
 
-Le regole si applicano ai fratelli successivi nel loro scope. Un `scope()`
-crea un blocco di contenuto; `context()` abilita la valutazione contestuale.
-Una regola trasformativa usa ad esempio
-`show_rule(selector="heading", transform=expr("it => underline(it)"))`.
-Non combinare `transform` e `target` nella stessa regola.
+Rules apply to subsequent siblings within their scope. `scope()` creates a
+content block; `context()` enables contextual evaluation. A transforming rule
+can use `show_rule(selector="heading", transform=expr("it => underline(it)"))`.
+Do not combine `transform` and `target` in the same rule.
 
-## Documento, pagine e impaginazione
+## Documents, pages and layout
 
-`document(paper="a4", flipped=False, margin="15mm")` mantiene il comportamento
-storico. `metadata` configura il documento Typst; `page_options` completa o
-sovrascrive le impostazioni di pagina iniziali:
+`document(paper="a4", flipped=False, margin="15mm")` preserves the original
+behavior. `metadata` configures the Typst document; `page_options` extends or
+overrides the initial page settings:
 
 ```python
 doc = root.document(
-    metadata={"title": "Bilancio", "author": ["Softwell"], "keywords": ["report"]},
+    metadata={"title": "Annual report", "author": ["Softwell"], "keywords": ["report"]},
     page_options={
         "margin": {"left": length("20mm"), "right": length("15mm")},
-        "header": markup("Bilancio annuale"),
+        "header": markup("Annual report"),
         "footer": expr("context counter(page).display()"),
     },
 )
 ```
 
 `page`, `pagebreak`, `columns`, `colbreak`, `grid`, `stack`, `align`, `block`,
-`box`, `pad`, `place`, `move`, `rotate`, `scale`, `skew`, `h` e `v` espongono
-l'impaginazione nativa. Esempi:
+`box`, `pad`, `place`, `move`, `rotate`, `scale`, `skew`, `h` and `v` expose
+native layout operations:
 
 ```python
-doc.align(args=[expr("center")]).heading("Centrato", level=2)
-doc.typst_columns(args=[2], gutter=length("6mm")).par("Testo su due colonne")
+doc.align(args=[expr("center")]).heading("Centered", level=2)
+doc.typst_columns(args=[2], gutter=length("6mm")).par("Text in two columns")
 doc.v(length("4mm"))
 grid = doc.grid(columns=[length("1fr"), length("2fr")], gutter=length("2mm"))
-grid.grid_cell("Sinistra")
-grid.grid_cell("Destra")
+grid.grid_cell("Left")
+grid.grid_cell("Right")
 ```
 
-## Tabelle native e tabelle dati
+## Native tables and data tables
 
-La tabella storica `table(data="^lines")` con figli `column` resta invariata.
-`native_table` genera invece la funzione Typst `table`, senza imporre un modello
-di righe Python:
+The original `table(data="^lines")` with `column` children remains available.
+`native_table` emits the Typst `table` function without imposing a Python row model:
 
 ```python
 table = doc.native_table(columns=[length("1fr"), length("2fr")], inset=length("2mm"))
 header = table.table_header(repeat=True)
-header.table_cell("Voce")
-header.table_cell("Valore")
-table.table_cell("Sezione", colspan=2, fill=color("#eeeeee"))
+header.table_cell("Item")
+header.table_cell("Value")
+table.table_cell("Section", colspan=2, fill=color("#eeeeee"))
 for name, value in [("A", 12), ("B", 24)]:
     table.table_cell(name)
     table.table_cell(str(value))
 ```
 
-Sono disponibili `table_cell`, `table_header`, `table_footer`, `table_hline`,
-`table_vline` e gli equivalenti `grid_*`. `rowspan`, `colspan`, `align`, `fill`,
-`stroke` e gli altri parametri nativi vengono inoltrati a Typst. Tipi, combinazioni
-e collocazioni non valide sono segnalati dal compilatore.
+`table_cell`, `table_header`, `table_footer`, `table_hline`, `table_vline` and
+their `grid_*` equivalents are available. Native parameters such as `rowspan`,
+`colspan`, `align`, `fill` and `stroke` are forwarded to Typst. The compiler
+reports invalid types, combinations and placement. Add body cells before the
+footer: a footer must end at the last row.
 
-## Figure, grafica, liste e riferimenti
+## Figures, graphics, lists and references
 
-`image` accetta percorsi di immagini raster o SVG. I file devono esistere sotto
-il `root` di compilazione (vedi sotto). `figure` aggiunge didascalie e semantica:
+`image` accepts raster or SVG paths. Files must exist under the compilation
+`root` (see below). `figure` adds captions and document semantics:
 
 ```python
-figure = doc.figure(caption=markup("Schema"), alt="Descrizione del disegno")
-figure.image("schema.svg", width=length("40mm"))
-doc.rect("Riquadro", fill=color("#eeeeee"), stroke=None)
+figure = doc.figure(caption=markup("Diagram"), alt="Description of the drawing")
+figure.image("diagram.svg", width=length("40mm"))
+doc.rect("Box", fill=color("#eeeeee"), stroke=None)
 ```
 
-`circle`, `ellipse`, `rect`, `square`, `line`, `polygon` e `curve` permettono
-forme native. I segmenti `curve_move`, `curve_line`, `curve_quad`, `curve_cubic`
-e `curve_close` sono figli/argomenti della curva. Gradienti e tiling sono valori
-passabili tramite `expr`; per disegno avanzato si possono importare pacchetti.
+`circle`, `ellipse`, `rect`, `square`, `line`, `polygon` and `curve` create
+native shapes. `curve_move`, `curve_line`, `curve_quad`, `curve_cubic` and
+`curve_close` are curve children/arguments. Gradients and tiling can be passed
+through `expr`; packages can provide more advanced drawing features.
 
-`list`/`list_item`, `enum`/`enum_item` e `terms`/`terms_item` producono elenchi.
-`terms_item(args=["Termine", "Definizione"])` prende due contenuti. Per link e
-riferimenti:
+`list`/`list_item`, `enum`/`enum_item` and `terms`/`terms_item` create lists.
+`terms_item(args=["Term", "Definition"])` takes two content values. For links
+and references:
 
 ```python
-doc.heading("Introduzione", level=1)
+doc.set_rule(target="heading", numbering="1.")
+doc.heading("Introduction", level=1)
 doc.typst_label(name="intro")
 doc.ref(label("intro"))
 doc.link("https://typst.app").text("Typst")
-doc.footnote("Una nota a piè di pagina")
-doc.outline(title=markup("Indice"))
-doc.cite(label("manuale"))
-doc.bibliography("references.yml", title=markup("Bibliografia"))
+doc.footnote("A footnote")
+doc.outline(title=markup("Contents"))
+doc.cite(label("manual"))
+doc.bibliography("references.yml", title=markup("Bibliography"))
 ```
 
-Le citazioni richiedono un file bibliografico valido; il formato e gli stili
-sono quelli di Typst. Per `ref` verso titoli numerati occorre impostare
-`set_rule(target="heading", numbering="1.")`.
+Citations require a valid bibliography file, using Typst's formats and styles.
+References to numbered headings require the heading numbering rule shown above.
 
-## Matematica
+## Mathematics
 
 ```python
 doc.equation(formula="sum_(i=1)^n i = (n (n+1))/2", block=True, numbering="(1)")
@@ -208,48 +207,46 @@ eq.math_mat(args=[["1", "2"], ["3", "4"]])
 eq.math_vec(args=["x", "y", "z"])
 ```
 
-`equation` accetta sintassi matematica Typst senza i delimitatori `$` esterni.
-Le chiamate strutturate `math_*` usano invece gli argomenti della modalità
-**codice**, non il parser della modalità matematica. Le funzioni che vogliono
-`content` richiedono stringhe o contenuti espliciti, non automaticamente numeri:
-per questo la matrice sopra usa `"1"`, non `1`.
+`equation` accepts Typst math syntax without the outer `$` delimiters.
+Structured `math_*` calls use **code-mode** arguments, not the math-mode parser.
+Functions expecting `content` need strings or explicit content, not numbers
+implicitly converted to text: the matrix above uses `"1"`, not `1`.
 
-Il catalogo include frazioni, radici, matrici, vettori, casi, attacchi, accenti,
-delimitatori, cancellazioni, dimensioni e varianti di carattere. Simboli e
-operatori sono accessibili tramite `expr` o la sintassi di `equation`.
+The catalog includes fractions, roots, matrices, vectors, cases, attachments,
+accents, delimiters, cancellations, sizes and font variants. Symbols and
+operators are available through `expr` or `equation` syntax.
 
-## Funzioni avanzate, moduli e codice
+## Advanced functions, modules and code
 
 ```python
 doc.import_module(path="helpers.typ", names=["banner"])
-doc.call(function="banner", content="Titolo")
+doc.call(function="banner", content="Title")
 doc.let(name="accent", value=color("navy"))
-doc.text("Colore condiviso", fill=expr("accent"))
+doc.text("Shared color", fill=expr("accent"))
 doc.context().text(content=expr("counter(page).display()"))
-doc.include(path="appendice.typ")
+doc.include(path="appendix.typ")
 ```
 
 `call(function=..., content=None, args=None, options=None, mode="body", **attrs)`
-permette funzioni standard non elencate e funzioni importate. Le modalità sono
-quelle del [catalogo](native-reference.md). `native_layout` è l'accesso alla
-funzione Typst `layout`, che riceve una callback, mentre `layout` resta il
-contenitore Genro a righe e celle.
+supports unlisted standard functions and imported functions. See the
+[catalog](native-reference.md) for call modes. `native_layout` accesses Typst's
+`layout` function, which takes a callback; `layout` remains the Genro container
+for rows and cells.
 
-`import_module(path, names=None, alias=None)` richiede parametri nominati;
-`names=["*"]` importa tutti i nomi. Alias e nomi importati devono essere
-identificatori semplici (senza punti). I pacchetti usano percorsi Typst versionati,
-ad esempio `@preview/...:...`. Risoluzione, cache e disponibilità dei pacchetti
-restano responsabilità del compilatore; i test della libreria usano file locali
-e non richiedono pacchetti remoti.
+`import_module(path, names=None, alias=None)` requires keyword arguments;
+`names=["*"]` imports all names. Aliases and imported names must be simple
+identifiers without dots. Packages use versioned Typst paths such as
+`@preview/...:...`. Resolution, caching and availability remain the compiler's
+responsibility. Library tests use local files and require no remote packages.
 
-`typst_markup(source=...)` inserisce markup completo nel proprio scope.
-`typst_code(code=...)` inserisce un blocco di codice, anch'esso locale. Per legare
-nomi usati dai fratelli successivi usare `let` o `import_module`, non una
-variabile interna a `typst_code`. `expr` può rappresentare callback, selettori,
-`query`, `state`, letture dati, simboli e altre espressioni. Questi accessi non
-pretendono di validare o reinterpretare l'intero linguaggio Typst in Python.
+`typst_markup(source=...)` inserts complete markup in its own scope.
+`typst_code(code=...)` inserts a local code block. To bind names used by later
+siblings, use `let` or `import_module`, not a variable inside `typst_code`.
+`expr` can represent callbacks, selectors, `query`, `state`, data reads, symbols
+and other expressions. These entry points do not validate or reinterpret the
+entire Typst language in Python.
 
-## Compilazione, serializzazione e diagnostica
+## Compilation, serialization and diagnostics
 
 ```python
 from pathlib import Path
@@ -257,42 +254,40 @@ from genro_typst.compiler import TypstEngine
 
 result = TypstEngine().compile(report.render(), root=Path("assets"), preview=True)
 Path("report.pdf").write_bytes(result.pdf)
-# result.svg_pages contiene le pagine SVG; result.pages il numero di pagine.
+# result.svg_pages contains SVG pages; result.pages is the page count.
 ```
 
-Anche `report.render(mode="pdf", root=Path("assets"))` usa quel filesystem root.
-Il builder non è un sandbox di esecuzione per ricette Python. Senza compiler
-extra si può comunque generare sorgente e ispezionare la grammatica.
+`report.render(mode="pdf", root=Path("assets"))` uses the same filesystem root.
+The builder is not an execution sandbox for Python recipes. Without the compiler
+extra, source generation and grammar inspection still work.
 
-`source.to_tytx()` conserva la struttura e i valori espliciti. La grammatica
-completa è esportabile con `TypstBuilder.to_grammar("grammar.json")` secondo il
-formato di `genro-builders`; il catalogo sintetico dei metodi è in questa cartella.
+`source.to_tytx()` preserves structure and explicit values. Export the complete
+grammar with `TypstBuilder.to_grammar("grammar.json")` in `genro-builders` format;
+the concise method catalog is provided alongside this guide.
 
-## Compatibilità e limiti verificabili
+## Compatibility and verified limits
 
-- `document`, `layout`, `row`, `cell`, `table`, `column`, `paragraph` e
-  `pageNumber` conservano le firme storiche. `paragraph` e `cell` possono ora
-  contenere anche elementi nativi. Il loro comportamento preesistente è testato.
-- La libreria ammette tutti i parametri nativi tramite keyword/`options`; non
-  replica tutte le firme e tutte le regole di composizione nel validatore Genro.
-  Il compilatore verifica nomi, tipi, argomenti richiesti e contesto.
-- Tutte le 129 chiamate del catalogo hanno un caso esplicito compilato in PDF
-  e SVG, con round trip TYTX, controllo degli errori e confronto SVG con Typst
-  scritto direttamente. Sono verificati anche i 12 costrutti di linguaggio e
-  gli 8 elementi storici. Vedi [metodo e limiti](verification.md) e gli
-  [esempi eseguibili](catalog-examples.md). Non vengono provate tutte le
-  combinazioni possibili di parametri né tutti i pacchetti esterni.
-- Non è un parser inverso di Typst: sorgente arbitrario non diventa automaticamente
-  un albero visuale. L'app separata può offrire controlli visuali differenti per
-  elementi storici e nativi; questo non limita l'API Python.
-- La grammatica riguarda la generazione di documenti Typst/PDF. Le API HTML,
-  bundle e ogni futura aggiunta alla libreria standard non sono dichiarate
-  automaticamente coperte da metodi dedicati.
+- `document`, `layout`, `row`, `cell`, `table`, `column`, `paragraph` and
+  `pageNumber` preserve their original signatures. `paragraph` and `cell` can
+  also contain native elements. Tests cover their existing behavior.
+- Native keywords and `options` are accepted without reproducing every native
+  signature and composition rule in the Genro validator. The compiler checks
+  names, types, required arguments and context.
+- All 129 catalog calls have explicit PDF/SVG compilation cases, TYTX round
+  trips, error checks and SVG comparisons against handwritten Typst. The
+  12 language constructs and eight legacy elements are also tested. See
+  [verification and limits](verification.md) and [executable examples](catalog-examples.md).
+  Not every parameter combination or external package is tested.
+- This is not a reverse Typst parser: arbitrary source does not automatically
+  become a visual tree. The separate app may expose different visual controls
+  for legacy and native elements without restricting the Python API.
+- The grammar targets Typst/PDF document generation. HTML APIs, bundles and
+  future standard-library additions are not automatically covered by dedicated methods.
 
-Fonti primarie: [riferimento Typst](https://typst.app/docs/reference/),
-[stili](https://typst.app/docs/reference/styling/),
-[modello](https://typst.app/docs/reference/model/),
-[testo](https://typst.app/docs/reference/text/),
+Primary sources: [Typst reference](https://typst.app/docs/reference/),
+[styling](https://typst.app/docs/reference/styling/),
+[document model](https://typst.app/docs/reference/model/),
+[text](https://typst.app/docs/reference/text/),
 [layout](https://typst.app/docs/reference/layout/),
-[grafica](https://typst.app/docs/reference/visualize/) e
-[matematica](https://typst.app/docs/reference/math/).
+[graphics](https://typst.app/docs/reference/visualize/) and
+[mathematics](https://typst.app/docs/reference/math/).

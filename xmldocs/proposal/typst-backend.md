@@ -1,166 +1,166 @@
 <!-- generated from typst-backend.xml by xmldocs: do not edit, edit the XML -->
 
-## Stampe con genro-builders e Typst
+## Printing with genro-builders and Typst
 *Proposal · proposal/typst-backend · 2026-10-20 · draft*
 
 ### Problem
 
-Le stampe commerciali (fatture, DDT, preventivi, etichette) e gli schemi oggi passano da HTML a PDF, oppure da ReportLab in genro-print.
+Business documents (invoices, delivery notes, quotes, labels) and diagrams currently go through HTML-to-PDF conversion or ReportLab in genro-print.
 
-Typst è un motore di composizione tipografica scritto in Rust, licenza Apache-2.0. Compila un sorgente testuale in PDF, SVG, PNG.
+Typst is a typesetting engine written in Rust and licensed under Apache-2.0. It compiles text source to PDF, SVG and PNG.
 
-Questo progetto descrive il documento con una grammatica genro-builders e lo fa comporre a Typst.
+This project describes documents with a genro-builders grammar and delegates typesetting to Typst.
 
-Obiettivo finale: in gramlot, un editor di carte intestate analogo a quello di GenroPy e un editor di stampe per applicazioni business: liste, pagine, moduli. Gli editor non fanno parte di questo progetto. genro-typst fornisce la grammatica, il formato salvato e il renderer.
+The eventual goal is a Gramlot letterhead editor similar to GenroPy's, and a print editor for business applications: lists, pages and forms. Editors are outside this project. genro-typst supplies the grammar, persistence format and renderer.
 
 ### Current state
 
-- `READ` `genro-print/src/genro_print/builders/print_lrc_builder.py` · 2026-10-20 — genro-print separa la grammatica (builder con mixin: document, platypus, canvas, lrc, styled, charts) dai renderer ReportLab. Ogni builder espone il renderer con la property `renderer_reportlab` e `_default_render_mode = "reportlab"`.
-- `RUN` `genro-print (git status)` · 2026-10-20 — In genro-print lo spostamento da `compilers/` a `renderers/` è nel working tree, non committato. L'ultimo commit è del 2026-04-07.
-- `READ` `genro-builders/src/genro_builders/contrib/svg/svg_builder.py` · 2026-10-20 — Il dialetto SVG di genro-builders ha tre parti: `SvgBuilder` (grammatica, `_name = "svg"`), `SvgElements` (elementi dichiarati con `@element`), `SvgRenderer` (sottoclasse di `RendererBase`, `mode = "svg"`, metodo `rendered_item`) esposto dalla property `renderer_svg`.
+- `READ` `genro-print/src/genro_print/builders/print_lrc_builder.py` · 2026-10-20 — genro-print separates the grammar (builders with document, platypus, canvas, lrc, styled and charts mixins) from ReportLab renderers. Each builder exposes its renderer through the property `renderer_reportlab` and `_default_render_mode = "reportlab"`.
+- `RUN` `genro-print (git status)` · 2026-10-20 — In genro-print the move from `compilers/` to `renderers/` is in the working tree, uncommitted. The latest commit is dated 2026-04-07.
+- `READ` `genro-builders/src/genro_builders/contrib/svg/svg_builder.py` · 2026-10-20 — The genro-builders SVG dialect has three parts: `SvgBuilder` (grammar, `_name = "svg"`), `SvgElements` (elements declared with `@element`), `SvgRenderer` (subclass of `RendererBase`, `mode = "svg"`, method `rendered_item`) exposed by the property `renderer_svg`.
 
 ### Proposed solution
 
-#### Principio
+#### Principle
 
-- **must** — La grammatica descrive il documento commerciale, non il linguaggio Typst. Non si avvolge l'intero linguaggio Typst.
-- **must** — Il renderer emette costrutti Typst fissi. Chi usa il builder non scrive mai codice Typst.
+- **must** — The grammar describes business documents, not the Typst language. It does not wrap the entire Typst language.
+- **must** — The renderer emits fixed Typst constructs. Builder users never write Typst code.
 
-Il modello è quello di Layout/Row/Cell di GenroPy: un inventario di funzionalità, ognuna associata a un oggetto astratto. Esempio: "pagina X di Y" è un elemento dedicato; il suo renderer emette uno snippet `context`.
+The model follows GenroPy's Layout/Row/Cell: a feature inventory with one abstract object per feature. For example, "page X of Y" is a dedicated element whose renderer emits a snippet of `context`.
 
-#### Inventario provvisorio
+#### Provisional inventory
 
-*Funzionalità e costrutto Typst emesso*
+*Features and emitted Typst constructs*
 
-| Funzionalità | Costrutto Typst | Stato |
+| Feature | Typst construct | Status |
 |---|---|---|
-| documento, pagina (formato, orientamento, margini) | `set page(...)` | verificato |
-| header/footer ripetuti, prima pagina diversa | `page(header:, footer:)` + `context` | verificato |
-| numero pagina X di Y | `counter(page).display()`, `counter(page).final()` in `context` | verificato |
-| layout/row/cell elastici | `grid` con colonne `auto`, `1fr`, fisse | verificato |
-| paragrafo, stile | `text`, `par`, `set` | da verificare |
-| campo formattato dai dati | formattazione in Python, `text` in Typst | da verificare |
-| tabella dati con intestazione ripetuta | `table` + `table.header(repeat: true)` | verificato |
-| totali, subtotali | `table.footer` | footer ripetuto verificato; riporto tra pagine non verificato |
-| tieni insieme, salto pagina | `block(breakable: false)`, `pagebreak()` | compila; effetto non verificato |
-| immagine | `image` | da verificare |
-| barcode, QR | pacchetto esterno `@preview/tiaoma` | import 0.3.0 compila |
-| bordi, riquadri, linee | `box`, `rect`, `line`, `stroke` | da verificare |
-| schemi | SVG del dialetto svg di genro-builders, incluso con `image` | da verificare |
+| document, page (format, orientation, margins) | `set page(...)` | verified |
+| repeated headers/footers, different first page | `page(header:, footer:)` + `context` | verified |
+| page number X of Y | `counter(page).display()`, `counter(page).final()` in `context` | verified |
+| elastic layout/row/cell | `grid` with columns `auto`, `1fr`, fixed | verified |
+| paragraph, style | `text`, `par`, `set` | to be verified |
+| formatted data field | Python formatting, `text` in Typst | to be verified |
+| data table with repeated header | `table` + `table.header(repeat: true)` | verified |
+| totals, subtotals | `table.footer` | repeated footer verified; page carryover unverified |
+| keep together, page break | `block(breakable: false)`, `pagebreak()` | compiles; effect unverified |
+| image | `image` | to be verified |
+| barcode, QR | external package `@preview/tiaoma` | import 0.3.0 compiles |
+| borders, boxes, lines | `box`, `rect`, `line`, `stroke` | to be verified |
+| diagrams | SVG from the genro-builders svg dialect, included with `image` | to be verified |
 
-#### Grammatica di prova
+#### Prototype grammar
 
-Base: Layout/Row/Cell di GenroPy (`gnr/core/gnrhtml.py`). Nel legacy ogni elemento ha posizione assoluta in `um` (millimetri) e `width=0`/`height=0` divide lo spazio libero in parti uguali. Qui il layout segue il flusso e può continuare nella pagina successiva.
+Based on GenroPy's Layout/Row/Cell (`gnr/core/gnrhtml.py`). In the legacy system each element has an absolute position in `um` (millimeters), and `width=0`/`height=0` divides free space equally. Here layout follows the flow and can continue on the next page.
 
-- Una riga senza `height` prende l'altezza del contenuto (`auto`). `'1fr'` è ammesso solo se il layout ha un'altezza.
-- Una larghezza è una lunghezza, una percentuale o una frazione: `'25mm'`, `'30%'`, `'2fr'`, `'auto'`. Un numero è una frazione; `width=0` vale `1fr`, come nel legacy.
-- Spariscono `um` e `lbl_height`. `top/left/bottom/right` diventano `inset`.
+- A row without `height` takes the height of its content (`auto`). `'1fr'` is allowed only if the layout has a height.
+- A width is a length, percentage or fraction: `'25mm'`, `'30%'`, `'2fr'`, `'auto'`. A number is a fraction; `width=0` means `1fr`, as in the legacy system.
+- Removed: `um` and `lbl_height`. `top/left/bottom/right` become `inset`.
 
-*Elementi*
+*Elements*
 
-| Elemento | Attributi | Costrutto Typst |
+| Element | Attributes | Typst construct |
 |---|---|---|
 | `document` | `paper`, `flipped`, `margin` | `set page` |
 | `header`, `footer` | `pages='all'|'first'|'others'` | `page(header:, footer:)` + `context` |
-| `pageNumber` | `template='Pagina {page} di {total}'` | `counter(page)` in `context` |
-| `style` | `name`, `font`, `size`, `weight`, `color`, `align` | parametri di `text`/`par` |
+| `pageNumber` | `template='Page {page} of {total}'` | `counter(page)` in `context` |
+| `style` | `name`, `font`, `size`, `weight`, `color`, `align` | parameters of `text`/`par` |
 | `layout` | `border_width`, `border_color`, `border_style`, `row_border`, `cell_border`, `lbl_class`, `content_class`, `inset` | `grid` |
-| `row` | `height`, `row_border`, `cell_border`, `lbl_class`, `content_class`, `breakable` | riga di `grid` |
+| `row` | `height`, `row_border`, `cell_border`, `lbl_class`, `content_class`, `breakable` | row of `grid` |
 | `cell` | `content`, `width`, `lbl`, `lbl_class`, `content_class`, `cell_border`, `align`, `valign`, `background`, `colspan` | `grid.cell` |
 | `paragraph` | `content`, `style` | `text` + `par` |
-| `field` | `value`, `dtype`, `format`, `style` | formattazione in Python, testo con escape |
-| `image` | `src` (anche un `SvgBuilder`), `width`, `height`, `fit` | `image` |
+| `field` | `value`, `dtype`, `format`, `style` | Python formatting, escaped text |
+| `image` | `src` (including an `SvgBuilder`), `width`, `height`, `fit` | `image` |
 | `barcode` | `value`, `kind='qr'|'ean13'|'code128'` | `tiaoma` |
-| `spacer`, `hline`, `pageBreak` | `height` per `spacer` | `v`, `line`, `pagebreak` |
+| `spacer`, `hline`, `pageBreak` | `height` for `spacer` | `v`, `line`, `pagebreak` |
 | `table` | `data`, `headerRepeat` | `table` + `table.header(repeat: true)` |
-| `column` | `field`, `name`, `width`, `dtype`, `format`, `align`, `totalize`, `subtotal`, `background`, `color` | colonna di `table`; `totalize` produce `table.footer` |
+| `column` | `field`, `name`, `width`, `dtype`, `format`, `align`, `totalize`, `subtotal`, `background`, `color` | column of `table`; `totalize` produces `table.footer` |
 
-Una `cell` può contenere un `layout` annidato. `colspan` non esiste nel legacy. Gli attributi di `column` vengono dalla grid struct legacy (`gnr/web/gnrbaseclasses.py`); `mm_width` diventa `width`.
+A `cell` can contain a nested `layout`. `colspan` does not exist in the legacy system. Attributes of `column` come from the legacy grid structure (`gnr/web/gnrbaseclasses.py`); `mm_width` becomes `width`.
 
-I nomi legacy restano: `lbl`, `lbl_class`, `content_class`, `border_width`, `row_border`, `cell_border`, `totalize`. I nomi nuovi sono in camelCase.
+Legacy names are retained: `lbl`, `lbl_class`, `content_class`, `border_width`, `row_border`, `cell_border`, `totalize`. New names use camelCase.
 
-#### Vincoli posti dagli editor
+#### Editor constraints
 
-1. Tutto è dato. Carte intestate e stampe sono Bag serializzate con TYTX. Ogni attributo della grammatica è un valore che un editor può impostare. Nessun elemento richiede codice Python (nel legacy servivano `calcRowHeight` e `prepareRow`).
-2. Testo formattato. Il legacy salvava l'HTML di `ckEditor` per ogni regione. La grammatica di prova non ha ancora un elemento inline per grassetto, corsivo o campo dentro una frase.
-3. Campi dei dati. Il legacy usava `$campo` nell'HTML, riempito da `templateReplace`. Qui si usano i puntatori `^` di genro-builders; l'editor offre la scelta dei campi dal modello della tabella.
-4. Moduli prestampati. Liste e pagine usano il layout elastico. Un modulo prestampato ha campi in posizioni fisse in mm: serve un elemento di posizione assoluta (`place` con `dx`/`dy` in Typst).
-5. Anteprima nel browser. Il renderer Bag → codice Typst è in Python. Il browser compila il codice Typst con typst.ts.
+1. Everything is data. Letterheads and print documents are Bags serialized with TYTX. Every grammar attribute is a value an editor can set. No element requires Python code (the legacy system required `calcRowHeight` and `prepareRow`).
+2. Formatted text. The legacy system stored HTML from `ckEditor` for each region. The prototype grammar does not yet have inline elements for bold, italic or a field within a sentence.
+3. Data fields. The legacy system used `$campo` in HTML, filled by `templateReplace`. Here the pointers are `^` from genro-builders; the editor offers fields from the table model.
+4. Preprinted forms. Lists and pages use elastic layout. A preprinted form has fields at fixed positions in millimeters, requiring an absolute-position element (`place` with `dx`/`dy` in Typst).
+5. Browser preview. The Bag-to-Typst renderer is in Python. The browser compiles Typst code with typst.ts.
 
-*Tipi di stampa*
+*Print document types*
 
-| Stampa | Struttura | Legacy |
+| Print document | Structure | Legacy |
 |---|---|---|
-| Lista | `table` + `column` | `TableScriptToHtml` con `gridStruct` |
-| Pagina (record) | LRC elastico | `TableScriptToHtml` con `prepareRow` |
-| Modulo | posizioni assolute in mm | LRC in mm su prestampato |
+| List | `table` + `column` | `TableScriptToHtml` with `gridStruct` |
+| Page (record) | Elastic LRC | `TableScriptToHtml` with `prepareRow` |
+| Form | absolute positions in mm | LRC in mm over a preprinted form |
 
-#### Carta intestata
+#### Letterhead
 
-#### Come funziona in GenroPy
+#### How GenroPy works
 
-- `READ` `gnrcore/packages/adm/model/htmltemplate.py` · 2026-10-20 — La carta intestata è un record di `adm.htmltemplate`. La colonna `data` è una Bag: `main.page.{height,width,top,left,right,bottom}` in mm, `main.design` (`headline` o `sidebar`), e per ogni regione una dimensione e un HTML con variabili `$campo`. Il contenuto della stampa va nella regione `center_center`.
-- `READ` `gnrcore/packages/adm/model/htmltemplate.py` · 2026-10-20 — `based_on` collega una carta a quella da cui deriva; `letterheadChain` costruisce la catena e ogni carta diventa un livello sovrapposto. `next_letterhead` indica la carta delle pagine dopo la prima (`gnr/core/gnrhtml.py`, `newPage`).
-- `READ` `gnrcore/packages/adm/resources/tables/htmltemplate/th_htmltemplate.py` · 2026-10-20 — L'editor legacy ha un form con le misure della pagina, una scheda per `design`, un'anteprima con le regioni ridimensionabili e `ckEditor` sull'HTML della regione selezionata.
+- `READ` `gnrcore/packages/adm/model/htmltemplate.py` · 2026-10-20 — A letterhead is a record in `adm.htmltemplate`. The column `data` is a Bag: `main.page.{height,width,top,left,right,bottom}` in mm, `main.design` (`headline` or `sidebar`), with a size and HTML containing variables for each region: `$campo`. Document content goes into the region `center_center`.
+- `READ` `gnrcore/packages/adm/model/htmltemplate.py` · 2026-10-20 — `based_on` links a letterhead to its parent; `letterheadChain` builds the chain, with each letterhead becoming an overlay. `next_letterhead` identifies the letterhead for pages after the first (`gnr/core/gnrhtml.py`, `newPage`).
+- `READ` `gnrcore/packages/adm/resources/tables/htmltemplate/th_htmltemplate.py` · 2026-10-20 — The legacy editor has a form with page dimensions, a tab for `design`, a preview with resizable regions, and `ckEditor` for the selected region's HTML.
 
-#### Proposta
+#### Proposal
 
 ```python
-letterhead(name='fattura', paper='a4', flipped=False,
+letterhead(name='invoice', paper='a4', flipped=False,
            margin_top='30mm', margin_bottom='20mm',
            margin_left='35mm', margin_right='15mm',
            basedOn='base')
-    region(name='top', pages='first', size='30mm')    # contenuto LRC con puntatori ^
+    region(name='top', pages='first', size='30mm')    # LRC content with ^ pointers
     region(name='top', pages='others', size='15mm')
     region(name='left', size='25mm')
     region(name='background')
-document(letterhead='fattura')
+document(letterhead='invoice')
 ```
 
-- `top` → `header`; `bottom` → `footer`; `left`, `right`, `background` → `background` con `place`; filigrana → `foreground`.
-- `pages='first'|'others'` sostituisce `next_letterhead`: `context` su `counter(page)`.
-- `basedOn` sostituisce `based_on`: le regioni con lo stesso `name` e `pages` sostituiscono quelle della base; le regioni `background` si sommano.
-- `main.design` sparisce: `headline` e `sidebar` sono una scelta di regioni.
-- La carta intestata è una Bag serializzata con TYTX (`Bag.to_tytx`, `Bag.from_tytx`). Il documento la carica e la innesta nel proprio sorgente.
+- `top` → `header`; `bottom` → `footer`; `left`, `right`, `background` → `background` with `place`; watermark → `foreground`.
+- `pages='first'|'others'` replaces `next_letterhead`: `context` on `counter(page)`.
+- `basedOn` replaces `based_on`: regions with the same `name` and `pages` replace those in the base; regions named `background` accumulate.
+- `main.design` is removed: `headline` and `sidebar` are choices of regions.
+- The letterhead is a Bag serialized with TYTX (`Bag.to_tytx`, `Bag.from_tytx`). The document loads it and grafts it into its source.
 
-- `RUN` `scratch lh.py` · 2026-10-20 — Typst 0.15.0: header diverso tra la prima pagina e le successive con `context`, banda laterale con `background` + `place`. Entrambi compaiono nel PDF su 2 pagine.
-- `RUN` `scratch lh.py` · 2026-10-20 — Typst non allarga il margine superiore per un header più alto: un header di 40 mm con margine di 10 mm si sovrappone al corpo. Il margine di ogni regione va dichiarato come lunghezza.
+- `RUN` `scratch lh.py` · 2026-10-20 — Typst 0.15.0: different first and subsequent page headers using `context`, sidebar using `background` + `place`. Both appear in a two-page PDF.
+- `RUN` `scratch lh.py` · 2026-10-20 — Typst does not enlarge the top margin for a taller header: a 40 mm header with a 10 mm margin overlaps the body. Each region's margin must be declared as a length.
 
-Una Bag di builder deve ricaricarsi da TYTX con i suoi tag ed essere validata dalla grammatica. Non è verificato.
+A builder Bag must reload from TYTX with its tags and pass grammar validation. This is unverified.
 
-#### Editor Typst esistenti
+#### Existing Typst editors
 
-- `RUN` `github.com/Myriad-Dreamin/typst.ts` · 2026-10-20 — typst.ts compila Typst nel browser via WASM. Licenza Apache-2.0, release v0.7.0 del 2026-06-01.
-- `RUN` `github.com/tyx-editor/TyX` · 2026-10-20 — Gli editor visuali open source per Typst sono giovani: TyX (MIT), typster (MIT), ortic/typst-wysiwyg (MIT, prototipo). TyX lavora su un JSON di TipTap e lo compila in codice Typst: lo stesso schema di questo progetto.
+- `RUN` `github.com/Myriad-Dreamin/typst.ts` · 2026-10-20 — typst.ts compiles Typst in the browser through WASM. Apache-2.0 license, release v0.7.0 dated 2026-06-01.
+- `RUN` `github.com/tyx-editor/TyX` · 2026-10-20 — Open-source visual Typst editors are young: TyX (MIT), typster (MIT), ortic/typst-wysiwyg (MIT, prototype). TyX works on TipTap JSON and compiles it into Typst code, following the same pattern as this project.
 
-Il renderer produce codice Typst vero. Il percorso è in un solo senso: una modifica fatta al codice Typst non torna nella Bag.
+The renderer produces actual Typst code. The path is one-way: edits to Typst code do not flow back into the Bag.
 
-#### Compiti del renderer
+#### Renderer responsibilities
 
-- Escape del testo: `#` `*` `_` `$` `@` `<` e gli altri caratteri di markup.
-- Conversione dei tipi Python in tipi Typst: lunghezze (`2cm`, `1fr`, `50%`), colori, `none`/`auto`, allineamenti, identificatori distinti dalle stringhe.
+- Text escaping: `#` `*` `_` `$` `@` `<` and other markup characters.
+- Converting Python types to Typst types: lengths (`2cm`, `1fr`, `50%`), colors, `none`/`auto`, alignment, identifiers distinct from strings.
 
-#### Binding Python verificato
+#### Verified Python binding
 
-- `RUN` `venv: pip install typst` · 2026-10-20 — Il pacchetto PyPI `typst` 0.15.0 include Typst 0.15.0 (`sys.version` nel documento stampa 0.15.0).
-- `READ` `typst/__init__.pyi` · 2026-10-20 — API pubblica: `compile`, `compile_with_warnings`, `query`, `eval`, `Compiler`, `Fonts`, `FontInfo`, `TypstError`, `TypstWarning`. `compile` accetta il sorgente come bytes, percorso o stringa; formati `pdf`, `svg`, `png`, `html`; parametri `sys_inputs`, `pdf_standards` (anche PDF/A), `timestamp`, `root`. `Compiler` accetta `font_paths`, `ignore_system_fonts`, `package_path`, `package_cache_path`.
-- `RUN` `scratch probe.py` · 2026-10-20 — Un documento di 3 pagine con tabella da 120 righe compila senza file: `typst.compile(bytes, format="pdf")`. Prima chiamata 0,62 s; con un `Compiler` già creato 0,014 s.
-- `RUN` `scratch probe.py` · 2026-10-20 — `TypstError` espone `message`, `hints`, `trace`.
-- **must** — La versione del binding è fissata con `==` in `pyproject.toml`. *(Typst è pre-1.0; la sintassi cambia tra versioni minori.)*
+- `RUN` `venv: pip install typst` · 2026-10-20 — The PyPI package `typst` 0.15.0 bundles Typst 0.15.0 (`sys.version` in the document prints 0.15.0).
+- `READ` `typst/__init__.pyi` · 2026-10-20 — Public API: `compile`, `compile_with_warnings`, `query`, `eval`, `Compiler`, `Fonts`, `FontInfo`, `TypstError`, `TypstWarning`. `compile` accepts source as bytes, a path or a string; formats `pdf`, `svg`, `png`, `html`; parameters `sys_inputs`, `pdf_standards` (including PDF/A), `timestamp`, `root`. `Compiler` accepts `font_paths`, `ignore_system_fonts`, `package_path`, `package_cache_path`.
+- `RUN` `scratch probe.py` · 2026-10-20 — A three-page document with a 120-row table compiles without files: `typst.compile(bytes, format="pdf")`. First call: 0.62 s; with an existing `Compiler`: 0.014 s.
+- `RUN` `scratch probe.py` · 2026-10-20 — `TypstError` exposes `message`, `hints`, `trace`.
+- **must** — The binding version is pinned with `==` in `pyproject.toml`. *(Typst is pre-1.0; syntax changes between minor versions.)*
 
-#### Anteprima nel browser
+#### Browser preview
 
-typst.ts (WASM) compila lo stesso sorgente nel browser. Non è verificato.
+typst.ts (WASM) compiles the same source in the browser. This is unverified.
 
 ### Decisions
 
-- **d-carryover** `open` — Il riporto dei totali tra pagine (a riportare / riporto) si fa con codice `context` generato dal renderer, o con un calcolo in Python prima della composizione?
-- **d-grammar** `open` — La grammatica riusa i nomi di genro-print (`layout`, `row`, `cell`, `paragraph`, `table`) o ne definisce di propri?
-- **d-packages** `open` — I pacchetti Typst esterni (es. `tiaoma`) si scaricano alla prima compilazione o si distribuiscono con il progetto tramite `package_path`?
-- **d-fonts** `open` — Si usano i font di sistema o una cartella di font distribuita con il progetto (`ignore_system_fonts=True`) per avere lo stesso PDF su ogni server?
-- **d-inline** `open` — Il testo formattato nelle regioni e nelle celle si descrive con elementi inline della grammatica, o il renderer converte il formato dell'editor di testo scelto in gramlot?
-- **d-preview** `open` — L'anteprima in gramlot chiede al server il codice Typst, o il renderer viene portato su genro-builders-js per lavorare tutto nel browser?
+- **d-carryover** `open` — Should page totals (carried forward / brought forward) use `context` code generated by the renderer, or Python calculations before typesetting?
+- **d-grammar** `open` — Should the grammar reuse genro-print names (`layout`, `row`, `cell`, `paragraph`, `table`) or define its own?
+- **d-packages** `open` — Should external Typst packages (e.g. `tiaoma`) download on first compilation or ship with the project through `package_path`?
+- **d-fonts** `open` — Should we use system fonts or ship a font directory with the project (`ignore_system_fonts=True`) for identical PDFs on every server?
+- **d-inline** `open` — Should formatted text in regions and cells use inline grammar elements, or should the renderer convert the format of the text editor chosen for Gramlot?
+- **d-preview** `open` — Should the Gramlot preview request Typst code from the server, or should the renderer be ported to genro-builders-js to run entirely in the browser?
 
 ### Consequences
 
-Le stampe non dipendono più da ReportLab né da un browser headless. Dipendono da una libreria Rust pre-1.0 con versione fissata.
+Printing no longer depends on ReportLab or a headless browser. It depends on a pinned pre-1.0 Rust library.

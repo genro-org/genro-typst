@@ -20,195 +20,195 @@ sys.path.insert(0, str(ROOT / "tests"))
 from native_cases import CASES, build_case, example_python
 
 SECTIONS = {
-    "text": "Testo e stili",
-    "model": "Struttura del documento",
-    "layout": "Impaginazione",
-    "visualize": "Grafica e immagini",
-    "math": "Matematica",
-    "introspection": "Metadati",
+    "text": "Text and styles",
+    "model": "Document structure",
+    "layout": "Page layout",
+    "visualize": "Graphics and images",
+    "math": "Mathematics",
+    "introspection": "Metadata",
     "pdf": "PDF",
-    "language": "Linguaggio Typst",
-    "legacy": "Documenti e dati Genro",
+    "language": "Typst language",
+    "legacy": "Genro documents and data",
 }
 DESCRIPTIONS = {
-    "text": "Testo e parametri tipografici.",
-    "underline": "Sottolineatura del testo.",
-    "overline": "Linea sopra il testo.",
-    "strike": "Testo barrato.",
-    "highlight": "Evidenziatore sul testo.",
-    "smallcaps": "Maiuscoletto.",
-    "sub": "Pedice nel testo.",
-    "super": "Apice nel testo.",
-    "lower": "Conversione in minuscolo.",
-    "upper": "Conversione in maiuscolo.",
-    "raw": "Codice e testo letterale, senza interpretare il markup.",
-    "lorem": "Testo segnaposto con numero di parole modificabile.",
-    "linebreak": "Interruzione della riga.",
-    "smartquote": "Virgolette tipografiche.",
-    "heading": "Titoli e livelli delle sezioni.",
-    "strong": "Grassetto.",
-    "emph": "Enfasi tipografica.",
-    "par": "Paragrafo e composizione del testo.",
-    "quote": "Citazione nel documento.",
-    "figure": "Figura con didascalia e numerazione.",
-    "footnote": "Nota a piè di pagina.",
-    "title": "Titolo del documento.",
-    "list": "Elenco puntato.",
-    "enum": "Elenco numerato.",
-    "terms": "Glossario di termini e definizioni.",
-    "list_item": "Elemento di un elenco puntato.",
-    "enum_item": "Elemento di un elenco numerato.",
-    "terms_item": "Termine e relativa definizione.",
-    "link": "Collegamento con testo modificabile.",
-    "ref": "Riferimento a una sezione etichettata.",
-    "cite": "Citazione da una bibliografia locale inclusa.",
-    "bibliography": "Bibliografia con file YAML incluso.",
-    "numbering": "Formato di numerazione.",
-    "outline": "Indice delle sezioni.",
-    "parbreak": "Separazione tra paragrafi.",
-    "divider": "Separatore del documento.",
-    "native_table": "Tabella nativa Typst con celle esplicite.",
-    "align": "Allineamento del contenuto.",
-    "block": "Blocco con spaziatura interna.",
-    "box": "Riquadro in linea di larghezza definita.",
-    "columns": "Testo su più colonne.",
-    "hide": "Contenuto invisibile che conserva lo spazio.",
-    "move": "Spostamento del contenuto.",
-    "pad": "Spaziatura interna.",
-    "page": "Pagina con un formato diverso.",
-    "place": "Posizionamento rispetto alla pagina.",
-    "repeat": "Ripetizione di un contenuto.",
-    "rotate": "Rotazione.",
-    "scale": "Ridimensionamento.",
-    "skew": "Inclinazione.",
-    "grid": "Griglia di contenuti.",
-    "stack": "Sequenza di blocchi con direzione e distanza.",
-    "pagebreak": "Interruzione di pagina: osserva le due pagine nell’anteprima.",
-    "colbreak": "Interruzione di colonna dentro un contenitore a colonne.",
-    "h": "Spazio orizzontale.",
-    "v": "Spazio verticale.",
-    "measure": "Misurazione contestuale del contenuto; il risultato è un dizionario.",
-    "native_layout": "Callback che riceve le dimensioni disponibili.",
-    "circle": "Cerchio con contenuto.",
-    "ellipse": "Ellisse con contenuto.",
-    "rect": "Rettangolo con riempimento.",
-    "square": "Quadrato con contenuto.",
-    "image": "Immagine SVG locale già inclusa.",
-    "line": "Linea tra due punti.",
-    "polygon": "Poligono con vertici e riempimento.",
-    "curve": "Curva costruita con segmenti.",
-    "metadata": "Dati non visibili inseriti nel documento.",
-    "pdf_artifact": "Contenuto decorativo marcato come artefatto nel PDF.",
+    "text": "Text and typography settings.",
+    "underline": "Underlined text.",
+    "overline": "A line above text.",
+    "strike": "Struck-through text.",
+    "highlight": "Highlighted text.",
+    "smallcaps": "Small capitals.",
+    "sub": "Subscript text.",
+    "super": "Superscript text.",
+    "lower": "Convert to lowercase.",
+    "upper": "Convert to uppercase.",
+    "raw": "Literal code and text, without interpreting markup.",
+    "lorem": "Placeholder text with an editable word count.",
+    "linebreak": "Line break.",
+    "smartquote": "Typographic quotation marks.",
+    "heading": "Headings and section levels.",
+    "strong": "Bold text.",
+    "emph": "Typographic emphasis.",
+    "par": "Paragraph and text layout.",
+    "quote": "A quotation in the document.",
+    "figure": "A figure with caption and numbering.",
+    "footnote": "Footnote.",
+    "title": "Document title.",
+    "list": "Bulleted list.",
+    "enum": "Numbered list.",
+    "terms": "Glossary of terms and definitions.",
+    "list_item": "An item in a bulleted list.",
+    "enum_item": "An item in a numbered list.",
+    "terms_item": "A term and its definition.",
+    "link": "A link with editable text.",
+    "ref": "Reference to a labeled section.",
+    "cite": "Citation from the included local bibliography.",
+    "bibliography": "Bibliography with an included YAML file.",
+    "numbering": "Numbering format.",
+    "outline": "Section outline.",
+    "parbreak": "Paragraph break.",
+    "divider": "Document divider.",
+    "native_table": "Native Typst table with explicit cells.",
+    "align": "Content alignment.",
+    "block": "Block with padding.",
+    "box": "Inline box with a fixed width.",
+    "columns": "Text in multiple columns.",
+    "hide": "Invisible content that preserves its space.",
+    "move": "Move content.",
+    "pad": "Padding.",
+    "page": "A page with a different format.",
+    "place": "Position content relative to the page.",
+    "repeat": "Repeated content.",
+    "rotate": "Rotation.",
+    "scale": "Scaling.",
+    "skew": "Skewing.",
+    "grid": "Content grid.",
+    "stack": "A sequence of blocks with direction and spacing.",
+    "pagebreak": "Page break: inspect both pages in the preview.",
+    "colbreak": "Column break inside a columns container.",
+    "h": "Horizontal space.",
+    "v": "Vertical space.",
+    "measure": "Contextual content measurement; the result is a dictionary.",
+    "native_layout": "A callback receiving the available dimensions.",
+    "circle": "Circle with content.",
+    "ellipse": "Ellipse with content.",
+    "rect": "Filled rectangle.",
+    "square": "Square with content.",
+    "image": "An included local SVG image.",
+    "line": "Line between two points.",
+    "polygon": "Polygon with vertices and fill.",
+    "curve": "A curve built from segments.",
+    "metadata": "Invisible data embedded in the document.",
+    "pdf_artifact": "Decorative content marked as a PDF artifact.",
 }
 for family in ("table", "grid"):
     for part, meaning in {
-        "header": "Intestazione",
-        "footer": "Piè di tabella, dopo le celle del corpo",
-        "cell": "Cella estesa su più colonne",
-        "hline": "Linea orizzontale",
-        "vline": "Linea verticale",
+        "header": "Header",
+        "footer": "Footer, after body cells",
+        "cell": "Cell spanning multiple columns",
+        "hline": "Horizontal line",
+        "vline": "Vertical line",
     }.items():
         DESCRIPTIONS[f"{family}_{part}"] = (
-            f"{meaning} nella {'tabella' if family == 'table' else 'griglia'} nativa."
+            f"{meaning} in the native {family}."
         )
 for name, meaning in {
-    "move": "Sposta il punto iniziale",
-    "line": "Segmento rettilineo",
-    "quad": "Curva quadratica",
-    "cubic": "Curva cubica",
-    "close": "Chiude il percorso",
+    "move": "Move the starting point",
+    "line": "Straight segment",
+    "quad": "Quadratic curve",
+    "cubic": "Cubic curve",
+    "close": "Close the path",
 }.items():
-    DESCRIPTIONS[f"curve_{name}"] = meaning + " all’interno di curve."
+    DESCRIPTIONS[f"curve_{name}"] = meaning + " inside curve."
 
 LANGUAGE = {
     "call": (
-        "Chiamata a una funzione Typst o importata.",
-        'doc.call(function="strong", content="Funzione personalizzabile")',
+        "Call a Typst or imported function.",
+        'doc.call(function="strong", content="Customizable function")',
     ),
     "set_rule": (
-        "Regola di stile per gli elementi successivi.",
-        'doc.set_rule(target="text", fill=color("blue"))\ndoc.text("Questo testo è blu")',
+        "Style rule for subsequent elements.",
+        'doc.set_rule(target="text", fill=color("blue"))\ndoc.text("This text is blue")',
     ),
     "show_rule": (
-        "Trasformazione o stile degli elementi selezionati.",
-        'doc.show_rule(selector="heading", target="text", fill=color("blue"))\ndoc.heading("Titolo trasformato")',
+        "Transform or style selected elements.",
+        'doc.show_rule(selector="heading", target="text", fill=color("blue"))\ndoc.heading("Transformed heading")',
     ),
     "scope": (
-        "Stili locali a un contenitore.",
-        'scope = doc.scope()\nscope.set_rule(target="text", fill=color("blue"))\nscope.text("Stile locale")\ndoc.text("Stile esterno")',
+        "Styles local to a container.",
+        'scope = doc.scope()\nscope.set_rule(target="text", fill=color("blue"))\nscope.text("Local style")\ndoc.text("Outer style")',
     ),
     "context": (
-        "Valori che richiedono il contesto della pagina.",
+        "Values requiring page context.",
         'doc.context().text(content=expr("counter(page).display()"))',
     ),
     "equation": (
-        "Formula scritta con la sintassi matematica Typst.",
+        "Formula written in Typst math syntax.",
         'doc.equation(formula="sum_(i=1)^n i = (n (n+1))/2", numbering="(1)")',
     ),
     "label": (
-        "Etichetta e riferimento a una sezione.",
-        'doc.set_rule(target="heading", numbering="1.")\ndoc.heading("Sezione di esempio")\ndoc.typst_label(name="example")\ndoc.ref(label("example"))',
+        "Label and reference to a section.",
+        'doc.set_rule(target="heading", numbering="1.")\ndoc.heading("Example section")\ndoc.typst_label(name="example")\ndoc.ref(label("example"))',
     ),
     "let": (
-        "Variabile Typst usata dagli elementi successivi.",
-        'doc.let(name="message", value="Ciao da una variabile Typst")\ndoc.text(content=expr("message"))',
+        "Typst variable used by subsequent elements.",
+        'doc.let(name="message", value="Hello from a Typst variable")\ndoc.text(content=expr("message"))',
     ),
     "import_module": (
-        "Import di una funzione da helper.typ, incluso nell’esempio.",
-        'doc.import_module(path="helper.typ", names=["greeting"])\ndoc.call(function="greeting", args=["Lettore"], mode="value")',
+        "Import a function from helper.typ, included in this example.",
+        'doc.import_module(path="helper.typ", names=["greeting"])\ndoc.call(function="greeting", args=["Reader"], mode="value")',
     ),
     "include": (
-        "Inclusione di extra.typ, già disponibile nell’esempio.",
+        "Include extra.typ, provided with this example.",
         'doc.include(path="extra.typ")',
     ),
     "typst_code": (
-        "Blocco di codice Typst con variabili locali.",
-        "doc.typst_code(code='let name = \"Lettore\"; [Ciao #name]')",
+        "Typst code block with local variables.",
+        "doc.typst_code(code='let name = \"Reader\"; [Hello #name]')",
     ),
     "typst_markup": (
-        "Markup Typst all’interno della ricetta Python.",
-        'doc.typst_markup(source="*Grassetto*, _enfasi_ e $x^2$. // commento finale")',
+        "Typst markup inside a Python recipe.",
+        'doc.typst_markup(source="*Bold*, _emphasis_ and $x^2$. // final comment")',
     ),
 }
 LEGACY = {
     "document": (
-        "Impostazioni di pagina e metadati del documento.",
-        'doc = root.document(paper="a5", margin="12mm", metadata={"title": "Esempio documento"})\ndoc.paragraph(content="Modifica formato e margini della pagina.")',
+        "Page settings and document metadata.",
+        'doc = root.document(paper="a5", margin="12mm", metadata={"title": "Example document"})\ndoc.paragraph(content="Edit the page format and margins.")',
     ),
     "layout": (
-        "Contenitore Genro a righe e celle.",
-        'doc = root.document()\nlayout = doc.layout(border_width="0.5pt")\nfor name in ("Prima riga", "Seconda riga"):\n    row = layout.row()\n    row.cell(content=name)\n    row.cell(content="Valore", width="40mm")',
+        "Genro container with rows and cells.",
+        'doc = root.document()\nlayout = doc.layout(border_width="0.5pt")\nfor name in ("First row", "Second row"):\n    row = layout.row()\n    row.cell(content=name)\n    row.cell(content="Value", width="40mm")',
     ),
     "row": (
-        "Righe con altezza e bordi configurabili.",
-        'doc = root.document()\nlayout = doc.layout(border_width="0.5pt")\nlayout.row(height="18mm").cell(content="Riga alta 18 mm")\nlayout.row().cell(content="Altezza automatica")',
+        "Rows with configurable height and borders.",
+        'doc = root.document()\nlayout = doc.layout(border_width="0.5pt")\nlayout.row(height="18mm").cell(content="An 18 mm tall row")\nlayout.row().cell(content="Automatic height")',
     ),
     "cell": (
-        "Celle con etichetta, larghezza e contenuti nativi.",
-        'doc = root.document()\nrow = doc.layout(border_width="0.5pt").row()\nrow.cell(content="Cliente", lbl="Anagrafica", width=2)\nrow.cell(lbl="Contenuto nativo", background="#eeeeee").strong("Grassetto")',
+        "Cells with labels, widths and native content.",
+        'doc = root.document()\nrow = doc.layout(border_width="0.5pt").row()\nrow.cell(content="Customer", lbl="Customer details", width=2)\nrow.cell(lbl="Native content", background="#eeeeee").strong("Bold")',
     ),
     "paragraph": (
-        "Paragrafo Genro con binding ai dati.",
-        'doc = root.document()\ndoc.paragraph(content="^customer.name")\ndoc.paragraph().strong("Contenuto nativo nel paragrafo")',
+        "Genro paragraph with data binding.",
+        'doc = root.document()\ndoc.paragraph(content="^customer.name")\ndoc.paragraph().strong("Native content in a paragraph")',
     ),
     "pageNumber": (
-        "Numero della pagina e totale, aggiornati in automatico.",
-        'doc = root.document()\nfor index in range(2):\n    if index:\n        doc.pagebreak()\n    doc.paragraph(content=f"Pagina di prova {index + 1}")\n    doc.pageNumber(template="Pagina {page} di {total}")',
+        "Automatically updated current and total page numbers.",
+        'doc = root.document()\nfor index in range(2):\n    if index:\n        doc.pagebreak()\n    doc.paragraph(content=f"Test page {index + 1}")\n    doc.pageNumber(template="Page {page} of {total}")',
     ),
     "table": (
-        "Tabella dai dati Bag, con intestazioni e totali.",
-        'doc = root.document()\ntable = doc.table(data="^lines", totalize_footer="Totale")\ntable.column(field="description", name="Descrizione", width=3)\ntable.column(field="quantity", name="Quantità", totalize=True)\ntable.column(field="amount", name="Importo", totalize=True)',
+        "Table from Bag data, with headers and totals.",
+        'doc = root.document()\ntable = doc.table(data="^lines", totalize_footer="Total")\ntable.column(field="description", name="Description", width=3)\ntable.column(field="quantity", name="Quantity", totalize=True)\ntable.column(field="amount", name="Amount", totalize=True)',
     ),
     "column": (
-        "Colonne della tabella dati: larghezza, allineamento e totale.",
-        'doc = root.document()\ntable = doc.table(data="^lines", totalize_footer="Totale")\ntable.column(field="description", name="Descrizione", width="80mm")\ntable.column(field="quantity", name="Quantità", align="right")\ntable.column(field="amount", name="Importo", align="right", totalize=True)',
+        "Data table columns: width, alignment and totals.",
+        'doc = root.document()\ntable = doc.table(data="^lines", totalize_footer="Total")\ntable.column(field="description", name="Description", width="80mm")\ntable.column(field="quantity", name="Quantity", align="right")\ntable.column(field="amount", name="Amount", align="right", totalize=True)',
     ),
 }
 ASSETS = {
     "logo.svg": '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"><circle cx="10" cy="10" r="8" fill="blue"/></svg>',
     "refs.yml": "manual:\n  type: Book\n  title: Test manual\n  author: Example, Alice\n  date: 2026\n",
-    "helper.typ": "#let greeting(name) = [Ciao #name]",
-    "extra.typ": "= Contenuto incluso\nQuesto testo proviene da extra.typ.\n",
+    "helper.typ": "#let greeting(name) = [Hello #name]",
+    "extra.typ": "= Included content\nThis text comes from extra.typ.\n",
 }
 
 
@@ -222,7 +222,7 @@ def recipe(body: str, description: str, setup: str = "") -> str:
         textwrap.indent(
             "# "
             + description
-            + "\n# Modifica la ricetta: l’anteprima si aggiorna automaticamente.\n"
+            + "\n# Edit the recipe: the preview updates automatically.\n"
             + body,
             "        ",
         )
@@ -242,7 +242,7 @@ def catalog() -> dict:
             .rsplit("\n\nsource = builder.render()", 1)[0]
             .replace("builder.source", "root")
         )
-        description = DESCRIPTIONS.get(tag, f"Funzione matematica {function}, dentro un’equazione.")
+        description = DESCRIPTIONS.get(tag, f"Math function {function}, inside an equation.")
         files = {"image": ["logo.svg"], "cite": ["refs.yml"], "bibliography": ["refs.yml"]}.get(
             tag, []
         )
@@ -274,7 +274,7 @@ def catalog() -> dict:
     setup = """data["customer.name"] = "Rossi & Figli"
 lines = Bag()
 for index, (description, quantity, amount) in enumerate([
-    ("Analisi", 2, 240), ("Template", 3, 150),
+    ("Analysis", 2, 240), ("Template", 3, 150),
 ]):
     row = Bag()
     row["description"] = description

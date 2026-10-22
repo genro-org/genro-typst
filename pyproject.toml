@@ -32,6 +32,7 @@ dependencies = [
 
 [project.optional-dependencies]
 pdf = ["typst==0.15.0"]
+docs = ["sphinx>=7.4,<9", "myst-parser>=3,<5", "furo>=2024.8.6"]
 dev = [
     "typst==0.15.0",
     "pytest>=7.0",

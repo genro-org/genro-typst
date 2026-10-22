@@ -1,155 +1,155 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<proposal id="proposal/typst-backend" title="Stampe con genro-builders e Typst" date="2026-10-20" lang="it" author="Giovanni Porcari" status="draft">
+<proposal id="proposal/typst-backend" title="Printing with genro-builders and Typst" date="2026-10-20" lang="en" author="Giovanni Porcari" status="draft">
   <problem>
-    <p>Le stampe commerciali (fatture, DDT, preventivi, etichette) e gli schemi oggi passano da HTML a PDF, oppure da ReportLab in genro-print.</p>
-    <p>Typst è un motore di composizione tipografica scritto in Rust, licenza Apache-2.0. Compila un sorgente testuale in PDF, SVG, PNG.</p>
-    <p>Questo progetto descrive il documento con una grammatica genro-builders e lo fa comporre a Typst.</p>
-    <p>Obiettivo finale: in gramlot, un editor di carte intestate analogo a quello di GenroPy e un editor di stampe per applicazioni business: liste, pagine, moduli. Gli editor non fanno parte di questo progetto. genro-typst fornisce la grammatica, il formato salvato e il renderer.</p>
+    <p>Business documents (invoices, delivery notes, quotes, labels) and diagrams currently go through HTML-to-PDF conversion or ReportLab in genro-print.</p>
+    <p>Typst is a typesetting engine written in Rust and licensed under Apache-2.0. It compiles text source to PDF, SVG and PNG.</p>
+    <p>This project describes documents with a genro-builders grammar and delegates typesetting to Typst.</p>
+    <p>The eventual goal is a Gramlot letterhead editor similar to GenroPy's, and a print editor for business applications: lists, pages and forms. Editors are outside this project. genro-typst supplies the grammar, persistence format and renderer.</p>
   </problem>
   <current>
-    <fact source="genro-print/src/genro_print/builders/print_lrc_builder.py" method="read" verified="2026-10-20">genro-print separa la grammatica (builder con mixin: document, platypus, canvas, lrc, styled, charts) dai renderer ReportLab. Ogni builder espone il renderer con la property <c>renderer_reportlab</c> e <c>_default_render_mode = "reportlab"</c>.</fact>
-    <fact source="genro-print (git status)" method="run" verified="2026-10-20">In genro-print lo spostamento da <c>compilers/</c> a <c>renderers/</c> è nel working tree, non committato. L'ultimo commit è del 2026-04-07.</fact>
-    <fact source="genro-builders/src/genro_builders/contrib/svg/svg_builder.py" method="read" verified="2026-10-20">Il dialetto SVG di genro-builders ha tre parti: <c>SvgBuilder</c> (grammatica, <c>_name = "svg"</c>), <c>SvgElements</c> (elementi dichiarati con <c>@element</c>), <c>SvgRenderer</c> (sottoclasse di <c>RendererBase</c>, <c>mode = "svg"</c>, metodo <c>rendered_item</c>) esposto dalla property <c>renderer_svg</c>.</fact>
+    <fact source="genro-print/src/genro_print/builders/print_lrc_builder.py" method="read" verified="2026-10-20">genro-print separates the grammar (builders with document, platypus, canvas, lrc, styled and charts mixins) from ReportLab renderers. Each builder exposes its renderer through the property <c>renderer_reportlab</c> and <c>_default_render_mode = "reportlab"</c>.</fact>
+    <fact source="genro-print (git status)" method="run" verified="2026-10-20">In genro-print the move from <c>compilers/</c> to <c>renderers/</c> is in the working tree, uncommitted. The latest commit is dated 2026-04-07.</fact>
+    <fact source="genro-builders/src/genro_builders/contrib/svg/svg_builder.py" method="read" verified="2026-10-20">The genro-builders SVG dialect has three parts: <c>SvgBuilder</c> (grammar, <c>_name = "svg"</c>), <c>SvgElements</c> (elements declared with <c>@element</c>), <c>SvgRenderer</c> (subclass of <c>RendererBase</c>, <c>mode = "svg"</c>, method <c>rendered_item</c>) exposed by the property <c>renderer_svg</c>.</fact>
   </current>
   <solution>
-    <section title="Principio">
-      <rule level="must">La grammatica descrive il documento commerciale, non il linguaggio Typst. Non si avvolge l'intero linguaggio Typst.</rule>
-      <rule level="must">Il renderer emette costrutti Typst fissi. Chi usa il builder non scrive mai codice Typst.</rule>
-      <p>Il modello è quello di Layout/Row/Cell di GenroPy: un inventario di funzionalità, ognuna associata a un oggetto astratto. Esempio: "pagina X di Y" è un elemento dedicato; il suo renderer emette uno snippet <c>context</c>.</p>
+    <section title="Principle">
+      <rule level="must">The grammar describes business documents, not the Typst language. It does not wrap the entire Typst language.</rule>
+      <rule level="must">The renderer emits fixed Typst constructs. Builder users never write Typst code.</rule>
+      <p>The model follows GenroPy's Layout/Row/Cell: a feature inventory with one abstract object per feature. For example, "page X of Y" is a dedicated element whose renderer emits a snippet of <c>context</c>.</p>
     </section>
-    <section title="Inventario provvisorio">
-      <table title="Funzionalità e costrutto Typst emesso">
-        <row head="true"><cell>Funzionalità</cell><cell>Costrutto Typst</cell><cell>Stato</cell></row>
-        <row><cell>documento, pagina (formato, orientamento, margini)</cell><cell><c>set page(...)</c></cell><cell>verificato</cell></row>
-        <row><cell>header/footer ripetuti, prima pagina diversa</cell><cell><c>page(header:, footer:)</c> + <c>context</c></cell><cell>verificato</cell></row>
-        <row><cell>numero pagina X di Y</cell><cell><c>counter(page).display()</c>, <c>counter(page).final()</c> in <c>context</c></cell><cell>verificato</cell></row>
-        <row><cell>layout/row/cell elastici</cell><cell><c>grid</c> con colonne <c>auto</c>, <c>1fr</c>, fisse</cell><cell>verificato</cell></row>
-        <row><cell>paragrafo, stile</cell><cell><c>text</c>, <c>par</c>, <c>set</c></cell><cell>da verificare</cell></row>
-        <row><cell>campo formattato dai dati</cell><cell>formattazione in Python, <c>text</c> in Typst</cell><cell>da verificare</cell></row>
-        <row><cell>tabella dati con intestazione ripetuta</cell><cell><c>table</c> + <c>table.header(repeat: true)</c></cell><cell>verificato</cell></row>
-        <row><cell>totali, subtotali</cell><cell><c>table.footer</c></cell><cell>footer ripetuto verificato; riporto tra pagine non verificato</cell></row>
-        <row><cell>tieni insieme, salto pagina</cell><cell><c>block(breakable: false)</c>, <c>pagebreak()</c></cell><cell>compila; effetto non verificato</cell></row>
-        <row><cell>immagine</cell><cell><c>image</c></cell><cell>da verificare</cell></row>
-        <row><cell>barcode, QR</cell><cell>pacchetto esterno <c>@preview/tiaoma</c></cell><cell>import 0.3.0 compila</cell></row>
-        <row><cell>bordi, riquadri, linee</cell><cell><c>box</c>, <c>rect</c>, <c>line</c>, <c>stroke</c></cell><cell>da verificare</cell></row>
-        <row><cell>schemi</cell><cell>SVG del dialetto svg di genro-builders, incluso con <c>image</c></cell><cell>da verificare</cell></row>
+    <section title="Provisional inventory">
+      <table title="Features and emitted Typst constructs">
+        <row head="true"><cell>Feature</cell><cell>Typst construct</cell><cell>Status</cell></row>
+        <row><cell>document, page (format, orientation, margins)</cell><cell><c>set page(...)</c></cell><cell>verified</cell></row>
+        <row><cell>repeated headers/footers, different first page</cell><cell><c>page(header:, footer:)</c> + <c>context</c></cell><cell>verified</cell></row>
+        <row><cell>page number X of Y</cell><cell><c>counter(page).display()</c>, <c>counter(page).final()</c> in <c>context</c></cell><cell>verified</cell></row>
+        <row><cell>elastic layout/row/cell</cell><cell><c>grid</c> with columns <c>auto</c>, <c>1fr</c>, fixed</cell><cell>verified</cell></row>
+        <row><cell>paragraph, style</cell><cell><c>text</c>, <c>par</c>, <c>set</c></cell><cell>to be verified</cell></row>
+        <row><cell>formatted data field</cell><cell>Python formatting, <c>text</c> in Typst</cell><cell>to be verified</cell></row>
+        <row><cell>data table with repeated header</cell><cell><c>table</c> + <c>table.header(repeat: true)</c></cell><cell>verified</cell></row>
+        <row><cell>totals, subtotals</cell><cell><c>table.footer</c></cell><cell>repeated footer verified; page carryover unverified</cell></row>
+        <row><cell>keep together, page break</cell><cell><c>block(breakable: false)</c>, <c>pagebreak()</c></cell><cell>compiles; effect unverified</cell></row>
+        <row><cell>image</cell><cell><c>image</c></cell><cell>to be verified</cell></row>
+        <row><cell>barcode, QR</cell><cell>external package <c>@preview/tiaoma</c></cell><cell>import 0.3.0 compiles</cell></row>
+        <row><cell>borders, boxes, lines</cell><cell><c>box</c>, <c>rect</c>, <c>line</c>, <c>stroke</c></cell><cell>to be verified</cell></row>
+        <row><cell>diagrams</cell><cell>SVG from the genro-builders svg dialect, included with <c>image</c></cell><cell>to be verified</cell></row>
       </table>
     </section>
-    <section title="Grammatica di prova">
-      <p>Base: Layout/Row/Cell di GenroPy (<c>gnr/core/gnrhtml.py</c>). Nel legacy ogni elemento ha posizione assoluta in <c>um</c> (millimetri) e <c>width=0</c>/<c>height=0</c> divide lo spazio libero in parti uguali. Qui il layout segue il flusso e può continuare nella pagina successiva.</p>
+    <section title="Prototype grammar">
+      <p>Based on GenroPy's Layout/Row/Cell (<c>gnr/core/gnrhtml.py</c>). In the legacy system each element has an absolute position in <c>um</c> (millimeters), and <c>width=0</c>/<c>height=0</c> divides free space equally. Here layout follows the flow and can continue on the next page.</p>
       <list>
-        <item>Una riga senza <c>height</c> prende l'altezza del contenuto (<c>auto</c>). <c>'1fr'</c> è ammesso solo se il layout ha un'altezza.</item>
-        <item>Una larghezza è una lunghezza, una percentuale o una frazione: <c>'25mm'</c>, <c>'30%'</c>, <c>'2fr'</c>, <c>'auto'</c>. Un numero è una frazione; <c>width=0</c> vale <c>1fr</c>, come nel legacy.</item>
-        <item>Spariscono <c>um</c> e <c>lbl_height</c>. <c>top/left/bottom/right</c> diventano <c>inset</c>.</item>
+        <item>A row without <c>height</c> takes the height of its content (<c>auto</c>). <c>'1fr'</c> is allowed only if the layout has a height.</item>
+        <item>A width is a length, percentage or fraction: <c>'25mm'</c>, <c>'30%'</c>, <c>'2fr'</c>, <c>'auto'</c>. A number is a fraction; <c>width=0</c> means <c>1fr</c>, as in the legacy system.</item>
+        <item>Removed: <c>um</c> and <c>lbl_height</c>. <c>top/left/bottom/right</c> become <c>inset</c>.</item>
       </list>
-      <table title="Elementi">
-        <row head="true"><cell>Elemento</cell><cell>Attributi</cell><cell>Costrutto Typst</cell></row>
+      <table title="Elements">
+        <row head="true"><cell>Element</cell><cell>Attributes</cell><cell>Typst construct</cell></row>
         <row><cell><c>document</c></cell><cell><c>paper</c>, <c>flipped</c>, <c>margin</c></cell><cell><c>set page</c></cell></row>
         <row><cell><c>header</c>, <c>footer</c></cell><cell><c>pages='all'|'first'|'others'</c></cell><cell><c>page(header:, footer:)</c> + <c>context</c></cell></row>
-        <row><cell><c>pageNumber</c></cell><cell><c>template='Pagina {page} di {total}'</c></cell><cell><c>counter(page)</c> in <c>context</c></cell></row>
-        <row><cell><c>style</c></cell><cell><c>name</c>, <c>font</c>, <c>size</c>, <c>weight</c>, <c>color</c>, <c>align</c></cell><cell>parametri di <c>text</c>/<c>par</c></cell></row>
+        <row><cell><c>pageNumber</c></cell><cell><c>template='Page {page} of {total}'</c></cell><cell><c>counter(page)</c> in <c>context</c></cell></row>
+        <row><cell><c>style</c></cell><cell><c>name</c>, <c>font</c>, <c>size</c>, <c>weight</c>, <c>color</c>, <c>align</c></cell><cell>parameters of <c>text</c>/<c>par</c></cell></row>
         <row><cell><c>layout</c></cell><cell><c>border_width</c>, <c>border_color</c>, <c>border_style</c>, <c>row_border</c>, <c>cell_border</c>, <c>lbl_class</c>, <c>content_class</c>, <c>inset</c></cell><cell><c>grid</c></cell></row>
-        <row><cell><c>row</c></cell><cell><c>height</c>, <c>row_border</c>, <c>cell_border</c>, <c>lbl_class</c>, <c>content_class</c>, <c>breakable</c></cell><cell>riga di <c>grid</c></cell></row>
+        <row><cell><c>row</c></cell><cell><c>height</c>, <c>row_border</c>, <c>cell_border</c>, <c>lbl_class</c>, <c>content_class</c>, <c>breakable</c></cell><cell>row of <c>grid</c></cell></row>
         <row><cell><c>cell</c></cell><cell><c>content</c>, <c>width</c>, <c>lbl</c>, <c>lbl_class</c>, <c>content_class</c>, <c>cell_border</c>, <c>align</c>, <c>valign</c>, <c>background</c>, <c>colspan</c></cell><cell><c>grid.cell</c></cell></row>
         <row><cell><c>paragraph</c></cell><cell><c>content</c>, <c>style</c></cell><cell><c>text</c> + <c>par</c></cell></row>
-        <row><cell><c>field</c></cell><cell><c>value</c>, <c>dtype</c>, <c>format</c>, <c>style</c></cell><cell>formattazione in Python, testo con escape</cell></row>
-        <row><cell><c>image</c></cell><cell><c>src</c> (anche un <c>SvgBuilder</c>), <c>width</c>, <c>height</c>, <c>fit</c></cell><cell><c>image</c></cell></row>
+        <row><cell><c>field</c></cell><cell><c>value</c>, <c>dtype</c>, <c>format</c>, <c>style</c></cell><cell>Python formatting, escaped text</cell></row>
+        <row><cell><c>image</c></cell><cell><c>src</c> (including an <c>SvgBuilder</c>), <c>width</c>, <c>height</c>, <c>fit</c></cell><cell><c>image</c></cell></row>
         <row><cell><c>barcode</c></cell><cell><c>value</c>, <c>kind='qr'|'ean13'|'code128'</c></cell><cell><c>tiaoma</c></cell></row>
-        <row><cell><c>spacer</c>, <c>hline</c>, <c>pageBreak</c></cell><cell><c>height</c> per <c>spacer</c></cell><cell><c>v</c>, <c>line</c>, <c>pagebreak</c></cell></row>
+        <row><cell><c>spacer</c>, <c>hline</c>, <c>pageBreak</c></cell><cell><c>height</c> for <c>spacer</c></cell><cell><c>v</c>, <c>line</c>, <c>pagebreak</c></cell></row>
         <row><cell><c>table</c></cell><cell><c>data</c>, <c>headerRepeat</c></cell><cell><c>table</c> + <c>table.header(repeat: true)</c></cell></row>
-        <row><cell><c>column</c></cell><cell><c>field</c>, <c>name</c>, <c>width</c>, <c>dtype</c>, <c>format</c>, <c>align</c>, <c>totalize</c>, <c>subtotal</c>, <c>background</c>, <c>color</c></cell><cell>colonna di <c>table</c>; <c>totalize</c> produce <c>table.footer</c></cell></row>
+        <row><cell><c>column</c></cell><cell><c>field</c>, <c>name</c>, <c>width</c>, <c>dtype</c>, <c>format</c>, <c>align</c>, <c>totalize</c>, <c>subtotal</c>, <c>background</c>, <c>color</c></cell><cell>column of <c>table</c>; <c>totalize</c> produces <c>table.footer</c></cell></row>
       </table>
-      <p>Una <c>cell</c> può contenere un <c>layout</c> annidato. <c>colspan</c> non esiste nel legacy. Gli attributi di <c>column</c> vengono dalla grid struct legacy (<c>gnr/web/gnrbaseclasses.py</c>); <c>mm_width</c> diventa <c>width</c>.</p>
-      <p>I nomi legacy restano: <c>lbl</c>, <c>lbl_class</c>, <c>content_class</c>, <c>border_width</c>, <c>row_border</c>, <c>cell_border</c>, <c>totalize</c>. I nomi nuovi sono in camelCase.</p>
+      <p>A <c>cell</c> can contain a nested <c>layout</c>. <c>colspan</c> does not exist in the legacy system. Attributes of <c>column</c> come from the legacy grid structure (<c>gnr/web/gnrbaseclasses.py</c>); <c>mm_width</c> becomes <c>width</c>.</p>
+      <p>Legacy names are retained: <c>lbl</c>, <c>lbl_class</c>, <c>content_class</c>, <c>border_width</c>, <c>row_border</c>, <c>cell_border</c>, <c>totalize</c>. New names use camelCase.</p>
     </section>
-    <section title="Vincoli posti dagli editor">
+    <section title="Editor constraints">
       <list ordered="true">
-        <item>Tutto è dato. Carte intestate e stampe sono Bag serializzate con TYTX. Ogni attributo della grammatica è un valore che un editor può impostare. Nessun elemento richiede codice Python (nel legacy servivano <c>calcRowHeight</c> e <c>prepareRow</c>).</item>
-        <item>Testo formattato. Il legacy salvava l'HTML di <c>ckEditor</c> per ogni regione. La grammatica di prova non ha ancora un elemento inline per grassetto, corsivo o campo dentro una frase.</item>
-        <item>Campi dei dati. Il legacy usava <c>$campo</c> nell'HTML, riempito da <c>templateReplace</c>. Qui si usano i puntatori <c>^</c> di genro-builders; l'editor offre la scelta dei campi dal modello della tabella.</item>
-        <item>Moduli prestampati. Liste e pagine usano il layout elastico. Un modulo prestampato ha campi in posizioni fisse in mm: serve un elemento di posizione assoluta (<c>place</c> con <c>dx</c>/<c>dy</c> in Typst).</item>
-        <item>Anteprima nel browser. Il renderer Bag → codice Typst è in Python. Il browser compila il codice Typst con typst.ts.</item>
+        <item>Everything is data. Letterheads and print documents are Bags serialized with TYTX. Every grammar attribute is a value an editor can set. No element requires Python code (the legacy system required <c>calcRowHeight</c> and <c>prepareRow</c>).</item>
+        <item>Formatted text. The legacy system stored HTML from <c>ckEditor</c> for each region. The prototype grammar does not yet have inline elements for bold, italic or a field within a sentence.</item>
+        <item>Data fields. The legacy system used <c>$campo</c> in HTML, filled by <c>templateReplace</c>. Here the pointers are <c>^</c> from genro-builders; the editor offers fields from the table model.</item>
+        <item>Preprinted forms. Lists and pages use elastic layout. A preprinted form has fields at fixed positions in millimeters, requiring an absolute-position element (<c>place</c> with <c>dx</c>/<c>dy</c> in Typst).</item>
+        <item>Browser preview. The Bag-to-Typst renderer is in Python. The browser compiles Typst code with typst.ts.</item>
       </list>
-      <table title="Tipi di stampa">
-        <row head="true"><cell>Stampa</cell><cell>Struttura</cell><cell>Legacy</cell></row>
-        <row><cell>Lista</cell><cell><c>table</c> + <c>column</c></cell><cell><c>TableScriptToHtml</c> con <c>gridStruct</c></cell></row>
-        <row><cell>Pagina (record)</cell><cell>LRC elastico</cell><cell><c>TableScriptToHtml</c> con <c>prepareRow</c></cell></row>
-        <row><cell>Modulo</cell><cell>posizioni assolute in mm</cell><cell>LRC in mm su prestampato</cell></row>
+      <table title="Print document types">
+        <row head="true"><cell>Print document</cell><cell>Structure</cell><cell>Legacy</cell></row>
+        <row><cell>List</cell><cell><c>table</c> + <c>column</c></cell><cell><c>TableScriptToHtml</c> with <c>gridStruct</c></cell></row>
+        <row><cell>Page (record)</cell><cell>Elastic LRC</cell><cell><c>TableScriptToHtml</c> with <c>prepareRow</c></cell></row>
+        <row><cell>Form</cell><cell>absolute positions in mm</cell><cell>LRC in mm over a preprinted form</cell></row>
       </table>
     </section>
-    <section title="Carta intestata">
-      <section title="Come funziona in GenroPy">
-        <fact source="gnrcore/packages/adm/model/htmltemplate.py" method="read" verified="2026-10-20">La carta intestata è un record di <c>adm.htmltemplate</c>. La colonna <c>data</c> è una Bag: <c>main.page.{height,width,top,left,right,bottom}</c> in mm, <c>main.design</c> (<c>headline</c> o <c>sidebar</c>), e per ogni regione una dimensione e un HTML con variabili <c>$campo</c>. Il contenuto della stampa va nella regione <c>center_center</c>.</fact>
-        <fact source="gnrcore/packages/adm/model/htmltemplate.py" method="read" verified="2026-10-20"><c>based_on</c> collega una carta a quella da cui deriva; <c>letterheadChain</c> costruisce la catena e ogni carta diventa un livello sovrapposto. <c>next_letterhead</c> indica la carta delle pagine dopo la prima (<c>gnr/core/gnrhtml.py</c>, <c>newPage</c>).</fact>
-        <fact source="gnrcore/packages/adm/resources/tables/htmltemplate/th_htmltemplate.py" method="read" verified="2026-10-20">L'editor legacy ha un form con le misure della pagina, una scheda per <c>design</c>, un'anteprima con le regioni ridimensionabili e <c>ckEditor</c> sull'HTML della regione selezionata.</fact>
+    <section title="Letterhead">
+      <section title="How GenroPy works">
+        <fact source="gnrcore/packages/adm/model/htmltemplate.py" method="read" verified="2026-10-20">A letterhead is a record in <c>adm.htmltemplate</c>. The column <c>data</c> is a Bag: <c>main.page.{height,width,top,left,right,bottom}</c> in mm, <c>main.design</c> (<c>headline</c> or <c>sidebar</c>), with a size and HTML containing variables for each region: <c>$campo</c>. Document content goes into the region <c>center_center</c>.</fact>
+        <fact source="gnrcore/packages/adm/model/htmltemplate.py" method="read" verified="2026-10-20"><c>based_on</c> links a letterhead to its parent; <c>letterheadChain</c> builds the chain, with each letterhead becoming an overlay. <c>next_letterhead</c> identifies the letterhead for pages after the first (<c>gnr/core/gnrhtml.py</c>, <c>newPage</c>).</fact>
+        <fact source="gnrcore/packages/adm/resources/tables/htmltemplate/th_htmltemplate.py" method="read" verified="2026-10-20">The legacy editor has a form with page dimensions, a tab for <c>design</c>, a preview with resizable regions, and <c>ckEditor</c> for the selected region's HTML.</fact>
       </section>
-      <section title="Proposta">
+      <section title="Proposal">
         <code lang="python"><![CDATA[
-letterhead(name='fattura', paper='a4', flipped=False,
+letterhead(name='invoice', paper='a4', flipped=False,
            margin_top='30mm', margin_bottom='20mm',
            margin_left='35mm', margin_right='15mm',
            basedOn='base')
-    region(name='top', pages='first', size='30mm')    # contenuto LRC con puntatori ^
+    region(name='top', pages='first', size='30mm')    # LRC content with ^ pointers
     region(name='top', pages='others', size='15mm')
     region(name='left', size='25mm')
     region(name='background')
-document(letterhead='fattura')
+document(letterhead='invoice')
 ]]></code>
         <list>
-          <item><c>top</c> → <c>header</c>; <c>bottom</c> → <c>footer</c>; <c>left</c>, <c>right</c>, <c>background</c> → <c>background</c> con <c>place</c>; filigrana → <c>foreground</c>.</item>
-          <item><c>pages='first'|'others'</c> sostituisce <c>next_letterhead</c>: <c>context</c> su <c>counter(page)</c>.</item>
-          <item><c>basedOn</c> sostituisce <c>based_on</c>: le regioni con lo stesso <c>name</c> e <c>pages</c> sostituiscono quelle della base; le regioni <c>background</c> si sommano.</item>
-          <item><c>main.design</c> sparisce: <c>headline</c> e <c>sidebar</c> sono una scelta di regioni.</item>
-          <item>La carta intestata è una Bag serializzata con TYTX (<c>Bag.to_tytx</c>, <c>Bag.from_tytx</c>). Il documento la carica e la innesta nel proprio sorgente.</item>
+          <item><c>top</c> → <c>header</c>; <c>bottom</c> → <c>footer</c>; <c>left</c>, <c>right</c>, <c>background</c> → <c>background</c> with <c>place</c>; watermark → <c>foreground</c>.</item>
+          <item><c>pages='first'|'others'</c> replaces <c>next_letterhead</c>: <c>context</c> on <c>counter(page)</c>.</item>
+          <item><c>basedOn</c> replaces <c>based_on</c>: regions with the same <c>name</c> and <c>pages</c> replace those in the base; regions named <c>background</c> accumulate.</item>
+          <item><c>main.design</c> is removed: <c>headline</c> and <c>sidebar</c> are choices of regions.</item>
+          <item>The letterhead is a Bag serialized with TYTX (<c>Bag.to_tytx</c>, <c>Bag.from_tytx</c>). The document loads it and grafts it into its source.</item>
         </list>
-        <fact source="scratch lh.py" method="run" verified="2026-10-20">Typst 0.15.0: header diverso tra la prima pagina e le successive con <c>context</c>, banda laterale con <c>background</c> + <c>place</c>. Entrambi compaiono nel PDF su 2 pagine.</fact>
-        <fact source="scratch lh.py" method="run" verified="2026-10-20">Typst non allarga il margine superiore per un header più alto: un header di 40 mm con margine di 10 mm si sovrappone al corpo. Il margine di ogni regione va dichiarato come lunghezza.</fact>
-        <p>Una Bag di builder deve ricaricarsi da TYTX con i suoi tag ed essere validata dalla grammatica. Non è verificato.</p>
+        <fact source="scratch lh.py" method="run" verified="2026-10-20">Typst 0.15.0: different first and subsequent page headers using <c>context</c>, sidebar using <c>background</c> + <c>place</c>. Both appear in a two-page PDF.</fact>
+        <fact source="scratch lh.py" method="run" verified="2026-10-20">Typst does not enlarge the top margin for a taller header: a 40 mm header with a 10 mm margin overlaps the body. Each region's margin must be declared as a length.</fact>
+        <p>A builder Bag must reload from TYTX with its tags and pass grammar validation. This is unverified.</p>
       </section>
     </section>
-    <section title="Editor Typst esistenti">
-      <fact source="github.com/Myriad-Dreamin/typst.ts" method="run" verified="2026-10-20">typst.ts compila Typst nel browser via WASM. Licenza Apache-2.0, release v0.7.0 del 2026-06-01.</fact>
-      <fact source="github.com/tyx-editor/TyX" method="run" verified="2026-10-20">Gli editor visuali open source per Typst sono giovani: TyX (MIT), typster (MIT), ortic/typst-wysiwyg (MIT, prototipo). TyX lavora su un JSON di TipTap e lo compila in codice Typst: lo stesso schema di questo progetto.</fact>
-      <p>Il renderer produce codice Typst vero. Il percorso è in un solo senso: una modifica fatta al codice Typst non torna nella Bag.</p>
+    <section title="Existing Typst editors">
+      <fact source="github.com/Myriad-Dreamin/typst.ts" method="run" verified="2026-10-20">typst.ts compiles Typst in the browser through WASM. Apache-2.0 license, release v0.7.0 dated 2026-06-01.</fact>
+      <fact source="github.com/tyx-editor/TyX" method="run" verified="2026-10-20">Open-source visual Typst editors are young: TyX (MIT), typster (MIT), ortic/typst-wysiwyg (MIT, prototype). TyX works on TipTap JSON and compiles it into Typst code, following the same pattern as this project.</fact>
+      <p>The renderer produces actual Typst code. The path is one-way: edits to Typst code do not flow back into the Bag.</p>
     </section>
-    <section title="Compiti del renderer">
+    <section title="Renderer responsibilities">
       <list>
-        <item>Escape del testo: <c>#</c> <c>*</c> <c>_</c> <c>$</c> <c>@</c> <c>&lt;</c> e gli altri caratteri di markup.</item>
-        <item>Conversione dei tipi Python in tipi Typst: lunghezze (<c>2cm</c>, <c>1fr</c>, <c>50%</c>), colori, <c>none</c>/<c>auto</c>, allineamenti, identificatori distinti dalle stringhe.</item>
+        <item>Text escaping: <c>#</c> <c>*</c> <c>_</c> <c>$</c> <c>@</c> <c>&lt;</c> and other markup characters.</item>
+        <item>Converting Python types to Typst types: lengths (<c>2cm</c>, <c>1fr</c>, <c>50%</c>), colors, <c>none</c>/<c>auto</c>, alignment, identifiers distinct from strings.</item>
       </list>
     </section>
-    <section title="Binding Python verificato">
-      <fact source="venv: pip install typst" method="run" verified="2026-10-20">Il pacchetto PyPI <c>typst</c> 0.15.0 include Typst 0.15.0 (<c>sys.version</c> nel documento stampa 0.15.0).</fact>
-      <fact source="typst/__init__.pyi" method="read" verified="2026-10-20">API pubblica: <c>compile</c>, <c>compile_with_warnings</c>, <c>query</c>, <c>eval</c>, <c>Compiler</c>, <c>Fonts</c>, <c>FontInfo</c>, <c>TypstError</c>, <c>TypstWarning</c>. <c>compile</c> accetta il sorgente come bytes, percorso o stringa; formati <c>pdf</c>, <c>svg</c>, <c>png</c>, <c>html</c>; parametri <c>sys_inputs</c>, <c>pdf_standards</c> (anche PDF/A), <c>timestamp</c>, <c>root</c>. <c>Compiler</c> accetta <c>font_paths</c>, <c>ignore_system_fonts</c>, <c>package_path</c>, <c>package_cache_path</c>.</fact>
-      <fact source="scratch probe.py" method="run" verified="2026-10-20">Un documento di 3 pagine con tabella da 120 righe compila senza file: <c>typst.compile(bytes, format="pdf")</c>. Prima chiamata 0,62 s; con un <c>Compiler</c> già creato 0,014 s.</fact>
-      <fact source="scratch probe.py" method="run" verified="2026-10-20"><c>TypstError</c> espone <c>message</c>, <c>hints</c>, <c>trace</c>.</fact>
-      <rule level="must" why="Typst è pre-1.0; la sintassi cambia tra versioni minori.">La versione del binding è fissata con <c>==</c> in <c>pyproject.toml</c>.</rule>
+    <section title="Verified Python binding">
+      <fact source="venv: pip install typst" method="run" verified="2026-10-20">The PyPI package <c>typst</c> 0.15.0 bundles Typst 0.15.0 (<c>sys.version</c> in the document prints 0.15.0).</fact>
+      <fact source="typst/__init__.pyi" method="read" verified="2026-10-20">Public API: <c>compile</c>, <c>compile_with_warnings</c>, <c>query</c>, <c>eval</c>, <c>Compiler</c>, <c>Fonts</c>, <c>FontInfo</c>, <c>TypstError</c>, <c>TypstWarning</c>. <c>compile</c> accepts source as bytes, a path or a string; formats <c>pdf</c>, <c>svg</c>, <c>png</c>, <c>html</c>; parameters <c>sys_inputs</c>, <c>pdf_standards</c> (including PDF/A), <c>timestamp</c>, <c>root</c>. <c>Compiler</c> accepts <c>font_paths</c>, <c>ignore_system_fonts</c>, <c>package_path</c>, <c>package_cache_path</c>.</fact>
+      <fact source="scratch probe.py" method="run" verified="2026-10-20">A three-page document with a 120-row table compiles without files: <c>typst.compile(bytes, format="pdf")</c>. First call: 0.62 s; with an existing <c>Compiler</c>: 0.014 s.</fact>
+      <fact source="scratch probe.py" method="run" verified="2026-10-20"><c>TypstError</c> exposes <c>message</c>, <c>hints</c>, <c>trace</c>.</fact>
+      <rule level="must" why="Typst is pre-1.0; syntax changes between minor versions.">The binding version is pinned with <c>==</c> in <c>pyproject.toml</c>.</rule>
     </section>
-    <section title="Anteprima nel browser">
-      <p>typst.ts (WASM) compila lo stesso sorgente nel browser. Non è verificato.</p>
+    <section title="Browser preview">
+      <p>typst.ts (WASM) compiles the same source in the browser. This is unverified.</p>
     </section>
   </solution>
   <decisions>
     <decision id="d-carryover" status="open">
-      <question>Il riporto dei totali tra pagine (a riportare / riporto) si fa con codice <c>context</c> generato dal renderer, o con un calcolo in Python prima della composizione?</question>
+      <question>Should page totals (carried forward / brought forward) use <c>context</c> code generated by the renderer, or Python calculations before typesetting?</question>
     </decision>
     <decision id="d-grammar" status="open">
-      <question>La grammatica riusa i nomi di genro-print (<c>layout</c>, <c>row</c>, <c>cell</c>, <c>paragraph</c>, <c>table</c>) o ne definisce di propri?</question>
+      <question>Should the grammar reuse genro-print names (<c>layout</c>, <c>row</c>, <c>cell</c>, <c>paragraph</c>, <c>table</c>) or define its own?</question>
     </decision>
     <decision id="d-packages" status="open">
-      <question>I pacchetti Typst esterni (es. <c>tiaoma</c>) si scaricano alla prima compilazione o si distribuiscono con il progetto tramite <c>package_path</c>?</question>
+      <question>Should external Typst packages (e.g. <c>tiaoma</c>) download on first compilation or ship with the project through <c>package_path</c>?</question>
     </decision>
     <decision id="d-fonts" status="open">
-      <question>Si usano i font di sistema o una cartella di font distribuita con il progetto (<c>ignore_system_fonts=True</c>) per avere lo stesso PDF su ogni server?</question>
+      <question>Should we use system fonts or ship a font directory with the project (<c>ignore_system_fonts=True</c>) for identical PDFs on every server?</question>
     </decision>
     <decision id="d-inline" status="open">
-      <question>Il testo formattato nelle regioni e nelle celle si descrive con elementi inline della grammatica, o il renderer converte il formato dell'editor di testo scelto in gramlot?</question>
+      <question>Should formatted text in regions and cells use inline grammar elements, or should the renderer convert the format of the text editor chosen for Gramlot?</question>
     </decision>
     <decision id="d-preview" status="open">
-      <question>L'anteprima in gramlot chiede al server il codice Typst, o il renderer viene portato su genro-builders-js per lavorare tutto nel browser?</question>
+      <question>Should the Gramlot preview request Typst code from the server, or should the renderer be ported to genro-builders-js to run entirely in the browser?</question>
     </decision>
   </decisions>
   <consequences>
-    <p>Le stampe non dipendono più da ReportLab né da un browser headless. Dipendono da una libreria Rust pre-1.0 con versione fissata.</p>
+    <p>Printing no longer depends on ReportLab or a headless browser. It depends on a pinned pre-1.0 Rust library.</p>
   </consequences>
 </proposal>

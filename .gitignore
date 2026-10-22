@@ -10,3 +10,6 @@ venv/
 .ruff_cache/
 .coverage
 temp/
+
+# Sphinx output
+docs/_build/

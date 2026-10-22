@@ -26,11 +26,11 @@ from genro_typst import TypstBuilder
 HERE = Path(__file__).parent
 
 ARTICLES = [
-    ("Viti M6x20 inox", Decimal("0.18")),
-    ("Dadi M6 autobloccanti", Decimal("0.09")),
-    ("Rondelle piane 6 mm", Decimal("0.04")),
-    ("Staffa angolare 40x40", Decimal("1.75")),
-    ("Tassello nylon 8 mm", Decimal("0.12")),
+    ("Stainless steel screws M6x20", Decimal("0.18")),
+    ("Self-locking nuts M6", Decimal("0.09")),
+    ("Flat washers 6 mm", Decimal("0.04")),
+    ("Angle bracket 40x40", Decimal("1.75")),
+    ("Nylon wall plug 8 mm", Decimal("0.12")),
 ]
 
 
@@ -53,14 +53,14 @@ class InvoiceLines(TypstBuilder):
 
     def main(self, root):
         doc = root.document(paper="a4", margin="15mm")
-        doc.paragraph(content="Fattura 2026/0142 — righe")
-        table = doc.table(data="^lines", totalize_footer="Totale fattura")
-        table.column(field="code", name="Codice", width="25mm")
-        table.column(field="description", name="Descrizione")
-        table.column(field="quantity", name="Q.tà", width="18mm", align="right", totalize=True)
-        table.column(field="price", name="Prezzo", width="22mm", align="right")
-        table.column(field="amount", name="Importo", width="25mm", align="right", totalize=True)
-        doc.pageNumber(template="Pagina {page} di {total}")
+        doc.paragraph(content="Invoice 2026/0142 — lines")
+        table = doc.table(data="^lines", totalize_footer="Invoice total")
+        table.column(field="code", name="Code", width="25mm")
+        table.column(field="description", name="Description")
+        table.column(field="quantity", name="Qty.", width="18mm", align="right", totalize=True)
+        table.column(field="price", name="Price", width="22mm", align="right")
+        table.column(field="amount", name="Amount", width="25mm", align="right", totalize=True)
+        doc.pageNumber(template="Page {page} of {total}")
 
 
 if __name__ == "__main__":

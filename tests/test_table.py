@@ -26,17 +26,17 @@ def lines_bag(count: int) -> Bag:
 
 class Lines(TypstBuilder):
     count = 3
-    caption: bool | str = "Totale"
+    caption: bool | str = "Total"
 
     def setup(self, data):
         data["lines"] = lines_bag(self.count)
 
     def main(self, root):
         table = root.document().table(data="^lines", totalize_footer=self.caption)
-        table.column(field="code", name="Codice", width="20mm")
-        table.column(field="quantity", name="Q.tà", align="right", totalize=True)
-        table.column(field="price", name="Prezzo", align="right")
-        table.column(field="amount", name="Importo", width=2, align="right", totalize=True)
+        table.column(field="code", name="Code", width="20mm")
+        table.column(field="quantity", name="Qty.", align="right", totalize=True)
+        table.column(field="price", name="Price", align="right")
+        table.column(field="amount", name="Amount", width=2, align="right", totalize=True)
 
 
 def rendered(cls: type[TypstBuilder]) -> str:
@@ -54,8 +54,8 @@ def test_columns_and_alignments():
 def test_header_repeats():
     code = rendered(Lines)
     assert (
-        'table.header(repeat: true, strong("Codice"), strong("Q.tà"), '
-        'strong("Prezzo"), strong("Importo"))'
+        'table.header(repeat: true, strong("Code"), strong("Qty."), '
+        'strong("Price"), strong("Amount"))'
     ) in code
 
 
@@ -67,7 +67,7 @@ def test_one_cell_per_field_per_row():
 def test_totals_and_caption_runs():
     code = rendered(Lines)
     assert (
-        'table.footer(repeat: false, table.cell(colspan: 1, strong("Totale")), '
+        'table.footer(repeat: false, table.cell(colspan: 1, strong("Total")), '
         'strong("6"), table.cell(colspan: 1, strong("")), strong("9.00"))'
     ) in code
 

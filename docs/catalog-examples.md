@@ -1,11 +1,11 @@
-# Esempi verificati del catalogo
+# Verified catalog examples
 
-Generato da `tests/native_cases.py` con `tools/generate_reference.py`.
-Ogni ricetta è eseguita nei test; il sorgente prodotto compila in PDF e SVG
-con Typst 0.15.0. Gli SVG coincidono con quelli del riferimento Typst
-scritto direttamente, nel medesimo contesto. Vedi [verifica](verification.md).
+Generated from `tests/native_cases.py` by `tools/generate_reference.py`.
+Every recipe is executed in tests; its source compiles to PDF and SVG
+with Typst 0.15.0. SVGs match the handwritten Typst reference
+in the same context. See [verification](verification.md).
 
-Le ricette sono autonome, salvo i file locali indicati qui sotto. Per compilare:
+Recipes are self-contained except for the local files below. To compile:
 
 ```python
 from pathlib import Path
@@ -14,7 +14,7 @@ result = TypstEngine().compile(source, root=Path("assets"), preview=True)
 Path("example.pdf").write_bytes(result.pdf)
 ```
 
-Creare la cartella `assets`. `image` richiede `assets/logo.svg`:
+Create the `assets` directory. `image` requires `assets/logo.svg`:
 
 ```xml
 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20">
@@ -22,7 +22,7 @@ Creare la cartella `assets`. `image` richiede `assets/logo.svg`:
 </svg>
 ```
 
-`cite` e `bibliography` richiedono `assets/refs.yml`:
+`cite` and `bibliography` require `assets/refs.yml`:
 
 ```yaml
 manual:
@@ -32,12 +32,12 @@ manual:
   date: 2026
 ```
 
-I prefissi `typst_` evitano collisioni con metodi/proprietà di SourceBag.
-`expr` rende espliciti i valori Typst; i dizionari e le liste restano dati Python.
+The `typst_` prefix avoids collisions with SourceBag methods/properties.
+`expr` marks explicit Typst values; dictionaries and lists remain Python data.
 
 ## text
 
-Contesto del caso: `document`.
+Case context: `document`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -51,7 +51,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -62,7 +62,7 @@ Riferimento Typst indipendente:
 
 ## underline
 
-Contesto del caso: `document`.
+Case context: `document`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -76,7 +76,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -87,7 +87,7 @@ Riferimento Typst indipendente:
 
 ## overline
 
-Contesto del caso: `document`.
+Case context: `document`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -101,7 +101,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -112,7 +112,7 @@ Riferimento Typst indipendente:
 
 ## strike
 
-Contesto del caso: `document`.
+Case context: `document`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -126,7 +126,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -137,7 +137,7 @@ Riferimento Typst indipendente:
 
 ## highlight
 
-Contesto del caso: `document`.
+Case context: `document`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -151,7 +151,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -162,7 +162,7 @@ Riferimento Typst indipendente:
 
 ## smallcaps
 
-Contesto del caso: `document`.
+Case context: `document`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -176,7 +176,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -187,7 +187,7 @@ Riferimento Typst indipendente:
 
 ## sub
 
-Contesto del caso: `document`.
+Case context: `document`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -201,7 +201,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -212,7 +212,7 @@ Riferimento Typst indipendente:
 
 ## super
 
-Contesto del caso: `document`.
+Case context: `document`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -226,7 +226,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -237,7 +237,7 @@ Riferimento Typst indipendente:
 
 ## lower
 
-Contesto del caso: `document`.
+Case context: `document`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -251,7 +251,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -262,7 +262,7 @@ Riferimento Typst indipendente:
 
 ## upper
 
-Contesto del caso: `document`.
+Case context: `document`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -276,7 +276,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -287,7 +287,7 @@ Riferimento Typst indipendente:
 
 ## raw
 
-Contesto del caso: `document`.
+Case context: `document`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -301,7 +301,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -312,7 +312,7 @@ Riferimento Typst indipendente:
 
 ## lorem
 
-Contesto del caso: `document`.
+Case context: `document`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -326,7 +326,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -337,7 +337,7 @@ Riferimento Typst indipendente:
 
 ## linebreak
 
-Contesto del caso: `document`.
+Case context: `document`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -351,7 +351,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -362,7 +362,7 @@ Riferimento Typst indipendente:
 
 ## smartquote
 
-Contesto del caso: `document`.
+Case context: `document`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -376,7 +376,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -387,7 +387,7 @@ Riferimento Typst indipendente:
 
 ## heading
 
-Contesto del caso: `document`.
+Case context: `document`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -401,7 +401,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -412,7 +412,7 @@ Riferimento Typst indipendente:
 
 ## strong
 
-Contesto del caso: `document`.
+Case context: `document`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -426,7 +426,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -437,7 +437,7 @@ Riferimento Typst indipendente:
 
 ## emph
 
-Contesto del caso: `document`.
+Case context: `document`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -451,7 +451,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -462,7 +462,7 @@ Riferimento Typst indipendente:
 
 ## par
 
-Contesto del caso: `document`.
+Case context: `document`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -476,7 +476,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -487,7 +487,7 @@ Riferimento Typst indipendente:
 
 ## quote
 
-Contesto del caso: `document`.
+Case context: `document`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -501,7 +501,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -512,7 +512,7 @@ Riferimento Typst indipendente:
 
 ## figure
 
-Contesto del caso: `document`.
+Case context: `document`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -527,7 +527,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -538,7 +538,7 @@ Riferimento Typst indipendente:
 
 ## footnote
 
-Contesto del caso: `document`.
+Case context: `document`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -552,7 +552,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -563,7 +563,7 @@ Riferimento Typst indipendente:
 
 ## title
 
-Contesto del caso: `document`.
+Case context: `document`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -577,7 +577,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -588,7 +588,7 @@ Riferimento Typst indipendente:
 
 ## list
 
-Contesto del caso: `document`.
+Case context: `document`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -602,7 +602,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -613,7 +613,7 @@ Riferimento Typst indipendente:
 
 ## enum
 
-Contesto del caso: `document`.
+Case context: `document`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -627,7 +627,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -638,7 +638,7 @@ Riferimento Typst indipendente:
 
 ## terms
 
-Contesto del caso: `document`.
+Case context: `document`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -653,7 +653,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -664,7 +664,7 @@ Riferimento Typst indipendente:
 
 ## list_item
 
-Contesto del caso: `list`.
+Case context: `list`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -679,7 +679,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -690,7 +690,7 @@ Riferimento Typst indipendente:
 
 ## enum_item
 
-Contesto del caso: `enum`.
+Case context: `enum`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -705,7 +705,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -716,7 +716,7 @@ Riferimento Typst indipendente:
 
 ## terms_item
 
-Contesto del caso: `terms`.
+Case context: `terms`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -731,7 +731,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -742,7 +742,7 @@ Riferimento Typst indipendente:
 
 ## link
 
-Contesto del caso: `document`.
+Case context: `document`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -757,7 +757,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -768,7 +768,7 @@ Riferimento Typst indipendente:
 
 ## ref
 
-Contesto del caso: `document`.
+Case context: `document`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -785,7 +785,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -799,7 +799,7 @@ Riferimento Typst indipendente:
 
 ## cite
 
-Contesto del caso: `document`.
+Case context: `document`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -814,7 +814,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -826,7 +826,7 @@ Riferimento Typst indipendente:
 
 ## bibliography
 
-Contesto del caso: `document`.
+Case context: `document`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -840,7 +840,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -851,7 +851,7 @@ Riferimento Typst indipendente:
 
 ## numbering
 
-Contesto del caso: `document`.
+Case context: `document`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -865,7 +865,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -876,7 +876,7 @@ Riferimento Typst indipendente:
 
 ## outline
 
-Contesto del caso: `document`.
+Case context: `document`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -893,7 +893,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -907,7 +907,7 @@ Riferimento Typst indipendente:
 
 ## parbreak
 
-Contesto del caso: `document`.
+Case context: `document`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -921,7 +921,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -932,7 +932,7 @@ Riferimento Typst indipendente:
 
 ## divider
 
-Contesto del caso: `document`.
+Case context: `document`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -946,7 +946,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -957,7 +957,7 @@ Riferimento Typst indipendente:
 
 ## table_header
 
-Contesto del caso: `table`.
+Case context: `table`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -975,7 +975,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -986,7 +986,7 @@ Riferimento Typst indipendente:
 
 ## table_footer
 
-Contesto del caso: `table`.
+Case context: `table`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -1004,7 +1004,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -1015,7 +1015,7 @@ Riferimento Typst indipendente:
 
 ## table_cell
 
-Contesto del caso: `table`.
+Case context: `table`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -1032,7 +1032,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -1043,7 +1043,7 @@ Riferimento Typst indipendente:
 
 ## table_hline
 
-Contesto del caso: `table`.
+Case context: `table`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -1060,7 +1060,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -1071,7 +1071,7 @@ Riferimento Typst indipendente:
 
 ## table_vline
 
-Contesto del caso: `table`.
+Case context: `table`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -1088,7 +1088,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -1099,7 +1099,7 @@ Riferimento Typst indipendente:
 
 ## native_table
 
-Contesto del caso: `document`.
+Case context: `document`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -1113,7 +1113,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -1124,7 +1124,7 @@ Riferimento Typst indipendente:
 
 ## align
 
-Contesto del caso: `document`.
+Case context: `document`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -1138,7 +1138,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -1149,7 +1149,7 @@ Riferimento Typst indipendente:
 
 ## block
 
-Contesto del caso: `document`.
+Case context: `document`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -1163,7 +1163,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -1174,7 +1174,7 @@ Riferimento Typst indipendente:
 
 ## box
 
-Contesto del caso: `document`.
+Case context: `document`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -1188,7 +1188,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -1199,7 +1199,7 @@ Riferimento Typst indipendente:
 
 ## columns
 
-Contesto del caso: `document`.
+Case context: `document`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -1213,7 +1213,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -1224,7 +1224,7 @@ Riferimento Typst indipendente:
 
 ## hide
 
-Contesto del caso: `document`.
+Case context: `document`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -1238,7 +1238,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -1249,7 +1249,7 @@ Riferimento Typst indipendente:
 
 ## move
 
-Contesto del caso: `document`.
+Case context: `document`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -1263,7 +1263,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -1274,7 +1274,7 @@ Riferimento Typst indipendente:
 
 ## pad
 
-Contesto del caso: `document`.
+Case context: `document`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -1288,7 +1288,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -1299,7 +1299,7 @@ Riferimento Typst indipendente:
 
 ## page
 
-Contesto del caso: `document`.
+Case context: `document`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -1313,7 +1313,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -1324,7 +1324,7 @@ Riferimento Typst indipendente:
 
 ## place
 
-Contesto del caso: `document`.
+Case context: `document`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -1338,7 +1338,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -1349,7 +1349,7 @@ Riferimento Typst indipendente:
 
 ## repeat
 
-Contesto del caso: `document`.
+Case context: `document`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -1363,7 +1363,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -1374,7 +1374,7 @@ Riferimento Typst indipendente:
 
 ## rotate
 
-Contesto del caso: `document`.
+Case context: `document`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -1388,7 +1388,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -1399,7 +1399,7 @@ Riferimento Typst indipendente:
 
 ## scale
 
-Contesto del caso: `document`.
+Case context: `document`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -1413,7 +1413,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -1424,7 +1424,7 @@ Riferimento Typst indipendente:
 
 ## skew
 
-Contesto del caso: `document`.
+Case context: `document`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -1438,7 +1438,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -1449,7 +1449,7 @@ Riferimento Typst indipendente:
 
 ## grid
 
-Contesto del caso: `document`.
+Case context: `document`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -1463,7 +1463,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -1474,7 +1474,7 @@ Riferimento Typst indipendente:
 
 ## stack
 
-Contesto del caso: `document`.
+Case context: `document`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -1488,7 +1488,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -1499,7 +1499,7 @@ Riferimento Typst indipendente:
 
 ## grid_header
 
-Contesto del caso: `grid`.
+Case context: `grid`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -1517,7 +1517,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -1528,7 +1528,7 @@ Riferimento Typst indipendente:
 
 ## grid_footer
 
-Contesto del caso: `grid`.
+Case context: `grid`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -1546,7 +1546,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -1557,7 +1557,7 @@ Riferimento Typst indipendente:
 
 ## grid_cell
 
-Contesto del caso: `grid`.
+Case context: `grid`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -1574,7 +1574,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -1585,7 +1585,7 @@ Riferimento Typst indipendente:
 
 ## pagebreak
 
-Contesto del caso: `document`.
+Case context: `document`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -1599,7 +1599,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -1610,7 +1610,7 @@ Riferimento Typst indipendente:
 
 ## colbreak
 
-Contesto del caso: `columns`.
+Case context: `columns`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -1627,7 +1627,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -1638,7 +1638,7 @@ Riferimento Typst indipendente:
 
 ## grid_hline
 
-Contesto del caso: `grid`.
+Case context: `grid`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -1655,7 +1655,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -1666,7 +1666,7 @@ Riferimento Typst indipendente:
 
 ## grid_vline
 
-Contesto del caso: `grid`.
+Case context: `grid`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -1683,7 +1683,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -1694,7 +1694,7 @@ Riferimento Typst indipendente:
 
 ## h
 
-Contesto del caso: `document`.
+Case context: `document`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -1708,7 +1708,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -1719,7 +1719,7 @@ Riferimento Typst indipendente:
 
 ## v
 
-Contesto del caso: `document`.
+Case context: `document`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -1733,7 +1733,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -1744,7 +1744,7 @@ Riferimento Typst indipendente:
 
 ## measure
 
-Contesto del caso: `measure`.
+Case context: `measure`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -1760,7 +1760,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -1771,7 +1771,7 @@ Riferimento Typst indipendente:
 
 ## native_layout
 
-Contesto del caso: `document`.
+Case context: `document`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -1785,7 +1785,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -1796,7 +1796,7 @@ Riferimento Typst indipendente:
 
 ## circle
 
-Contesto del caso: `document`.
+Case context: `document`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -1810,7 +1810,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -1821,7 +1821,7 @@ Riferimento Typst indipendente:
 
 ## ellipse
 
-Contesto del caso: `document`.
+Case context: `document`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -1835,7 +1835,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -1846,7 +1846,7 @@ Riferimento Typst indipendente:
 
 ## rect
 
-Contesto del caso: `document`.
+Case context: `document`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -1860,7 +1860,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -1871,7 +1871,7 @@ Riferimento Typst indipendente:
 
 ## square
 
-Contesto del caso: `document`.
+Case context: `document`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -1885,7 +1885,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -1896,7 +1896,7 @@ Riferimento Typst indipendente:
 
 ## image
 
-Contesto del caso: `document`.
+Case context: `document`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -1910,7 +1910,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -1921,7 +1921,7 @@ Riferimento Typst indipendente:
 
 ## line
 
-Contesto del caso: `document`.
+Case context: `document`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -1935,7 +1935,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -1946,7 +1946,7 @@ Riferimento Typst indipendente:
 
 ## polygon
 
-Contesto del caso: `document`.
+Case context: `document`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -1960,7 +1960,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -1971,7 +1971,7 @@ Riferimento Typst indipendente:
 
 ## curve
 
-Contesto del caso: `document`.
+Case context: `document`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -1987,7 +1987,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -1998,7 +1998,7 @@ Riferimento Typst indipendente:
 
 ## curve_move
 
-Contesto del caso: `curve`.
+Case context: `curve`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -2016,7 +2016,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -2027,7 +2027,7 @@ Riferimento Typst indipendente:
 
 ## curve_line
 
-Contesto del caso: `curve`.
+Case context: `curve`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -2045,7 +2045,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -2056,7 +2056,7 @@ Riferimento Typst indipendente:
 
 ## curve_quad
 
-Contesto del caso: `curve`.
+Case context: `curve`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -2074,7 +2074,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -2085,7 +2085,7 @@ Riferimento Typst indipendente:
 
 ## curve_cubic
 
-Contesto del caso: `curve`.
+Case context: `curve`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -2103,7 +2103,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -2114,7 +2114,7 @@ Riferimento Typst indipendente:
 
 ## curve_close
 
-Contesto del caso: `curve`.
+Case context: `curve`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -2132,7 +2132,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -2143,7 +2143,7 @@ Riferimento Typst indipendente:
 
 ## math_equation
 
-Contesto del caso: `document`.
+Case context: `document`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -2157,7 +2157,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -2168,7 +2168,7 @@ Riferimento Typst indipendente:
 
 ## math_upright
 
-Contesto del caso: `math`.
+Case context: `math`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -2183,7 +2183,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -2194,7 +2194,7 @@ Riferimento Typst indipendente:
 
 ## math_italic
 
-Contesto del caso: `math`.
+Case context: `math`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -2209,7 +2209,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -2220,7 +2220,7 @@ Riferimento Typst indipendente:
 
 ## math_bold
 
-Contesto del caso: `math`.
+Case context: `math`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -2235,7 +2235,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -2246,7 +2246,7 @@ Riferimento Typst indipendente:
 
 ## math_serif
 
-Contesto del caso: `math`.
+Case context: `math`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -2261,7 +2261,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -2272,7 +2272,7 @@ Riferimento Typst indipendente:
 
 ## math_sans
 
-Contesto del caso: `math`.
+Case context: `math`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -2287,7 +2287,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -2298,7 +2298,7 @@ Riferimento Typst indipendente:
 
 ## math_cal
 
-Contesto del caso: `math`.
+Case context: `math`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -2313,7 +2313,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -2324,7 +2324,7 @@ Riferimento Typst indipendente:
 
 ## math_frak
 
-Contesto del caso: `math`.
+Case context: `math`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -2339,7 +2339,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -2350,7 +2350,7 @@ Riferimento Typst indipendente:
 
 ## math_mono
 
-Contesto del caso: `math`.
+Case context: `math`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -2365,7 +2365,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -2376,7 +2376,7 @@ Riferimento Typst indipendente:
 
 ## math_bb
 
-Contesto del caso: `math`.
+Case context: `math`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -2391,7 +2391,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -2402,7 +2402,7 @@ Riferimento Typst indipendente:
 
 ## math_display
 
-Contesto del caso: `math`.
+Case context: `math`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -2417,7 +2417,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -2428,7 +2428,7 @@ Riferimento Typst indipendente:
 
 ## math_inline
 
-Contesto del caso: `math`.
+Case context: `math`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -2443,7 +2443,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -2454,7 +2454,7 @@ Riferimento Typst indipendente:
 
 ## math_script
 
-Contesto del caso: `math`.
+Case context: `math`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -2469,7 +2469,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -2480,7 +2480,7 @@ Riferimento Typst indipendente:
 
 ## math_sscript
 
-Contesto del caso: `math`.
+Case context: `math`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -2495,7 +2495,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -2506,7 +2506,7 @@ Riferimento Typst indipendente:
 
 ## math_frac
 
-Contesto del caso: `math`.
+Case context: `math`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -2521,7 +2521,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -2532,7 +2532,7 @@ Riferimento Typst indipendente:
 
 ## math_root
 
-Contesto del caso: `math`.
+Case context: `math`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -2547,7 +2547,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -2558,7 +2558,7 @@ Riferimento Typst indipendente:
 
 ## math_sqrt
 
-Contesto del caso: `math`.
+Case context: `math`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -2573,7 +2573,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -2584,7 +2584,7 @@ Riferimento Typst indipendente:
 
 ## math_binom
 
-Contesto del caso: `math`.
+Case context: `math`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -2599,7 +2599,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -2610,7 +2610,7 @@ Riferimento Typst indipendente:
 
 ## math_vec
 
-Contesto del caso: `math`.
+Case context: `math`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -2625,7 +2625,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -2636,7 +2636,7 @@ Riferimento Typst indipendente:
 
 ## math_mat
 
-Contesto del caso: `math`.
+Case context: `math`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -2651,7 +2651,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -2662,7 +2662,7 @@ Riferimento Typst indipendente:
 
 ## math_cases
 
-Contesto del caso: `math`.
+Case context: `math`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -2677,7 +2677,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -2688,7 +2688,7 @@ Riferimento Typst indipendente:
 
 ## math_lr
 
-Contesto del caso: `math`.
+Case context: `math`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -2703,7 +2703,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -2714,7 +2714,7 @@ Riferimento Typst indipendente:
 
 ## math_attach
 
-Contesto del caso: `math`.
+Case context: `math`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -2729,7 +2729,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -2740,7 +2740,7 @@ Riferimento Typst indipendente:
 
 ## math_accent
 
-Contesto del caso: `math`.
+Case context: `math`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -2755,7 +2755,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -2766,7 +2766,7 @@ Riferimento Typst indipendente:
 
 ## math_cancel
 
-Contesto del caso: `math`.
+Case context: `math`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -2781,7 +2781,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -2792,7 +2792,7 @@ Riferimento Typst indipendente:
 
 ## math_class
 
-Contesto del caso: `math`.
+Case context: `math`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -2807,7 +2807,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -2818,7 +2818,7 @@ Riferimento Typst indipendente:
 
 ## math_op
 
-Contesto del caso: `math`.
+Case context: `math`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -2833,7 +2833,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -2844,7 +2844,7 @@ Riferimento Typst indipendente:
 
 ## math_limits
 
-Contesto del caso: `math`.
+Case context: `math`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -2859,7 +2859,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -2870,7 +2870,7 @@ Riferimento Typst indipendente:
 
 ## math_scripts
 
-Contesto del caso: `math`.
+Case context: `math`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -2885,7 +2885,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -2896,7 +2896,7 @@ Riferimento Typst indipendente:
 
 ## math_abs
 
-Contesto del caso: `math`.
+Case context: `math`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -2911,7 +2911,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -2922,7 +2922,7 @@ Riferimento Typst indipendente:
 
 ## math_norm
 
-Contesto del caso: `math`.
+Case context: `math`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -2937,7 +2937,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -2948,7 +2948,7 @@ Riferimento Typst indipendente:
 
 ## math_floor
 
-Contesto del caso: `math`.
+Case context: `math`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -2963,7 +2963,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -2974,7 +2974,7 @@ Riferimento Typst indipendente:
 
 ## math_ceil
 
-Contesto del caso: `math`.
+Case context: `math`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -2989,7 +2989,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -3000,7 +3000,7 @@ Riferimento Typst indipendente:
 
 ## math_round
 
-Contesto del caso: `math`.
+Case context: `math`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -3015,7 +3015,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -3026,7 +3026,7 @@ Riferimento Typst indipendente:
 
 ## math_stretch
 
-Contesto del caso: `math`.
+Case context: `math`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -3041,7 +3041,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -3052,7 +3052,7 @@ Riferimento Typst indipendente:
 
 ## math_underbrace
 
-Contesto del caso: `math`.
+Case context: `math`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -3067,7 +3067,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -3078,7 +3078,7 @@ Riferimento Typst indipendente:
 
 ## math_overbrace
 
-Contesto del caso: `math`.
+Case context: `math`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -3093,7 +3093,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -3104,7 +3104,7 @@ Riferimento Typst indipendente:
 
 ## math_underbracket
 
-Contesto del caso: `math`.
+Case context: `math`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -3119,7 +3119,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -3130,7 +3130,7 @@ Riferimento Typst indipendente:
 
 ## math_overbracket
 
-Contesto del caso: `math`.
+Case context: `math`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -3145,7 +3145,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -3156,7 +3156,7 @@ Riferimento Typst indipendente:
 
 ## math_underline
 
-Contesto del caso: `math`.
+Case context: `math`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -3171,7 +3171,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -3182,7 +3182,7 @@ Riferimento Typst indipendente:
 
 ## math_overline
 
-Contesto del caso: `math`.
+Case context: `math`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -3197,7 +3197,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -3208,7 +3208,7 @@ Riferimento Typst indipendente:
 
 ## math_underparen
 
-Contesto del caso: `math`.
+Case context: `math`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -3223,7 +3223,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -3234,7 +3234,7 @@ Riferimento Typst indipendente:
 
 ## math_overparen
 
-Contesto del caso: `math`.
+Case context: `math`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -3249,7 +3249,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -3260,7 +3260,7 @@ Riferimento Typst indipendente:
 
 ## math_undershell
 
-Contesto del caso: `math`.
+Case context: `math`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -3275,7 +3275,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -3286,7 +3286,7 @@ Riferimento Typst indipendente:
 
 ## math_overshell
 
-Contesto del caso: `math`.
+Case context: `math`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -3301,7 +3301,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -3312,7 +3312,7 @@ Riferimento Typst indipendente:
 
 ## math_primes
 
-Contesto del caso: `math`.
+Case context: `math`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -3327,7 +3327,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -3338,7 +3338,7 @@ Riferimento Typst indipendente:
 
 ## metadata
 
-Contesto del caso: `document`.
+Case context: `document`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -3352,7 +3352,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)
@@ -3363,7 +3363,7 @@ Riferimento Typst indipendente:
 
 ## pdf_artifact
 
-Contesto del caso: `document`.
+Case context: `document`.
 
 ```python
 from genro_typst import TypstBuilder, expr
@@ -3377,7 +3377,7 @@ doc.typst_text(content='After')
 source = builder.render()
 ```
 
-Riferimento Typst indipendente:
+Independent Typst reference:
 
 ```typst
 #set page(paper: "a4", flipped: false, margin: 15mm)

@@ -33,20 +33,20 @@ class InvoiceHeader(TypstBuilder):
 
     def main(self, root):
         doc = root.document(paper="a4", margin="15mm")
-        doc.paragraph(content="Fattura")
+        doc.paragraph(content="Invoice")
         layout = doc.layout(border_width="0.5pt", border_color="#555555")
         top = layout.row()
-        top.cell(content="Softwell S.r.l.", lbl="Fornitore")
-        top.cell(content="^customer.name", lbl="Cliente")
+        top.cell(content="Softwell S.r.l.", lbl="Supplier")
+        top.cell(content="^customer.name", lbl="Customer")
         middle = layout.row()
-        middle.cell(content="^customer.address", lbl="Indirizzo")
-        middle.cell(content="^customer.vat", lbl="Partita IVA", width="45mm")
+        middle.cell(content="^customer.address", lbl="Address")
+        middle.cell(content="^customer.vat", lbl="VAT number", width="45mm")
         bottom = layout.row(height="12mm")
-        bottom.cell(content="^invoice.number", lbl="Numero", width="40mm")
-        bottom.cell(content="^invoice.date", lbl="Data", width="30mm")
-        bottom.cell(content="Bonifico a 30 giorni", lbl="Pagamento")
-        notes = bottom.cell(lbl="Pagina", width="25mm", align="right", background="#eeeeee")
-        notes.pageNumber(template="{page} di {total}")
+        bottom.cell(content="^invoice.number", lbl="Number", width="40mm")
+        bottom.cell(content="^invoice.date", lbl="Date", width="30mm")
+        bottom.cell(content="Bank transfer within 30 days", lbl="Payment")
+        notes = bottom.cell(lbl="Page", width="25mm", align="right", background="#eeeeee")
+        notes.pageNumber(template="{page} of {total}")
 
 
 if __name__ == "__main__":

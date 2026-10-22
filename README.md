@@ -54,7 +54,7 @@ imports, includes, bindings and access to custom functions and trusted code.
 The original `document`, `layout`, `row`, `cell`, `table`, `column`, `paragraph`
 and `pageNumber` elements remain compatible.
 
-Start with the [Italian guide](docs/typst-guide.md), the generated
+Start with the [English guide](docs/typst-guide.md), the generated
 [native API reference](docs/native-reference.md) and the
 [machine-readable catalog](docs/native-catalog.json). The catalog targets Typst
 0.15.0. Native keyword parameters are forwarded to Typst for validation; this
@@ -81,7 +81,7 @@ Examples with Python, generated Typst and PDF:
 - [Invoice lines](examples/02_invoice_lines/invoice_lines.py): table columns and
   totals.
 
-The original design proposal is retained in
+The historical design proposal (2026-10-20, superseded in part by the current guide) is retained in
 [`xmldocs/proposal/typst-backend.md`](xmldocs/proposal/typst-backend.md).
 
 The [native report](examples/03_native_report/report.py) demonstrates styles,
@@ -108,6 +108,22 @@ page_count = result.pages
 the same source with a shared timestamp. Without `preview=True`, no SVG pages
 are generated and `pages` is `None`. Importing the library or generating source
 does not import the optional Typst compiler.
+
+## Sphinx documentation
+
+The [documentation](docs/index.md) is entirely in English: guide, Python API,
+native reference, executable examples and verification contract.
+
+```bash
+python -m pip install -e ".[docs]"
+python -m sphinx -n -W --keep-going -b html docs docs/_build/html
+```
+
+Open `docs/_build/html/index.html`. See [documentation development](docs/documentation.md)
+for generated references and the application gallery. CI builds the site with
+warnings treated as errors and uploads the HTML artifact.
+The repository also includes `.readthedocs.yaml`; import `genro-org/genro-typst`
+on Read the Docs to enable hosted documentation builds from `main`.
 
 ## Development and repository boundary
 

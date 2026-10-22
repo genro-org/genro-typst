@@ -1,84 +1,82 @@
-# Verifica del renderer Typst
+# Renderer verification
 
-La verifica si riferisce a **Typst 0.15.0**, la versione fissata nell'extra `pdf`.
-Copre tutte le **129 chiamate native registrate**, i **12 costrutti di linguaggio**
-e gli **8 elementi storici** del builder. Non significa che ogni combinazione
-possibile dei parametri o l'intera libreria standard Typst sia stata provata.
+Verification targets **Typst 0.15.0**, pinned in the `pdf` extra. It covers all
+**129 registered native calls**, **12 language constructs** and **eight legacy
+builder elements**. This does not mean that every parameter combination or the
+entire Typst standard library has been tested.
 
-## Contratto verificato
+## Verification contract
 
-Per ciascuna chiamata nativa, `tests/native_cases.py` contiene un caso esplicito
-con parametri validi, il contesto necessario e un riferimento Typst scritto
-indipendentemente dal renderer. Il test in `tests/test_catalog_compilation.py`:
+For every native call, `tests/native_cases.py` defines an explicit case with
+valid parameters, the required context and Typst reference source written
+independently of the renderer. `tests/test_catalog_compilation.py`:
 
-1. controlla che i casi corrispondano esattamente al catalogo: un nuovo elemento
-   senza esempio fa fallire la suite;
-2. costruisce l'albero e ne verifica la grammatica;
-3. esegue la ricetta Python pubblicata nella documentazione e verifica che
-   produca lo stesso sorgente;
-4. salva e ricarica l'albero TYTX, conservando struttura e sorgente;
-5. compila il sorgente con `TypstEngine` in PDF e SVG;
-6. verifica il numero atteso di pagine, XML e dimensioni degli SVG;
-7. confronta **tutte le pagine SVG byte per byte** con il riferimento Typst,
-   compilato nello stesso ambiente;
-8. prova un parametro inesistente e verifica l'errore del compilatore.
+1. Checks exact agreement between cases and catalog: adding an element without
+   an example fails the suite.
+2. Builds the tree and validates its grammar.
+3. Executes the Python recipe published in the documentation and checks that
+   it produces the same source.
+4. Saves and reloads the TYTX tree, preserving structure and source.
+5. Compiles the source to PDF and SVG through `TypstEngine`.
+6. Checks the expected page count, SVG XML and dimensions.
+7. Compares **every SVG page byte for byte** against the handwritten reference
+   compiled in the same environment.
+8. Supplies an unknown parameter and checks the compiler error.
 
-I file Typst di prova sono conservati nella directory temporanea pytest. Se il
-confronto fallisce, vengono salvati anche gli SVG effettivi e attesi. Il confronto
-è tra due compilazioni della stessa versione, con gli stessi font: non impone
-snapshot binari che dipendano dalla macchina o da una versione futura di Typst.
-Il PDF viene realmente compilato, ma non viene confrontato byte per byte con
-l'SVG né viene verificata automaticamente ogni proprietà del PDF (tagging,
-accessibilità, link e metadati).
+Test Typst files remain in pytest's temporary directory. Failed comparisons
+also save actual and expected SVGs. Comparisons use the same compiler version
+and fonts; they do not impose binary snapshots tied to a machine or future
+Typst version. PDF output is compiled, but is not compared byte for byte with
+SVG, and not every PDF property is automatically checked (tagging,
+accessibility, links and metadata).
 
-Gli [esempi del catalogo](catalog-examples.md) riportano ricetta Python e
-riferimento Typst completo, inclusi i contenitori richiesti.
+The [catalog examples](catalog-examples.md) include Python recipes and complete
+Typst references with the required containers.
 
-## Contesti e comportamenti da rispettare
+## Required contexts and behavior
 
-- `table_footer` e `grid_footer` devono terminare all'ultima riga: le celle del
-  corpo vanno aggiunte **prima** del footer. La suite prova anche il caso errato.
-- `table_cell`, `grid_cell`, intestazioni e linee vanno usati nel contenitore
-  corrispondente; gli elementi `curve_*` dentro `curve`.
-- Gli elementi matematici sono provati dentro `math_equation`; in modalità codice
-  argomenti come quelli di `math_vec` e `math_mat` sono contenuti/stringhe,
-  non numeri Python da visualizzare implicitamente.
-- `measure` richiede un contesto Typst e restituisce un dizionario. L'esempio
-  usa `context` e `call(function="repr", mode="args")` per visualizzarlo.
-- `native_layout` riceve una callback esplicita; `metadata` inserisce dati
-  invisibili. `hide` e gli elementi strutturali non producono necessariamente
-  contenuto visibile proprio.
-- `columns`, `move` e `label` collidono con nomi di SourceBag: usare i prefissi
-  `typst_columns`, `typst_move`, `typst_label`. Gli esempi usano il prefisso
-  sistematicamente, valido anche per gli altri metodi.
+- `table_footer` and `grid_footer` must end at the final row. Add body cells
+  **before** the footer. The suite also exercises invalid ordering.
+- Table/grid cells, headers and lines belong in their corresponding container;
+  `curve_*` elements belong in `curve`.
+- Math elements are tested inside `math_equation`. In code mode, arguments to
+  functions such as `math_vec` and `math_mat` are content/strings, not Python
+  numbers implicitly converted to displayed text.
+- `measure` requires Typst context and returns a dictionary. Its example uses
+  `context` and `call(function="repr", mode="args")` to display the result.
+- `native_layout` receives an explicit callback; `metadata` inserts invisible
+  data. `hide` and structural elements need not produce visible content themselves.
+- `columns`, `move` and `label` collide with SourceBag names: use
+  `typst_columns`, `typst_move` and `typst_label`. Examples consistently use the
+  prefix, which is also valid for other methods.
 
-## Linguaggio, dati e regressioni
+## Language, data and regressions
 
-`tests/test_language_compilation.py` esercita tutti i costrutti di linguaggio con
-PDF/SVG e round trip, le cinque modalità di `call`, import locali per nome,
-wildcard e alias, valori letterali confrontati con il parser JSON di Typst,
-errori attesi e un documento che combina tutti gli elementi storici con dati
-Bag ed elementi nativi. I test preesistenti coprono anche tabelle su più pagine,
-totali, ereditarietà di stili, riferimenti, regole locali e binding dinamici.
+`tests/test_language_compilation.py` exercises every language construct with
+PDF/SVG compilation and round trips, all five `call` modes, local imports by
+name, wildcard and alias, literal values compared with Typst's JSON parser,
+expected errors, and a document combining every legacy element with Bag data
+and native elements. Existing tests also cover multipage tables, totals,
+style inheritance, references, local rules and dynamic binding.
 
-Difetti corretti durante la verifica:
+Regressions covered during verification:
 
-- `markup("... // commento")` conserva ora il delimitatore di chiusura grazie
-  a una nuova riga finale, come già faceva `typst_markup`.
-- `options` e `args` distinguono `None` dai valori vuoti di tipo errato: liste
-  passate come `options`, dizionari passati come `args`, booleani e stringhe non
-  vengono più ignorati silenziosamente. Gli errori sono `TypeError`.
-- Alias e nomi importati devono essere identificatori semplici; percorsi puntati
-  vengono rifiutati con `ValueError`. I percorsi puntati restano validi per
-  chiamare funzioni, ad esempio `call(function="helper.greeting", ...)`.
+- `markup("... // comment")` preserves the closing delimiter by adding a final
+  newline, matching `typst_markup`.
+- `options` and `args` distinguish `None` from empty values of the wrong type.
+  Lists supplied as `options`, dictionaries supplied as `args`, booleans and
+  strings raise `TypeError` instead of being silently ignored.
+- Imported names and aliases must be simple identifiers. Dotted names raise
+  `ValueError`; dotted paths remain valid for function calls such as
+  `call(function="helper.greeting", ...)`.
 
-I tre elementi `dataSetter`, `dataFormula` e `dataController` ereditati da
-`genro-builders` riguardano il runtime dei dati: non sono chiamate Typst e non
-sono contati tra i 149 elementi documentali sopra indicati.
+The three elements `dataSetter`, `dataFormula` and `dataController` inherited
+from `genro-builders` belong to the data runtime. They are not Typst calls and
+are excluded from the 149 document elements above.
 
-## Riprodurre la verifica
+## Reproducing the checks
 
-Dalla radice del repository, con l'ambiente di sviluppo installato:
+From the repository root, with the development environment installed:
 
 ```bash
 venv/bin/pytest -q
@@ -87,20 +85,23 @@ venv/bin/mypy
 venv/bin/python tools/generate_reference.py --check
 ```
 
-Per una singola chiamata:
+To check a single call:
 
 ```bash
 venv/bin/pytest -q tests/test_catalog_compilation.py -k table_footer
 ```
 
-Per rigenerare riferimento ed esempi:
+To regenerate the reference and examples:
 
 ```bash
 venv/bin/python tools/generate_reference.py
 ```
 
-Restano fuori da questa verifica esaustiva del catalogo: tutte le combinazioni
-di parametri, i pacchetti remoti, i font esterni non installati, altri sistemi
-operativi/versioni del compilatore e i target Typst diversi da PDF/SVG. Il
-validatore Python non replica il sistema di tipi del compilatore: molti errori
-su parametri nativi sono intenzionalmente diagnosticati da Typst.
+See [documentation development](documentation.md) for the Sphinx build and
+packaged application catalog checks.
+
+Outside this catalog-wide verification: every possible parameter combination,
+remote packages, unavailable external fonts, other operating systems/compiler
+versions, and targets other than PDF/SVG. The Python validator does not
+replicate the compiler's type system; Typst intentionally diagnoses many
+native parameter errors.

@@ -4,8 +4,10 @@
 from __future__ import annotations
 
 import argparse
+import ast
 import json
 import sys
+import textwrap
 from pathlib import Path
 
 from genro_typst.native_catalog import NATIVE, SPECIAL
@@ -15,40 +17,40 @@ ROOT = Path(__file__).resolve().parents[1]
 
 def reference() -> tuple[str, str]:
     lines = [
-        "# Riferimento degli elementi nativi",
+        "# Native element reference",
         "",
-        "Generato da `native_catalog.py` con `tools/generate_reference.py`. Non modificare a mano.",
+        "Generated from `native_catalog.py` by `tools/generate_reference.py`. Do not edit by hand.",
         "",
-        f"**{len(NATIVE)} chiamate native**, verificate su Typst **0.15.0**, oltre ai costrutti",
-        "di linguaggio elencati sotto e agli otto elementi storici per documenti commerciali.",
+        f"**{len(NATIVE)} native calls**, verified with Typst **0.15.0**, alongside the language",
+        "constructs below and the eight legacy business-document elements.",
         "",
-        "Per i tipi dei parametri e i relativi valori predefiniti, seguire i collegamenti",
-        "alla documentazione ufficiale. Le pagine online possono descrivere versioni più",
-        "recenti: il riferimento eseguibile di questo progetto resta Typst 0.15.0.",
+        "For parameter types and defaults, follow the links",
+        "to the official documentation. Online pages may describe newer",
+        "versions: this project's executable reference remains Typst 0.15.0.",
         "",
-        "## Firma comune",
+        "## Common signature",
         "",
         "```python",
-        "node.heading(content=None, args=None, options=None, **parametri_typst)",
+        "node.heading(content=None, args=None, options=None, **typst_parameters)",
         "```",
         "",
-        "`content` accetta anche la prima posizione (`node.heading('Titolo')`).",
-        "`args` è una lista di argomenti posizionali Typst; `options` permette nomi che",
-        "collidono con quelli del builder. I parametri aggiuntivi sono inoltrati a Typst:",
-        "i loro nomi e tipi vengono verificati dal compilatore, non tutti dallo schema Python.",
+        "`content` also accepts the first positional argument (`node.heading('Title')`).",
+        "`args` is a list of Typst positional arguments; `options` supports names that",
+        "collide with builder parameters. Additional parameters are forwarded to Typst:",
+        "the compiler validates names and types beyond the checks in the Python schema.",
         "",
-        "| Modalità | Significato |",
+        "| Mode | Meaning |",
         "|---|---|",
-        "| `body` | Testo iniziale e figli formano un unico contenuto; nessuno spazio implicito tra figli. |",
-        "| `items` | Ogni figlio diventa un argomento distinto, ad esempio una cella. |",
-        "| `args` | Argomenti e figli sono passati separatamente; segue i tipi della funzione. |",
-        "| `value` | Il contenuto iniziale è un valore posizionale, ad esempio URL o percorso; i figli formano un eventuale corpo. |",
-        "| `leaf` | Senza contenuto/figli; restano disponibili `args` e parametri nominati. |",
+        "| `body` | Initial text and children form one content value; no implicit spaces between children. |",
+        "| `items` | Each child becomes a separate argument, such as a cell. |",
+        "| `args` | Arguments and children are passed separately, following the function's types. |",
+        "| `value` | Initial content is a positional value, such as a URL or path; children form an optional body. |",
+        "| `leaf` | No content or children; `args` and named parameters remain available. |",
         "",
-        "Le stringhe restano stringhe. Usare `length`, `color`, `label`, `expr` e `markup`",
-        "per valori Typst non testuali. I metodi con underscore corrispondono ai percorsi",
-        "puntati di Typst (`table_cell` → `table.cell`); gli underscore nei parametri",
-        "diventano trattini (`column_gutter` → `column-gutter`).",
+        "Strings remain strings. Use `length`, `color`, `label`, `expr` and `markup`",
+        "for non-text Typst values. Underscored methods map to dotted",
+        "Typst paths (`table_cell` → `table.cell`); parameter underscores",
+        "become hyphens (`column_gutter` → `column-gutter`).",
         "",
     ]
     entries = []
@@ -57,9 +59,9 @@ def reference() -> tuple[str, str]:
         lines += [
             f"## {section}",
             "",
-            f"[Riferimento ufficiale]({url})",
+            f"[Official reference]({url})",
             "",
-            "| Metodo builder (esempio verificato) | Funzione Typst | Modalità |",
+            "| Builder method (verified example) | Typst function | Mode |",
             "|---|---|---|",
         ]
         for tag, (function, mode, group) in NATIVE.items():
@@ -69,11 +71,11 @@ def reference() -> tuple[str, str]:
             entries.append({"tag": tag, "function": function, "mode": mode, "section": group})
         lines += [""]
     lines += [
-        "## Costrutti del linguaggio",
+        "## Language constructs",
         "",
         ", ".join(f"`{s}`" for s in SPECIAL),
         "",
-        "Firme, esempi e limiti sono descritti nella [guida](typst-guide.md).",
+        "Signatures, examples and limits are described in the [guide](typst-guide.md).",
         "",
     ]
     catalog = {
@@ -92,14 +94,14 @@ def examples() -> str:
     if set(CASES) != set(NATIVE):
         raise ValueError("Every catalog entry needs an explicit executable example")
     lines = [
-        "# Esempi verificati del catalogo",
+        "# Verified catalog examples",
         "",
-        "Generato da `tests/native_cases.py` con `tools/generate_reference.py`.",
-        "Ogni ricetta è eseguita nei test; il sorgente prodotto compila in PDF e SVG",
-        "con Typst 0.15.0. Gli SVG coincidono con quelli del riferimento Typst",
-        "scritto direttamente, nel medesimo contesto. Vedi [verifica](verification.md).",
+        "Generated from `tests/native_cases.py` by `tools/generate_reference.py`.",
+        "Every recipe is executed in tests; its source compiles to PDF and SVG",
+        "with Typst 0.15.0. SVGs match the handwritten Typst reference",
+        "in the same context. See [verification](verification.md).",
         "",
-        "Le ricette sono autonome, salvo i file locali indicati qui sotto. Per compilare:",
+        "Recipes are self-contained except for the local files below. To compile:",
         "",
         "```python",
         "from pathlib import Path",
@@ -108,7 +110,7 @@ def examples() -> str:
         'Path("example.pdf").write_bytes(result.pdf)',
         "```",
         "",
-        "Creare la cartella `assets`. `image` richiede `assets/logo.svg`:",
+        "Create the `assets` directory. `image` requires `assets/logo.svg`:",
         "",
         "```xml",
         '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20">',
@@ -116,7 +118,7 @@ def examples() -> str:
         "</svg>",
         "```",
         "",
-        "`cite` e `bibliography` richiedono `assets/refs.yml`:",
+        "`cite` and `bibliography` require `assets/refs.yml`:",
         "",
         "```yaml",
         "manual:",
@@ -126,8 +128,8 @@ def examples() -> str:
         "  date: 2026",
         "```",
         "",
-        "I prefissi `typst_` evitano collisioni con metodi/proprietà di SourceBag.",
-        "`expr` rende espliciti i valori Typst; i dizionari e le liste restano dati Python.",
+        "The `typst_` prefix avoids collisions with SourceBag methods/properties.",
+        "`expr` marks explicit Typst values; dictionaries and lists remain Python data.",
         "",
     ]
     for tag in NATIVE:
@@ -136,19 +138,64 @@ def examples() -> str:
         lines += [
             f"## {tag}",
             "",
-            f"Contesto del caso: `{case.context}`.",
+            f"Case context: `{case.context}`.",
             "",
             "```python",
             example_python(builder),
             "```",
             "",
-            "Riferimento Typst indipendente:",
+            "Independent Typst reference:",
             "",
             "```typst",
             reference.rstrip(),
             "```",
             "",
         ]
+    return "\n".join(lines)
+
+
+def grammar_api() -> str:
+    """Read declaration signatures before @element replaces them with markers."""
+    lines = [
+        "Declared grammar signatures",
+        "===========================",
+        "",
+        "Generated from the Python grammar declarations. Do not edit by hand.",
+        "Call these methods on source nodes; they are not module-level functions.",
+        "Language constructs use keyword arguments. For ``label``, use the",
+        "``typst_label`` alias to avoid the SourceBag property with that name.",
+        "See :doc:`typst-guide` for usage and :doc:`native-reference` for native calls.",
+        "",
+    ]
+    for filename, title in [
+        ("typst_elements.py", "Legacy document elements"),
+        ("native_elements.py", "Language constructs"),
+    ]:
+        lines += [title, "-" * len(title), ""]
+        tree = ast.parse((ROOT / "src" / "genro_typst" / filename).read_text())
+        for cls in tree.body:
+            if not isinstance(cls, ast.ClassDef):
+                continue
+            for method in cls.body:
+                if not isinstance(method, ast.FunctionDef):
+                    continue
+                method.args.args = [a for a in method.args.args if a.arg != "self"]
+                for node in ast.walk(method.args):
+                    if isinstance(node, ast.arg):
+                        node.annotation = None
+                lines += [f".. py:function:: {method.name}({ast.unparse(method.args)})", ""]
+                doc = ast.get_docstring(method) or ""
+                if "\n\nArgs:\n" in doc:
+                    summary, arguments = doc.split("\n\nArgs:\n", 1)
+                    fields = []
+                    for line in arguments.splitlines():
+                        if line.startswith("    ") and not line.startswith("        "):
+                            name, description = line.strip().split(":", 1)
+                            fields.append(f":param {name}:{description}")
+                        elif line.strip():
+                            fields[-1] += " " + line.strip()
+                    doc = summary + "\n\n" + "\n".join(fields)
+                lines += [textwrap.indent(doc, "   "), ""]
     return "\n".join(lines)
 
 
@@ -161,6 +208,7 @@ def main() -> None:
         ("native-reference.md", markdown),
         ("native-catalog.json", catalog),
         ("catalog-examples.md", examples()),
+        ("grammar-api.rst", grammar_api()),
     ]:
         path = ROOT / "docs" / name
         if check:
