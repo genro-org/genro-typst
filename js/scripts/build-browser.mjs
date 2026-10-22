@@ -31,6 +31,7 @@ await Promise.all(['Regular', 'Bold', 'Italic', 'BoldItalic'].map(weight => {
     const name = `LibertinusSerif-${weight}.otf`;
     return asset(`files/fonts/${name}`, resolve(output, 'fonts', name));
 }));
+await asset('files/fonts/NewCMMath-Regular.otf', resolve(output, 'fonts/NewCMMath-Regular.otf'));
 const notices = await asset('NOTICE', resolve(output, 'fonts/NOTICE'));
 const license = await readFile(resolve(root, 'LICENSE'), 'utf8');
 await writeFile(resolve(output, 'THIRD_PARTY_NOTICES.txt'),
@@ -40,5 +41,7 @@ await writeFile(resolve(output, 'THIRD_PARTY_NOTICES.txt'),
     + 'Genro Typst, genro-builders-js and genro-bag-js: Softwell S.r.l.\n'
     + 'These projects are licensed under Apache-2.0.\n\n' + license
     + '\nFonts are from typst-assets v0.13.1 and retain their own licenses:\n\n'
-    + new TextDecoder().decode(notices));
+    + new TextDecoder().decode(notices)
+    + '\nCodeMirror (MIT): https://codemirror.net/\n'
+    + await readFile(resolve(root, 'node_modules/codemirror/LICENSE'), 'utf8'));
 console.log(`Browser example built in ${output}`);

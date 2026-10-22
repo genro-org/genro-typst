@@ -182,6 +182,9 @@ SVG preview, run `npm run demo --prefix js` and open
 [localhost:8172](http://127.0.0.1:8172/). Compilation runs in the browser with
 Typst WebAssembly; no Python server is needed. See the
 [browser example guide](https://genro-typst.readthedocs.io/en/latest/browser.html).
+The playground includes 149 element recipes, searchable by category, with
+CodeMirror editing and live SVG preview. Browser compiler limitations are
+marked explicitly in the collection.
 
 Typst remains responsible for compilation. See the
 [JavaScript guide](https://genro-typst.readthedocs.io/en/latest/javascript.html)

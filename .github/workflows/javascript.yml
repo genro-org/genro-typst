@@ -25,6 +25,7 @@ jobs:
       - run: npm ci --prefix js --ignore-scripts
       - run: python tools/export_js.py --check
       - run: python tools/export_js_fixtures.py --check
+      - run: python tools/export_browser_examples.py --check
       - run: pytest -q
       - run: npm test --prefix js
       - run: npm run build:browser --prefix js

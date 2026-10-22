@@ -1,0 +1,1516 @@
+{
+  "typst_version": "0.15.0",
+  "sections": {
+    "text": "Text and styles",
+    "model": "Document structure",
+    "layout": "Page layout",
+    "visualize": "Graphics and images",
+    "math": "Mathematics",
+    "introspection": "Metadata",
+    "pdf": "PDF",
+    "language": "Typst language",
+    "legacy": "Genro documents and data"
+  },
+  "examples": [
+    {
+      "id": "text",
+      "title": "text",
+      "section": "text",
+      "description": "Text and typography settings.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#text(\"Example\")\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// Text and typography settings.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\ndoc.typst_text({ \"content\": \"Example\" });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#text([#\"Example\"])\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "underline",
+      "title": "underline",
+      "section": "text",
+      "description": "Underlined text.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#underline(\"Example\")\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// Underlined text.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\ndoc.typst_underline({ \"content\": \"Example\" });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#underline([#\"Example\"])\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "overline",
+      "title": "overline",
+      "section": "text",
+      "description": "A line above text.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#overline(\"Example\")\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// A line above text.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\ndoc.typst_overline({ \"content\": \"Example\" });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#overline([#\"Example\"])\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "strike",
+      "title": "strike",
+      "section": "text",
+      "description": "Struck-through text.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#strike(\"Example\")\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// Struck-through text.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\ndoc.typst_strike({ \"content\": \"Example\" });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#strike([#\"Example\"])\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "highlight",
+      "title": "highlight",
+      "section": "text",
+      "description": "Highlighted text.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#highlight(\"Example\")\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// Highlighted text.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\ndoc.typst_highlight({ \"content\": \"Example\" });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#highlight([#\"Example\"])\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "smallcaps",
+      "title": "smallcaps",
+      "section": "text",
+      "description": "Small capitals.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#smallcaps(\"Example\")\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// Small capitals.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\ndoc.typst_smallcaps({ \"content\": \"Example\" });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#smallcaps([#\"Example\"])\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "sub",
+      "title": "sub",
+      "section": "text",
+      "description": "Subscript text.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#sub(\"Example\")\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// Subscript text.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\ndoc.typst_sub({ \"content\": \"Example\" });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#sub([#\"Example\"])\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "super",
+      "title": "super",
+      "section": "text",
+      "description": "Superscript text.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#super(\"Example\")\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// Superscript text.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\ndoc.typst_super({ \"content\": \"Example\" });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#super([#\"Example\"])\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "lower",
+      "title": "lower",
+      "section": "text",
+      "description": "Convert to lowercase.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#lower([Example])\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// Convert to lowercase.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\ndoc.typst_lower({ \"content\": \"Example\" });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#lower([#\"Example\"])\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "upper",
+      "title": "upper",
+      "section": "text",
+      "description": "Convert to uppercase.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#upper([Example])\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// Convert to uppercase.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\ndoc.typst_upper({ \"content\": \"Example\" });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#upper([#\"Example\"])\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "raw",
+      "title": "raw",
+      "section": "text",
+      "description": "Literal code and text, without interpreting markup.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#raw(\"#literal <x>\", lang: \"typst\")\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// Literal code and text, without interpreting markup.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\ndoc.typst_raw({ \"content\": \"#literal <x>\", \"lang\": \"typst\" });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#raw(lang: \"typst\", \"#literal <x>\")\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "lorem",
+      "title": "lorem",
+      "section": "text",
+      "description": "Placeholder text with an editable word count.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#lorem(12)\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// Placeholder text with an editable word count.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\ndoc.typst_lorem({ \"content\": 12 });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#lorem(12)\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "linebreak",
+      "title": "linebreak",
+      "section": "text",
+      "description": "Line break.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#linebreak(justify: true)\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// Line break.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\ndoc.typst_linebreak({ \"justify\": true });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#linebreak(justify: true)\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "smartquote",
+      "title": "smartquote",
+      "section": "text",
+      "description": "Typographic quotation marks.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#smartquote(double: false)\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// Typographic quotation marks.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\ndoc.typst_smartquote({ \"double\": false });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#smartquote(double: false)\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "heading",
+      "title": "heading",
+      "section": "model",
+      "description": "Headings and section levels.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#heading(level: 2, \"Heading\")\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// Headings and section levels.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\ndoc.typst_heading({ \"content\": \"Heading\", \"level\": 2 });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#heading(level: 2, [#\"Heading\"])\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "strong",
+      "title": "strong",
+      "section": "model",
+      "description": "Bold text.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#strong(\"Example\")\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// Bold text.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\ndoc.typst_strong({ \"content\": \"Example\" });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#strong([#\"Example\"])\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "emph",
+      "title": "emph",
+      "section": "model",
+      "description": "Typographic emphasis.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#emph(\"Example\")\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// Typographic emphasis.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\ndoc.typst_emph({ \"content\": \"Example\" });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#emph([#\"Example\"])\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "par",
+      "title": "par",
+      "section": "model",
+      "description": "Paragraph and text layout.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#par(\"Example\")\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// Paragraph and text layout.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\ndoc.typst_par({ \"content\": \"Example\" });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#par([#\"Example\"])\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "quote",
+      "title": "quote",
+      "section": "model",
+      "description": "A quotation in the document.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#quote(\"Example\")\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// A quotation in the document.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\ndoc.typst_quote({ \"content\": \"Example\" });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#quote([#\"Example\"])\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "figure",
+      "title": "figure",
+      "section": "model",
+      "description": "A figure with caption and numbering.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#figure(rect(width: 10mm, height: 5mm), caption: [Caption])\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// A figure with caption and numbering.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\nconst node2 = doc.typst_figure({ \"caption\": expr(\"[Caption\\n]\") });\nnode2.typst_rect({ \"width\": expr(\"10mm\"), \"height\": expr(\"5mm\") });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#figure(caption: [Caption\n], [#rect(width: 10mm, height: 5mm)])\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "footnote",
+      "title": "footnote",
+      "section": "model",
+      "description": "Footnote.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#footnote(\"Example\")\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// Footnote.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\ndoc.typst_footnote({ \"content\": \"Example\" });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#footnote([#\"Example\"])\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "title",
+      "title": "title",
+      "section": "model",
+      "description": "Document title.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#title(\"Example\")\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// Document title.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\ndoc.typst_title({ \"content\": \"Example\" });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#title([#\"Example\"])\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "list",
+      "title": "list",
+      "section": "model",
+      "description": "Bulleted list.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#list(\"One\", \"Two\")\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// Bulleted list.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\ndoc.typst_list({ \"args\": [\"One\", \"Two\"] });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#list(\"One\", \"Two\")\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "enum",
+      "title": "enum",
+      "section": "model",
+      "description": "Numbered list.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#enum(start: 3, \"One\", \"Two\")\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// Numbered list.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\ndoc.typst_enum({ \"args\": [\"One\", \"Two\"], \"start\": 3 });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#enum(\"One\", \"Two\", start: 3)\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "terms",
+      "title": "terms",
+      "section": "model",
+      "description": "Glossary of terms and definitions.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#terms(terms.item(\"API\", \"Interface\"))\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// Glossary of terms and definitions.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\nconst node2 = doc.typst_terms({  });\nnode2.typst_terms_item({ \"args\": [\"API\", \"Interface\"] });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#terms(terms.item(\"API\", \"Interface\"))\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "list_item",
+      "title": "list.item",
+      "section": "model",
+      "description": "An item in a bulleted list.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#list(list.item(\"Item\"))\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// An item in a bulleted list.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\nconst node2 = doc.typst_list({  });\nnode2.typst_list_item({ \"content\": \"Item\" });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#list(list.item([#\"Item\"]))\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "enum_item",
+      "title": "enum.item",
+      "section": "model",
+      "description": "An item in a numbered list.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#enum(enum.item(\"Item\"))\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// An item in a numbered list.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\nconst node2 = doc.typst_enum({  });\nnode2.typst_enum_item({ \"content\": \"Item\" });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#enum(enum.item([#\"Item\"]))\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "terms_item",
+      "title": "terms.item",
+      "section": "model",
+      "description": "A term and its definition.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#terms(terms.item(\"API\", \"Interface\"))\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// A term and its definition.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\nconst node2 = doc.typst_terms({  });\nnode2.typst_terms_item({ \"args\": [\"API\", \"Interface\"] });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#terms(terms.item(\"API\", \"Interface\"))\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "link",
+      "title": "link",
+      "section": "model",
+      "description": "A link with editable text.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#link(\"https://typst.app\", [#text(\"Website\")])\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// A link with editable text.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\nconst node2 = doc.typst_link({ \"content\": \"https://typst.app\" });\nnode2.typst_text({ \"content\": \"Website\" });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#link(\"https://typst.app\", [#text([#\"Website\"])])\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "ref",
+      "title": "ref",
+      "section": "model",
+      "description": "Reference to a labeled section.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#set heading(numbering: \"1.\")\n#heading(\"Target\")\n#label(\"target\")\n#ref(label(\"target\"))\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// Reference to a labeled section.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\ndoc.typst_set_rule({ \"target\": \"heading\", \"numbering\": \"1.\" });\ndoc.typst_heading({ \"content\": \"Target\" });\ndoc.typst_label({ \"name\": \"target\" });\ndoc.typst_ref({ \"content\": expr(\"label(\\\"target\\\")\") });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#set heading(numbering: \"1.\")\n#heading([#\"Target\"])\n#label(\"target\")\n#ref(label(\"target\"))\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "cite",
+      "title": "cite",
+      "section": "model",
+      "description": "Citation from the included local bibliography.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#cite(label(\"manual\"))\n#bibliography(\"refs.yml\")\n#text(\"After\")\n",
+      "assets": {
+        "refs.yml": "manual:\n  type: Book\n  title: Test manual\n  author: Example, Alice\n  date: 2026\n"
+      },
+      "code": "// Citation from the included local bibliography.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\ndoc.typst_cite({ \"content\": expr(\"label(\\\"manual\\\")\") });\ndoc.typst_bibliography({ \"content\": \"refs.yml\" });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#cite(label(\"manual\"))\n#bibliography(\"refs.yml\")\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "bibliography",
+      "title": "bibliography",
+      "section": "model",
+      "description": "Bibliography with an included YAML file.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#bibliography(\"refs.yml\", full: true)\n#text(\"After\")\n",
+      "assets": {
+        "refs.yml": "manual:\n  type: Book\n  title: Test manual\n  author: Example, Alice\n  date: 2026\n"
+      },
+      "code": "// Bibliography with an included YAML file.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\ndoc.typst_bibliography({ \"content\": \"refs.yml\", \"full\": true });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#bibliography(full: true, \"refs.yml\")\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "numbering",
+      "title": "numbering",
+      "section": "model",
+      "description": "Numbering format.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#numbering(\"1.a\", 2, 3)\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// Numbering format.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\ndoc.typst_numbering({ \"args\": [\"1.a\", 2, 3] });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#numbering(\"1.a\", 2, 3)\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "outline",
+      "title": "outline",
+      "section": "model",
+      "description": "Section outline.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#set heading(numbering: \"1.\")\n#heading(\"Target\")\n#label(\"target\")\n#outline(title: [Contents])\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// Section outline.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\ndoc.typst_set_rule({ \"target\": \"heading\", \"numbering\": \"1.\" });\ndoc.typst_heading({ \"content\": \"Target\" });\ndoc.typst_label({ \"name\": \"target\" });\ndoc.typst_outline({ \"title\": expr(\"[Contents\\n]\") });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#set heading(numbering: \"1.\")\n#heading([#\"Target\"])\n#label(\"target\")\n#outline(title: [Contents\n])\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "parbreak",
+      "title": "parbreak",
+      "section": "model",
+      "description": "Paragraph break.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#parbreak()\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// Paragraph break.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\ndoc.typst_parbreak({  });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#parbreak()\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "divider",
+      "title": "divider",
+      "section": "model",
+      "description": "Document divider.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#divider()\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// Document divider.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\ndoc.typst_divider({  });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#divider()\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "table_header",
+      "title": "table.header",
+      "section": "model",
+      "description": "Header in the native table.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#table(columns: 2, table.header(table.cell(\"Span\", colspan: 2)), text(\"A\"), text(\"B\"))\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// Header in the native table.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\nconst node2 = doc.typst_native_table({ \"columns\": 2 });\nconst node3 = node2.typst_table_header({  });\nnode3.typst_table_cell({ \"content\": \"Span\", \"colspan\": 2 });\nnode2.typst_text({ \"content\": \"A\" });\nnode2.typst_text({ \"content\": \"B\" });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#table(columns: 2, table.header(table.cell(colspan: 2, [#\"Span\"])), text([#\"A\"]), text([#\"B\"]))\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "table_footer",
+      "title": "table.footer",
+      "section": "model",
+      "description": "Footer, after body cells in the native table.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#table(columns: 2, text(\"A\"), text(\"B\"), table.footer(table.cell(\"Span\", colspan: 2)))\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// Footer, after body cells in the native table.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\nconst node2 = doc.typst_native_table({ \"columns\": 2 });\nnode2.typst_text({ \"content\": \"A\" });\nnode2.typst_text({ \"content\": \"B\" });\nconst node5 = node2.typst_table_footer({  });\nnode5.typst_table_cell({ \"content\": \"Span\", \"colspan\": 2 });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#table(columns: 2, text([#\"A\"]), text([#\"B\"]), table.footer(table.cell(colspan: 2, [#\"Span\"])))\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "table_cell",
+      "title": "table.cell",
+      "section": "model",
+      "description": "Cell spanning multiple columns in the native table.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#table(columns: 2, table.cell(\"Span\", colspan: 2), text(\"A\"), text(\"B\"))\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// Cell spanning multiple columns in the native table.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\nconst node2 = doc.typst_native_table({ \"columns\": 2 });\nnode2.typst_table_cell({ \"content\": \"Span\", \"colspan\": 2 });\nnode2.typst_text({ \"content\": \"A\" });\nnode2.typst_text({ \"content\": \"B\" });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#table(columns: 2, table.cell(colspan: 2, [#\"Span\"]), text([#\"A\"]), text([#\"B\"]))\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "table_hline",
+      "title": "table.hline",
+      "section": "model",
+      "description": "Horizontal line in the native table.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#table(columns: 2, table.hline(stroke: 2pt + blue), text(\"A\"), text(\"B\"))\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// Horizontal line in the native table.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\nconst node2 = doc.typst_native_table({ \"columns\": 2 });\nnode2.typst_table_hline({ \"stroke\": expr(\"2pt + blue\") });\nnode2.typst_text({ \"content\": \"A\" });\nnode2.typst_text({ \"content\": \"B\" });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#table(columns: 2, table.hline(stroke: 2pt + blue), text([#\"A\"]), text([#\"B\"]))\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "table_vline",
+      "title": "table.vline",
+      "section": "model",
+      "description": "Vertical line in the native table.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#table(columns: 2, table.vline(x: 1, stroke: 2pt + blue), text(\"A\"), text(\"B\"))\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// Vertical line in the native table.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\nconst node2 = doc.typst_native_table({ \"columns\": 2 });\nnode2.typst_table_vline({ \"x\": 1, \"stroke\": expr(\"2pt + blue\") });\nnode2.typst_text({ \"content\": \"A\" });\nnode2.typst_text({ \"content\": \"B\" });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#table(columns: 2, table.vline(x: 1, stroke: 2pt + blue), text([#\"A\"]), text([#\"B\"]))\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "native_table",
+      "title": "table",
+      "section": "model",
+      "description": "Native Typst table with explicit cells.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#table(columns: 2, \"A\", \"B\")\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// Native Typst table with explicit cells.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\ndoc.typst_native_table({ \"columns\": 2, \"args\": [\"A\", \"B\"] });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#table(\"A\", \"B\", columns: 2)\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "align",
+      "title": "align",
+      "section": "layout",
+      "description": "Content alignment.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#align(center, \"Example\")\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// Content alignment.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\ndoc.typst_align({ \"args\": [expr(\"center\")], \"content\": \"Example\" });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#align(center, [#\"Example\"])\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "block",
+      "title": "block",
+      "section": "layout",
+      "description": "Block with padding.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#block(inset: 2mm, \"Example\")\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// Block with padding.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\ndoc.typst_block({ \"content\": \"Example\", \"inset\": expr(\"2mm\") });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#block(inset: 2mm, [#\"Example\"])\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "box",
+      "title": "box",
+      "section": "layout",
+      "description": "Inline box with a fixed width.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#box(width: 30mm, \"Example\")\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// Inline box with a fixed width.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\ndoc.typst_box({ \"content\": \"Example\", \"width\": expr(\"30mm\") });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#box(width: 30mm, [#\"Example\"])\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "columns",
+      "title": "columns",
+      "section": "layout",
+      "description": "Text in multiple columns.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#columns(2, \"Example\")\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// Text in multiple columns.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\ndoc.typst_columns({ \"args\": [2], \"content\": \"Example\" });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#columns(2, [#\"Example\"])\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "hide",
+      "title": "hide",
+      "section": "layout",
+      "description": "Invisible content that preserves its space.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#hide(\"Invisible\")\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// Invisible content that preserves its space.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\ndoc.typst_hide({ \"content\": \"Invisible\" });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#hide([#\"Invisible\"])\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "move",
+      "title": "move",
+      "section": "layout",
+      "description": "Move content.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#move(dx: 2mm, \"Example\")\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// Move content.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\ndoc.typst_move({ \"content\": \"Example\", \"dx\": expr(\"2mm\") });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#move(dx: 2mm, [#\"Example\"])\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "pad",
+      "title": "pad",
+      "section": "layout",
+      "description": "Padding.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#pad(2mm, \"Example\")\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// Padding.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\ndoc.typst_pad({ \"args\": [expr(\"2mm\")], \"content\": \"Example\" });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#pad(2mm, [#\"Example\"])\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "page",
+      "title": "page",
+      "section": "layout",
+      "description": "A page with a different format.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#page(paper: \"a5\", \"Example\")\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// A page with a different format.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\ndoc.typst_page({ \"content\": \"Example\", \"paper\": \"a5\" });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#page(paper: \"a5\", [#\"Example\"])\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "place",
+      "title": "place",
+      "section": "layout",
+      "description": "Position content relative to the page.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#place(top + right, \"Example\")\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// Position content relative to the page.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\ndoc.typst_place({ \"args\": [expr(\"top + right\")], \"content\": \"Example\" });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#place(top + right, [#\"Example\"])\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "repeat",
+      "title": "repeat",
+      "section": "layout",
+      "description": "Repeated content.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#repeat(\".\")\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// Repeated content.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\ndoc.typst_repeat({ \"content\": \".\" });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#repeat([#\".\"])\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "rotate",
+      "title": "rotate",
+      "section": "layout",
+      "description": "Rotation.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#rotate(10deg, \"Example\")\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// Rotation.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\ndoc.typst_rotate({ \"args\": [expr(\"10deg\")], \"content\": \"Example\" });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#rotate(10deg, [#\"Example\"])\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "scale",
+      "title": "scale",
+      "section": "layout",
+      "description": "Scaling.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#scale(x: 120%, \"Example\")\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// Scaling.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\ndoc.typst_scale({ \"x\": expr(\"120%\"), \"content\": \"Example\" });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#scale(x: 120%, [#\"Example\"])\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "skew",
+      "title": "skew",
+      "section": "layout",
+      "description": "Skewing.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#skew(ax: 10deg, \"Example\")\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// Skewing.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\ndoc.typst_skew({ \"ax\": expr(\"10deg\"), \"content\": \"Example\" });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#skew(ax: 10deg, [#\"Example\"])\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "grid",
+      "title": "grid",
+      "section": "layout",
+      "description": "Content grid.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#grid(columns: 2, \"A\", \"B\")\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// Content grid.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\ndoc.typst_grid({ \"columns\": 2, \"args\": [\"A\", \"B\"] });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#grid(\"A\", \"B\", columns: 2)\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "stack",
+      "title": "stack",
+      "section": "layout",
+      "description": "A sequence of blocks with direction and spacing.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#stack(dir: ltr, spacing: 2mm, \"A\", \"B\")\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// A sequence of blocks with direction and spacing.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\ndoc.typst_stack({ \"dir\": expr(\"ltr\"), \"spacing\": expr(\"2mm\"), \"args\": [\"A\", \"B\"] });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#stack(\"A\", \"B\", dir: ltr, spacing: 2mm)\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "grid_header",
+      "title": "grid.header",
+      "section": "layout",
+      "description": "Header in the native grid.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#grid(columns: 2, grid.header(grid.cell(\"Span\", colspan: 2)), text(\"A\"), text(\"B\"))\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// Header in the native grid.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\nconst node2 = doc.typst_grid({ \"columns\": 2 });\nconst node3 = node2.typst_grid_header({  });\nnode3.typst_grid_cell({ \"content\": \"Span\", \"colspan\": 2 });\nnode2.typst_text({ \"content\": \"A\" });\nnode2.typst_text({ \"content\": \"B\" });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#grid(columns: 2, grid.header(grid.cell(colspan: 2, [#\"Span\"])), text([#\"A\"]), text([#\"B\"]))\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "grid_footer",
+      "title": "grid.footer",
+      "section": "layout",
+      "description": "Footer, after body cells in the native grid.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#grid(columns: 2, text(\"A\"), text(\"B\"), grid.footer(grid.cell(\"Span\", colspan: 2)))\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// Footer, after body cells in the native grid.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\nconst node2 = doc.typst_grid({ \"columns\": 2 });\nnode2.typst_text({ \"content\": \"A\" });\nnode2.typst_text({ \"content\": \"B\" });\nconst node5 = node2.typst_grid_footer({  });\nnode5.typst_grid_cell({ \"content\": \"Span\", \"colspan\": 2 });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#grid(columns: 2, text([#\"A\"]), text([#\"B\"]), grid.footer(grid.cell(colspan: 2, [#\"Span\"])))\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "grid_cell",
+      "title": "grid.cell",
+      "section": "layout",
+      "description": "Cell spanning multiple columns in the native grid.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#grid(columns: 2, grid.cell(\"Span\", colspan: 2), text(\"A\"), text(\"B\"))\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// Cell spanning multiple columns in the native grid.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\nconst node2 = doc.typst_grid({ \"columns\": 2 });\nnode2.typst_grid_cell({ \"content\": \"Span\", \"colspan\": 2 });\nnode2.typst_text({ \"content\": \"A\" });\nnode2.typst_text({ \"content\": \"B\" });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#grid(columns: 2, grid.cell(colspan: 2, [#\"Span\"]), text([#\"A\"]), text([#\"B\"]))\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "pagebreak",
+      "title": "pagebreak",
+      "section": "layout",
+      "description": "Page break: inspect both pages in the preview.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#pagebreak()\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// Page break: inspect both pages in the preview.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\ndoc.typst_pagebreak({  });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#pagebreak()\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "colbreak",
+      "title": "colbreak",
+      "section": "layout",
+      "description": "Column break inside a columns container.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#columns(2, [#text(\"Left\")#colbreak()#text(\"Right\")])\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// Column break inside a columns container.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\nconst node2 = doc.typst_columns({ \"args\": [2] });\nnode2.typst_text({ \"content\": \"Left\" });\nnode2.typst_colbreak({  });\nnode2.typst_text({ \"content\": \"Right\" });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#columns(2, [#text([#\"Left\"])#colbreak()#text([#\"Right\"])])\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "grid_hline",
+      "title": "grid.hline",
+      "section": "layout",
+      "description": "Horizontal line in the native grid.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#grid(columns: 2, grid.hline(stroke: 2pt + blue), text(\"A\"), text(\"B\"))\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// Horizontal line in the native grid.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\nconst node2 = doc.typst_grid({ \"columns\": 2 });\nnode2.typst_grid_hline({ \"stroke\": expr(\"2pt + blue\") });\nnode2.typst_text({ \"content\": \"A\" });\nnode2.typst_text({ \"content\": \"B\" });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#grid(columns: 2, grid.hline(stroke: 2pt + blue), text([#\"A\"]), text([#\"B\"]))\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "grid_vline",
+      "title": "grid.vline",
+      "section": "layout",
+      "description": "Vertical line in the native grid.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#grid(columns: 2, grid.vline(x: 1, stroke: 2pt + blue), text(\"A\"), text(\"B\"))\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// Vertical line in the native grid.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\nconst node2 = doc.typst_grid({ \"columns\": 2 });\nnode2.typst_grid_vline({ \"x\": 1, \"stroke\": expr(\"2pt + blue\") });\nnode2.typst_text({ \"content\": \"A\" });\nnode2.typst_text({ \"content\": \"B\" });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#grid(columns: 2, grid.vline(x: 1, stroke: 2pt + blue), text([#\"A\"]), text([#\"B\"]))\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "h",
+      "title": "h",
+      "section": "layout",
+      "description": "Horizontal space.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#h(5mm)\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// Horizontal space.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\ndoc.typst_h({ \"content\": expr(\"5mm\") });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#h(5mm)\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "v",
+      "title": "v",
+      "section": "layout",
+      "description": "Vertical space.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#v(5mm)\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// Vertical space.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\ndoc.typst_v({ \"content\": expr(\"5mm\") });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#v(5mm)\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "measure",
+      "title": "measure",
+      "section": "layout",
+      "description": "Contextual content measurement; the result is a dictionary.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#context [#repr(measure(\"Example\"))]\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// Contextual content measurement; the result is a dictionary.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\nconst node2 = doc.typst_context({  });\nconst node3 = node2.typst_call({ \"function\": \"repr\", \"mode\": \"args\" });\nnode3.typst_measure({ \"content\": \"Example\" });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#context [#repr(measure(\"Example\"))]\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "native_layout",
+      "title": "layout",
+      "section": "layout",
+      "description": "A callback receiving the available dimensions.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#layout(size => [Width: #size.width])\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// A callback receiving the available dimensions.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\ndoc.typst_native_layout({ \"content\": expr(\"size => [Width: #size.width]\") });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#layout(size => [Width: #size.width])\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "circle",
+      "title": "circle",
+      "section": "visualize",
+      "description": "Circle with content.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#circle(fill: rgb(\"#eeeeee\"), \"G\")\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// Circle with content.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\ndoc.typst_circle({ \"content\": \"G\", \"fill\": expr(\"rgb(\\\"#eeeeee\\\")\") });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#circle(fill: rgb(\"#eeeeee\"), [#\"G\"])\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "ellipse",
+      "title": "ellipse",
+      "section": "visualize",
+      "description": "Ellipse with content.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#ellipse(fill: rgb(\"#eeeeee\"), \"G\")\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// Ellipse with content.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\ndoc.typst_ellipse({ \"content\": \"G\", \"fill\": expr(\"rgb(\\\"#eeeeee\\\")\") });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#ellipse(fill: rgb(\"#eeeeee\"), [#\"G\"])\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "rect",
+      "title": "rect",
+      "section": "visualize",
+      "description": "Filled rectangle.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#rect(fill: rgb(\"#eeeeee\"), \"G\")\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// Filled rectangle.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\ndoc.typst_rect({ \"content\": \"G\", \"fill\": expr(\"rgb(\\\"#eeeeee\\\")\") });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#rect(fill: rgb(\"#eeeeee\"), [#\"G\"])\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "square",
+      "title": "square",
+      "section": "visualize",
+      "description": "Square with content.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#square(fill: rgb(\"#eeeeee\"), \"G\")\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// Square with content.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\ndoc.typst_square({ \"content\": \"G\", \"fill\": expr(\"rgb(\\\"#eeeeee\\\")\") });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#square(fill: rgb(\"#eeeeee\"), [#\"G\"])\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "image",
+      "title": "image",
+      "section": "visualize",
+      "description": "An included local SVG image.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#image(\"logo.svg\", width: 10mm)\n#text(\"After\")\n",
+      "assets": {
+        "logo.svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"20\" height=\"20\"><circle cx=\"10\" cy=\"10\" r=\"8\" fill=\"blue\"/></svg>"
+      },
+      "code": "// An included local SVG image.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\ndoc.typst_image({ \"content\": \"logo.svg\", \"width\": expr(\"10mm\") });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#image(width: 10mm, \"logo.svg\")\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "line",
+      "title": "line",
+      "section": "visualize",
+      "description": "Line between two points.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#line(start: (0pt, 0pt), end: (10mm, 10mm))\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// Line between two points.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\ndoc.typst_line({ \"start\": [expr(\"0pt\"), expr(\"0pt\")], \"end\": [expr(\"10mm\"), expr(\"10mm\")] });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#line(start: (0pt, 0pt,), end: (10mm, 10mm,))\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "polygon",
+      "title": "polygon",
+      "section": "visualize",
+      "description": "Polygon with vertices and fill.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#polygon((0pt, 0pt), (10mm, 0pt), (10mm, 10mm), fill: blue)\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// Polygon with vertices and fill.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\ndoc.typst_polygon({ \"args\": [[expr(\"0pt\"), expr(\"0pt\")], [expr(\"10mm\"), expr(\"0pt\")], [expr(\"10mm\"), expr(\"10mm\")]], \"fill\": expr(\"blue\") });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#polygon((0pt, 0pt,), (10mm, 0pt,), (10mm, 10mm,), fill: blue)\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "curve",
+      "title": "curve",
+      "section": "visualize",
+      "description": "A curve built from segments.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#curve(curve.move((0pt, 0pt)), curve.line((10mm, 10mm)))\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// A curve built from segments.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\nconst node2 = doc.typst_curve({  });\nnode2.typst_curve_move({ \"args\": [[expr(\"0pt\"), expr(\"0pt\")]] });\nnode2.typst_curve_line({ \"args\": [[expr(\"10mm\"), expr(\"10mm\")]] });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#curve(curve.move((0pt, 0pt,)), curve.line((10mm, 10mm,)))\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "curve_move",
+      "title": "curve.move",
+      "section": "visualize",
+      "description": "Move the starting point inside curve.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#curve(curve.move((0pt, 0pt)), curve.line((10mm, 0pt)), curve.move((10mm, 0pt)), curve.line((0pt, 10mm)))\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// Move the starting point inside curve.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\nconst node2 = doc.typst_curve({  });\nnode2.typst_curve_move({ \"args\": [[expr(\"0pt\"), expr(\"0pt\")]] });\nnode2.typst_curve_line({ \"args\": [[expr(\"10mm\"), expr(\"0pt\")]] });\nnode2.typst_curve_move({ \"args\": [[expr(\"10mm\"), expr(\"0pt\")]] });\nnode2.typst_curve_line({ \"args\": [[expr(\"0pt\"), expr(\"10mm\")]] });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#curve(curve.move((0pt, 0pt,)), curve.line((10mm, 0pt,)), curve.move((10mm, 0pt,)), curve.line((0pt, 10mm,)))\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "curve_line",
+      "title": "curve.line",
+      "section": "visualize",
+      "description": "Straight segment inside curve.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#curve(curve.move((0pt, 0pt)), curve.line((10mm, 0pt)), curve.line((10mm, 10mm)), curve.line((0pt, 10mm)))\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// Straight segment inside curve.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\nconst node2 = doc.typst_curve({  });\nnode2.typst_curve_move({ \"args\": [[expr(\"0pt\"), expr(\"0pt\")]] });\nnode2.typst_curve_line({ \"args\": [[expr(\"10mm\"), expr(\"0pt\")]] });\nnode2.typst_curve_line({ \"args\": [[expr(\"10mm\"), expr(\"10mm\")]] });\nnode2.typst_curve_line({ \"args\": [[expr(\"0pt\"), expr(\"10mm\")]] });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#curve(curve.move((0pt, 0pt,)), curve.line((10mm, 0pt,)), curve.line((10mm, 10mm,)), curve.line((0pt, 10mm,)))\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "curve_quad",
+      "title": "curve.quad",
+      "section": "visualize",
+      "description": "Quadratic curve inside curve.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#curve(curve.move((0pt, 0pt)), curve.line((10mm, 0pt)), curve.quad((10mm, 10mm), (10mm, 0pt)), curve.line((0pt, 10mm)))\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// Quadratic curve inside curve.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\nconst node2 = doc.typst_curve({  });\nnode2.typst_curve_move({ \"args\": [[expr(\"0pt\"), expr(\"0pt\")]] });\nnode2.typst_curve_line({ \"args\": [[expr(\"10mm\"), expr(\"0pt\")]] });\nnode2.typst_curve_quad({ \"args\": [[expr(\"10mm\"), expr(\"10mm\")], [expr(\"10mm\"), expr(\"0pt\")]] });\nnode2.typst_curve_line({ \"args\": [[expr(\"0pt\"), expr(\"10mm\")]] });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#curve(curve.move((0pt, 0pt,)), curve.line((10mm, 0pt,)), curve.quad((10mm, 10mm,), (10mm, 0pt,)), curve.line((0pt, 10mm,)))\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "curve_cubic",
+      "title": "curve.cubic",
+      "section": "visualize",
+      "description": "Cubic curve inside curve.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#curve(curve.move((0pt, 0pt)), curve.line((10mm, 0pt)), curve.cubic((10mm, 10mm), (10mm, 0pt), (0pt, 10mm)), curve.line((0pt, 10mm)))\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// Cubic curve inside curve.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\nconst node2 = doc.typst_curve({  });\nnode2.typst_curve_move({ \"args\": [[expr(\"0pt\"), expr(\"0pt\")]] });\nnode2.typst_curve_line({ \"args\": [[expr(\"10mm\"), expr(\"0pt\")]] });\nnode2.typst_curve_cubic({ \"args\": [[expr(\"10mm\"), expr(\"10mm\")], [expr(\"10mm\"), expr(\"0pt\")], [expr(\"0pt\"), expr(\"10mm\")]] });\nnode2.typst_curve_line({ \"args\": [[expr(\"0pt\"), expr(\"10mm\")]] });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#curve(curve.move((0pt, 0pt,)), curve.line((10mm, 0pt,)), curve.cubic((10mm, 10mm,), (10mm, 0pt,), (0pt, 10mm,)), curve.line((0pt, 10mm,)))\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "curve_close",
+      "title": "curve.close",
+      "section": "visualize",
+      "description": "Close the path inside curve.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#curve(curve.move((0pt, 0pt)), curve.line((10mm, 0pt)), curve.close(), curve.line((0pt, 10mm)))\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// Close the path inside curve.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\nconst node2 = doc.typst_curve({  });\nnode2.typst_curve_move({ \"args\": [[expr(\"0pt\"), expr(\"0pt\")]] });\nnode2.typst_curve_line({ \"args\": [[expr(\"10mm\"), expr(\"0pt\")]] });\nnode2.typst_curve_close({  });\nnode2.typst_curve_line({ \"args\": [[expr(\"0pt\"), expr(\"10mm\")]] });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#curve(curve.move((0pt, 0pt,)), curve.line((10mm, 0pt,)), curve.close(), curve.line((0pt, 10mm,)))\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "math_equation",
+      "title": "math.equation",
+      "section": "math",
+      "description": "Math function math.equation, inside an equation.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#math.equation(block: true, [$x + y$])\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// Math function math.equation, inside an equation.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\ndoc.typst_math_equation({ \"content\": expr(\"[$x + y$\\n]\"), \"block\": true });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#math.equation(block: true, [#[$x + y$\n]])\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "math_upright",
+      "title": "math.upright",
+      "section": "math",
+      "description": "Math function math.upright, inside an equation.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#math.equation(block: true, [#math.upright([$x$])])\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// Math function math.upright, inside an equation.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\nconst node2 = doc.typst_math_equation({ \"block\": true });\nnode2.typst_math_upright({ \"content\": expr(\"[$x$\\n]\") });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#math.equation(block: true, [#math.upright([#[$x$\n]])])\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "math_italic",
+      "title": "math.italic",
+      "section": "math",
+      "description": "Math function math.italic, inside an equation.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#math.equation(block: true, [#math.italic([$x$])])\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// Math function math.italic, inside an equation.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\nconst node2 = doc.typst_math_equation({ \"block\": true });\nnode2.typst_math_italic({ \"content\": expr(\"[$x$\\n]\") });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#math.equation(block: true, [#math.italic([#[$x$\n]])])\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "math_bold",
+      "title": "math.bold",
+      "section": "math",
+      "description": "Math function math.bold, inside an equation.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#math.equation(block: true, [#math.bold([$x$])])\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// Math function math.bold, inside an equation.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\nconst node2 = doc.typst_math_equation({ \"block\": true });\nnode2.typst_math_bold({ \"content\": expr(\"[$x$\\n]\") });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#math.equation(block: true, [#math.bold([#[$x$\n]])])\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "math_serif",
+      "title": "math.serif",
+      "section": "math",
+      "description": "Math function math.serif, inside an equation.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#math.equation(block: true, [#math.serif([$x$])])\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// Math function math.serif, inside an equation.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\nconst node2 = doc.typst_math_equation({ \"block\": true });\nnode2.typst_math_serif({ \"content\": expr(\"[$x$\\n]\") });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#math.equation(block: true, [#math.serif([#[$x$\n]])])\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "math_sans",
+      "title": "math.sans",
+      "section": "math",
+      "description": "Math function math.sans, inside an equation.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#math.equation(block: true, [#math.sans([$x$])])\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// Math function math.sans, inside an equation.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\nconst node2 = doc.typst_math_equation({ \"block\": true });\nnode2.typst_math_sans({ \"content\": expr(\"[$x$\\n]\") });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#math.equation(block: true, [#math.sans([#[$x$\n]])])\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "math_cal",
+      "title": "math.cal",
+      "section": "math",
+      "description": "Math function math.cal, inside an equation.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#math.equation(block: true, [#math.cal([$x$])])\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// Math function math.cal, inside an equation.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\nconst node2 = doc.typst_math_equation({ \"block\": true });\nnode2.typst_math_cal({ \"content\": expr(\"[$x$\\n]\") });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#math.equation(block: true, [#math.cal([#[$x$\n]])])\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "math_frak",
+      "title": "math.frak",
+      "section": "math",
+      "description": "Math function math.frak, inside an equation.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#math.equation(block: true, [#math.frak([$x$])])\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// Math function math.frak, inside an equation.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\nconst node2 = doc.typst_math_equation({ \"block\": true });\nnode2.typst_math_frak({ \"content\": expr(\"[$x$\\n]\") });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#math.equation(block: true, [#math.frak([#[$x$\n]])])\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "math_mono",
+      "title": "math.mono",
+      "section": "math",
+      "description": "Math function math.mono, inside an equation.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#math.equation(block: true, [#math.mono([$x$])])\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// Math function math.mono, inside an equation.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\nconst node2 = doc.typst_math_equation({ \"block\": true });\nnode2.typst_math_mono({ \"content\": expr(\"[$x$\\n]\") });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#math.equation(block: true, [#math.mono([#[$x$\n]])])\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "math_bb",
+      "title": "math.bb",
+      "section": "math",
+      "description": "Math function math.bb, inside an equation.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#math.equation(block: true, [#math.bb([$x$])])\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// Math function math.bb, inside an equation.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\nconst node2 = doc.typst_math_equation({ \"block\": true });\nnode2.typst_math_bb({ \"content\": expr(\"[$x$\\n]\") });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#math.equation(block: true, [#math.bb([#[$x$\n]])])\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "math_display",
+      "title": "math.display",
+      "section": "math",
+      "description": "Math function math.display, inside an equation.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#math.equation(block: true, [#math.display([$x$])])\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// Math function math.display, inside an equation.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\nconst node2 = doc.typst_math_equation({ \"block\": true });\nnode2.typst_math_display({ \"content\": expr(\"[$x$\\n]\") });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#math.equation(block: true, [#math.display([#[$x$\n]])])\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "math_inline",
+      "title": "math.inline",
+      "section": "math",
+      "description": "Math function math.inline, inside an equation.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#math.equation(block: true, [#math.inline([$x$])])\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// Math function math.inline, inside an equation.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\nconst node2 = doc.typst_math_equation({ \"block\": true });\nnode2.typst_math_inline({ \"content\": expr(\"[$x$\\n]\") });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#math.equation(block: true, [#math.inline([#[$x$\n]])])\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "math_script",
+      "title": "math.script",
+      "section": "math",
+      "description": "Math function math.script, inside an equation.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#math.equation(block: true, [#math.script([$x$])])\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// Math function math.script, inside an equation.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\nconst node2 = doc.typst_math_equation({ \"block\": true });\nnode2.typst_math_script({ \"content\": expr(\"[$x$\\n]\") });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#math.equation(block: true, [#math.script([#[$x$\n]])])\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "math_sscript",
+      "title": "math.sscript",
+      "section": "math",
+      "description": "Math function math.sscript, inside an equation.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#math.equation(block: true, [#math.sscript([$x$])])\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// Math function math.sscript, inside an equation.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\nconst node2 = doc.typst_math_equation({ \"block\": true });\nnode2.typst_math_sscript({ \"content\": expr(\"[$x$\\n]\") });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#math.equation(block: true, [#math.sscript([#[$x$\n]])])\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "math_frac",
+      "title": "math.frac",
+      "section": "math",
+      "description": "Math function math.frac, inside an equation.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#math.equation(block: true, [#math.frac([$x$], [$y$])])\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// Math function math.frac, inside an equation.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\nconst node2 = doc.typst_math_equation({ \"block\": true });\nnode2.typst_math_frac({ \"args\": [expr(\"[$x$\\n]\"), expr(\"[$y$\\n]\")] });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#math.equation(block: true, [#math.frac([$x$\n], [$y$\n])])\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "math_root",
+      "title": "math.root",
+      "section": "math",
+      "description": "Math function math.root, inside an equation.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#math.equation(block: true, [#math.root(\"3\", [$x$])])\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// Math function math.root, inside an equation.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\nconst node2 = doc.typst_math_equation({ \"block\": true });\nnode2.typst_math_root({ \"args\": [\"3\", expr(\"[$x$\\n]\")] });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#math.equation(block: true, [#math.root(\"3\", [$x$\n])])\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "math_sqrt",
+      "title": "math.sqrt",
+      "section": "math",
+      "description": "Math function math.sqrt, inside an equation.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#math.equation(block: true, [#math.sqrt([$x$])])\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// Math function math.sqrt, inside an equation.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\nconst node2 = doc.typst_math_equation({ \"block\": true });\nnode2.typst_math_sqrt({ \"args\": [expr(\"[$x$\\n]\")] });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#math.equation(block: true, [#math.sqrt([$x$\n])])\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "math_binom",
+      "title": "math.binom",
+      "section": "math",
+      "description": "Math function math.binom, inside an equation.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#math.equation(block: true, [#math.binom(\"n\", \"k\")])\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// Math function math.binom, inside an equation.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\nconst node2 = doc.typst_math_equation({ \"block\": true });\nnode2.typst_math_binom({ \"args\": [\"n\", \"k\"] });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#math.equation(block: true, [#math.binom(\"n\", \"k\")])\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "math_vec",
+      "title": "math.vec",
+      "section": "math",
+      "description": "Math function math.vec, inside an equation.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#math.equation(block: true, [#math.vec(\"1\", \"2\")])\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// Math function math.vec, inside an equation.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\nconst node2 = doc.typst_math_equation({ \"block\": true });\nnode2.typst_math_vec({ \"args\": [\"1\", \"2\"] });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#math.equation(block: true, [#math.vec(\"1\", \"2\")])\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "math_mat",
+      "title": "math.mat",
+      "section": "math",
+      "description": "Math function math.mat, inside an equation.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#math.equation(block: true, [#math.mat((\"1\", \"2\"), (\"3\", \"4\"))])\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// Math function math.mat, inside an equation.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\nconst node2 = doc.typst_math_equation({ \"block\": true });\nnode2.typst_math_mat({ \"args\": [[\"1\", \"2\"], [\"3\", \"4\"]] });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#math.equation(block: true, [#math.mat((\"1\", \"2\",), (\"3\", \"4\",))])\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "math_cases",
+      "title": "math.cases",
+      "section": "math",
+      "description": "Math function math.cases, inside an equation.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#math.equation(block: true, [#math.cases([$x & x >= 0$], [$-x & x < 0$])])\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// Math function math.cases, inside an equation.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\nconst node2 = doc.typst_math_equation({ \"block\": true });\nnode2.typst_math_cases({ \"args\": [expr(\"[$x & x >= 0$\\n]\"), expr(\"[$-x & x < 0$\\n]\")] });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#math.equation(block: true, [#math.cases([$x & x >= 0$\n], [$-x & x < 0$\n])])\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "math_lr",
+      "title": "math.lr",
+      "section": "math",
+      "description": "Math function math.lr, inside an equation.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#math.equation(block: true, [#math.lr([$(x)$])])\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// Math function math.lr, inside an equation.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\nconst node2 = doc.typst_math_equation({ \"block\": true });\nnode2.typst_math_lr({ \"args\": [expr(\"[$(x)$\\n]\")] });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#math.equation(block: true, [#math.lr([$(x)$\n])])\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "math_attach",
+      "title": "math.attach",
+      "section": "math",
+      "description": "Math function math.attach, inside an equation.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#math.equation(block: true, [#math.attach([$x$], t: [2], b: [i])])\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// Math function math.attach, inside an equation.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\nconst node2 = doc.typst_math_equation({ \"block\": true });\nnode2.typst_math_attach({ \"args\": [expr(\"[$x$\\n]\")], \"t\": expr(\"[2\\n]\"), \"b\": expr(\"[i\\n]\") });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#math.equation(block: true, [#math.attach([$x$\n], t: [2\n], b: [i\n])])\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "math_accent",
+      "title": "math.accent",
+      "section": "math",
+      "description": "Math function math.accent, inside an equation.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#math.equation(block: true, [#math.accent([$x$], \"^\")])\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// Math function math.accent, inside an equation.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\nconst node2 = doc.typst_math_equation({ \"block\": true });\nnode2.typst_math_accent({ \"args\": [expr(\"[$x$\\n]\"), \"^\"] });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#math.equation(block: true, [#math.accent([$x$\n], \"^\")])\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "math_cancel",
+      "title": "math.cancel",
+      "section": "math",
+      "description": "Math function math.cancel, inside an equation.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#math.equation(block: true, [#math.cancel([$x$])])\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// Math function math.cancel, inside an equation.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\nconst node2 = doc.typst_math_equation({ \"block\": true });\nnode2.typst_math_cancel({ \"args\": [expr(\"[$x$\\n]\")] });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#math.equation(block: true, [#math.cancel([$x$\n])])\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "math_class",
+      "title": "math.class",
+      "section": "math",
+      "description": "Math function math.class, inside an equation.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#math.equation(block: true, [#math.class(\"relation\", [$=$])])\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// Math function math.class, inside an equation.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\nconst node2 = doc.typst_math_equation({ \"block\": true });\nnode2.typst_math_class({ \"args\": [\"relation\", expr(\"[$=$\\n]\")] });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#math.equation(block: true, [#math.class(\"relation\", [$=$\n])])\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "math_op",
+      "title": "math.op",
+      "section": "math",
+      "description": "Math function math.op, inside an equation.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#math.equation(block: true, [#math.op(\"custom\")])\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// Math function math.op, inside an equation.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\nconst node2 = doc.typst_math_equation({ \"block\": true });\nnode2.typst_math_op({ \"args\": [\"custom\"] });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#math.equation(block: true, [#math.op(\"custom\")])\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "math_limits",
+      "title": "math.limits",
+      "section": "math",
+      "description": "Math function math.limits, inside an equation.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#math.equation(block: true, [#math.limits(sym.sum)])\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// Math function math.limits, inside an equation.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\nconst node2 = doc.typst_math_equation({ \"block\": true });\nnode2.typst_math_limits({ \"args\": [expr(\"sym.sum\")] });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#math.equation(block: true, [#math.limits(sym.sum)])\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "math_scripts",
+      "title": "math.scripts",
+      "section": "math",
+      "description": "Math function math.scripts, inside an equation.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#math.equation(block: true, [#math.scripts(sym.sum)])\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// Math function math.scripts, inside an equation.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\nconst node2 = doc.typst_math_equation({ \"block\": true });\nnode2.typst_math_scripts({ \"args\": [expr(\"sym.sum\")] });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#math.equation(block: true, [#math.scripts(sym.sum)])\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "math_abs",
+      "title": "math.abs",
+      "section": "math",
+      "description": "Math function math.abs, inside an equation.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#math.equation(block: true, [#math.abs([$x$])])\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// Math function math.abs, inside an equation.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\nconst node2 = doc.typst_math_equation({ \"block\": true });\nnode2.typst_math_abs({ \"args\": [expr(\"[$x$\\n]\")] });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#math.equation(block: true, [#math.abs([$x$\n])])\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "math_norm",
+      "title": "math.norm",
+      "section": "math",
+      "description": "Math function math.norm, inside an equation.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#math.equation(block: true, [#math.norm([$x$])])\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// Math function math.norm, inside an equation.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\nconst node2 = doc.typst_math_equation({ \"block\": true });\nnode2.typst_math_norm({ \"args\": [expr(\"[$x$\\n]\")] });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#math.equation(block: true, [#math.norm([$x$\n])])\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "math_floor",
+      "title": "math.floor",
+      "section": "math",
+      "description": "Math function math.floor, inside an equation.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#math.equation(block: true, [#math.floor([$x$])])\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// Math function math.floor, inside an equation.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\nconst node2 = doc.typst_math_equation({ \"block\": true });\nnode2.typst_math_floor({ \"args\": [expr(\"[$x$\\n]\")] });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#math.equation(block: true, [#math.floor([$x$\n])])\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "math_ceil",
+      "title": "math.ceil",
+      "section": "math",
+      "description": "Math function math.ceil, inside an equation.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#math.equation(block: true, [#math.ceil([$x$])])\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// Math function math.ceil, inside an equation.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\nconst node2 = doc.typst_math_equation({ \"block\": true });\nnode2.typst_math_ceil({ \"args\": [expr(\"[$x$\\n]\")] });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#math.equation(block: true, [#math.ceil([$x$\n])])\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "math_round",
+      "title": "math.round",
+      "section": "math",
+      "description": "Math function math.round, inside an equation.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#math.equation(block: true, [#math.round([$x$])])\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// Math function math.round, inside an equation.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\nconst node2 = doc.typst_math_equation({ \"block\": true });\nnode2.typst_math_round({ \"args\": [expr(\"[$x$\\n]\")] });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#math.equation(block: true, [#math.round([$x$\n])])\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "math_stretch",
+      "title": "math.stretch",
+      "section": "math",
+      "description": "Math function math.stretch, inside an equation.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#math.equation(block: true, [#math.stretch(sym.arrow.r, size: 200%)])\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// Math function math.stretch, inside an equation.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\nconst node2 = doc.typst_math_equation({ \"block\": true });\nnode2.typst_math_stretch({ \"args\": [expr(\"sym.arrow.r\")], \"size\": expr(\"200%\") });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#math.equation(block: true, [#math.stretch(sym.arrow.r, size: 200%)])\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "math_underbrace",
+      "title": "math.underbrace",
+      "section": "math",
+      "description": "Math function math.underbrace, inside an equation.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#math.equation(block: true, [#math.underbrace([$x$])])\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// Math function math.underbrace, inside an equation.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\nconst node2 = doc.typst_math_equation({ \"block\": true });\nnode2.typst_math_underbrace({ \"args\": [expr(\"[$x$\\n]\")] });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#math.equation(block: true, [#math.underbrace([$x$\n])])\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "math_overbrace",
+      "title": "math.overbrace",
+      "section": "math",
+      "description": "Math function math.overbrace, inside an equation.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#math.equation(block: true, [#math.overbrace([$x$])])\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// Math function math.overbrace, inside an equation.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\nconst node2 = doc.typst_math_equation({ \"block\": true });\nnode2.typst_math_overbrace({ \"args\": [expr(\"[$x$\\n]\")] });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#math.equation(block: true, [#math.overbrace([$x$\n])])\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "math_underbracket",
+      "title": "math.underbracket",
+      "section": "math",
+      "description": "Math function math.underbracket, inside an equation.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#math.equation(block: true, [#math.underbracket([$x$])])\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// Math function math.underbracket, inside an equation.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\nconst node2 = doc.typst_math_equation({ \"block\": true });\nnode2.typst_math_underbracket({ \"args\": [expr(\"[$x$\\n]\")] });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#math.equation(block: true, [#math.underbracket([$x$\n])])\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "math_overbracket",
+      "title": "math.overbracket",
+      "section": "math",
+      "description": "Math function math.overbracket, inside an equation.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#math.equation(block: true, [#math.overbracket([$x$])])\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// Math function math.overbracket, inside an equation.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\nconst node2 = doc.typst_math_equation({ \"block\": true });\nnode2.typst_math_overbracket({ \"args\": [expr(\"[$x$\\n]\")] });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#math.equation(block: true, [#math.overbracket([$x$\n])])\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "math_underline",
+      "title": "math.underline",
+      "section": "math",
+      "description": "Math function math.underline, inside an equation.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#math.equation(block: true, [#math.underline([$x$])])\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// Math function math.underline, inside an equation.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\nconst node2 = doc.typst_math_equation({ \"block\": true });\nnode2.typst_math_underline({ \"args\": [expr(\"[$x$\\n]\")] });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#math.equation(block: true, [#math.underline([$x$\n])])\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "math_overline",
+      "title": "math.overline",
+      "section": "math",
+      "description": "Math function math.overline, inside an equation.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#math.equation(block: true, [#math.overline([$x$])])\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// Math function math.overline, inside an equation.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\nconst node2 = doc.typst_math_equation({ \"block\": true });\nnode2.typst_math_overline({ \"args\": [expr(\"[$x$\\n]\")] });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#math.equation(block: true, [#math.overline([$x$\n])])\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "math_underparen",
+      "title": "math.underparen",
+      "section": "math",
+      "description": "Math function math.underparen, inside an equation.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#math.equation(block: true, [#math.underparen([$x$])])\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// Math function math.underparen, inside an equation.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\nconst node2 = doc.typst_math_equation({ \"block\": true });\nnode2.typst_math_underparen({ \"args\": [expr(\"[$x$\\n]\")] });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#math.equation(block: true, [#math.underparen([$x$\n])])\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "math_overparen",
+      "title": "math.overparen",
+      "section": "math",
+      "description": "Math function math.overparen, inside an equation.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#math.equation(block: true, [#math.overparen([$x$])])\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// Math function math.overparen, inside an equation.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\nconst node2 = doc.typst_math_equation({ \"block\": true });\nnode2.typst_math_overparen({ \"args\": [expr(\"[$x$\\n]\")] });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#math.equation(block: true, [#math.overparen([$x$\n])])\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "math_undershell",
+      "title": "math.undershell",
+      "section": "math",
+      "description": "Math function math.undershell, inside an equation.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#math.equation(block: true, [#math.undershell([$x$])])\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// Math function math.undershell, inside an equation.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\nconst node2 = doc.typst_math_equation({ \"block\": true });\nnode2.typst_math_undershell({ \"args\": [expr(\"[$x$\\n]\")] });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#math.equation(block: true, [#math.undershell([$x$\n])])\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "math_overshell",
+      "title": "math.overshell",
+      "section": "math",
+      "description": "Math function math.overshell, inside an equation.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#math.equation(block: true, [#math.overshell([$x$])])\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// Math function math.overshell, inside an equation.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\nconst node2 = doc.typst_math_equation({ \"block\": true });\nnode2.typst_math_overshell({ \"args\": [expr(\"[$x$\\n]\")] });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#math.equation(block: true, [#math.overshell([$x$\n])])\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "math_primes",
+      "title": "math.primes",
+      "section": "math",
+      "description": "Math function math.primes, inside an equation.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#math.equation(block: true, [#math.primes(3)])\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// Math function math.primes, inside an equation.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\nconst node2 = doc.typst_math_equation({ \"block\": true });\nnode2.typst_math_primes({ \"args\": [3] });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#math.equation(block: true, [#math.primes(3)])\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "metadata",
+      "title": "metadata",
+      "section": "introspection",
+      "description": "Invisible data embedded in the document.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#metadata((\"answer\": 42,))\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// Invisible data embedded in the document.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\ndoc.typst_metadata({ \"content\": { \"answer\": 42 } });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#metadata((\"answer\": 42,))\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "pdf_artifact",
+      "title": "pdf.artifact",
+      "section": "pdf",
+      "description": "Decorative content marked as a PDF artifact.",
+      "reference": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text(\"Before\")\n#pdf.artifact(\"Decoration\")\n#text(\"After\")\n",
+      "assets": {},
+      "code": "// Decorative content marked as a PDF artifact.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_text({ \"content\": \"Before\" });\ndoc.typst_pdf_artifact({ \"content\": \"Decoration\" });\ndoc.typst_text({ \"content\": \"After\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#text([#\"Before\"])\n#pdf.artifact([#\"Decoration\"])\n#text([#\"After\"])\n"
+    },
+    {
+      "id": "call",
+      "title": "call",
+      "section": "language",
+      "description": "Call a Typst or imported function.",
+      "reference": "",
+      "assets": {},
+      "code": "// Call a Typst or imported function.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_call({ \"function\": \"strong\", \"content\": \"Customizable function\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#strong([#\"Customizable function\"])\n"
+    },
+    {
+      "id": "set_rule",
+      "title": "set_rule",
+      "section": "language",
+      "description": "Style rule for subsequent elements.",
+      "reference": "",
+      "assets": {},
+      "code": "// Style rule for subsequent elements.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_set_rule({ \"target\": \"text\", \"fill\": expr(\"blue\") });\ndoc.typst_text({ \"content\": \"This text is blue\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#set text(fill: blue)\n#text([#\"This text is blue\"])\n"
+    },
+    {
+      "id": "show_rule",
+      "title": "show_rule",
+      "section": "language",
+      "description": "Transform or style selected elements.",
+      "reference": "",
+      "assets": {},
+      "code": "// Transform or style selected elements.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_show_rule({ \"selector\": \"heading\", \"target\": \"text\", \"fill\": expr(\"blue\") });\ndoc.typst_heading({ \"content\": \"Transformed heading\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#show heading: set text(fill: blue)\n#heading([#\"Transformed heading\"])\n"
+    },
+    {
+      "id": "scope",
+      "title": "scope",
+      "section": "language",
+      "description": "Styles local to a container.",
+      "reference": "",
+      "assets": {},
+      "code": "// Styles local to a container.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\nconst node1 = doc.typst_scope({  });\nnode1.typst_set_rule({ \"target\": \"text\", \"fill\": expr(\"blue\") });\nnode1.typst_text({ \"content\": \"Local style\" });\ndoc.typst_text({ \"content\": \"Outer style\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#[#set text(fill: blue);\n#text([#\"Local style\"])]\n#text([#\"Outer style\"])\n"
+    },
+    {
+      "id": "context",
+      "title": "context",
+      "section": "language",
+      "description": "Values requiring page context.",
+      "reference": "",
+      "assets": {},
+      "code": "// Values requiring page context.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\nconst node1 = doc.typst_context({  });\nnode1.typst_text({ \"content\": expr(\"counter(page).display()\") });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#context [#text([#counter(page).display()])]\n"
+    },
+    {
+      "id": "equation",
+      "title": "equation",
+      "section": "language",
+      "description": "Formula written in Typst math syntax.",
+      "reference": "",
+      "assets": {},
+      "code": "// Formula written in Typst math syntax.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_equation({ \"formula\": \"sum_(i=1)^n i = (n (n+1))/2\", \"numbering\": \"(1)\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#math.equation(block: true, numbering: \"(1)\", $sum_(i=1)^n i = (n (n+1))/2$)\n"
+    },
+    {
+      "id": "label",
+      "title": "label",
+      "section": "language",
+      "description": "Label and reference to a section.",
+      "reference": "",
+      "assets": {},
+      "code": "// Label and reference to a section.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_set_rule({ \"target\": \"heading\", \"numbering\": \"1.\" });\ndoc.typst_heading({ \"content\": \"Example section\" });\ndoc.typst_label({ \"name\": \"example\" });\ndoc.typst_ref({ \"content\": expr(\"label(\\\"example\\\")\") });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#set heading(numbering: \"1.\")\n#heading([#\"Example section\"])\n#label(\"example\")\n#ref(label(\"example\"))\n"
+    },
+    {
+      "id": "let",
+      "title": "let",
+      "section": "language",
+      "description": "Typst variable used by subsequent elements.",
+      "reference": "",
+      "assets": {},
+      "code": "// Typst variable used by subsequent elements.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_let({ \"name\": \"message\", \"value\": \"Hello from a Typst variable\" });\ndoc.typst_text({ \"content\": expr(\"message\") });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#let message = \"Hello from a Typst variable\"\n#text([#message])\n"
+    },
+    {
+      "id": "import_module",
+      "title": "import_module",
+      "section": "language",
+      "description": "Import a function from helper.typ, included in this example.",
+      "reference": "",
+      "assets": {
+        "helper.typ": "#let greeting(name) = [Hello #name]"
+      },
+      "code": "// Import a function from helper.typ, included in this example.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_import_module({ \"path\": \"helper.typ\", \"names\": [\"greeting\"] });\ndoc.typst_call({ \"function\": \"greeting\", \"args\": [\"Reader\"], \"mode\": \"value\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#import \"helper.typ\": greeting\n#greeting(\"Reader\")\n"
+    },
+    {
+      "id": "include",
+      "title": "include",
+      "section": "language",
+      "description": "Include extra.typ, provided with this example.",
+      "reference": "",
+      "assets": {
+        "extra.typ": "= Included content\nThis text comes from extra.typ.\n"
+      },
+      "code": "// Include extra.typ, provided with this example.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_include({ \"path\": \"extra.typ\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#include \"extra.typ\"\n"
+    },
+    {
+      "id": "typst_code",
+      "title": "typst_code",
+      "section": "language",
+      "description": "Typst code block with local variables.",
+      "reference": "",
+      "assets": {},
+      "code": "// Typst code block with local variables.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_typst_code({ \"code\": \"let name = \\\"Reader\\\"; [Hello #name]\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#{let name = \"Reader\"; [Hello #name]\n}\n"
+    },
+    {
+      "id": "typst_markup",
+      "title": "typst_markup",
+      "section": "language",
+      "description": "Typst markup inside a JavaScript recipe.",
+      "reference": "",
+      "assets": {},
+      "code": "// Typst markup inside a JavaScript recipe.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_typst_markup({ \"source\": \"*Bold*, _emphasis_ and $x^2$. // final comment\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#[*Bold*, _emphasis_ and $x^2$. // final comment\n]\n"
+    },
+    {
+      "id": "document",
+      "title": "document",
+      "section": "legacy",
+      "description": "Page settings and document metadata.",
+      "reference": "",
+      "assets": {},
+      "code": "// Page settings and document metadata.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({ \"paper\": \"a5\", \"margin\": \"12mm\", \"metadata\": { \"title\": \"Example document\" } });\ndoc.typst_paragraph({ \"content\": \"Edit the page format and margins.\" });\n",
+      "source": "#set page(paper: \"a5\", flipped: false, margin: 12mm)\n#set document(title: \"Example document\")\n#par(\"Edit the page format and margins.\")\n"
+    },
+    {
+      "id": "layout",
+      "title": "layout",
+      "section": "legacy",
+      "description": "Genro container with rows and cells.",
+      "reference": "",
+      "assets": {},
+      "code": "// Genro container with rows and cells.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\nconst node1 = doc.typst_layout({ \"border_width\": \"0.5pt\" });\nconst node2 = node1.typst_row({  });\nnode2.typst_cell({ \"content\": \"First row\" });\nnode2.typst_cell({ \"content\": \"Value\", \"width\": \"40mm\" });\nconst node5 = node1.typst_row({  });\nnode5.typst_cell({ \"content\": \"Second row\" });\nnode5.typst_cell({ \"content\": \"Value\", \"width\": \"40mm\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#block(width: 100%, stroke: 0.5pt + black, grid(columns: (1fr,), grid(columns: (1fr, 40mm,), rows: (auto,), inset: 1mm, grid.cell([#\"First row\"]), grid.vline(x: 1, stroke: 0.5pt + black), grid.cell([#\"Value\"])), grid.hline(stroke: 0.5pt + black), grid(columns: (1fr, 40mm,), rows: (auto,), inset: 1mm, grid.cell([#\"Second row\"]), grid.vline(x: 1, stroke: 0.5pt + black), grid.cell([#\"Value\"]))))\n"
+    },
+    {
+      "id": "row",
+      "title": "row",
+      "section": "legacy",
+      "description": "Rows with configurable height and borders.",
+      "reference": "",
+      "assets": {},
+      "code": "// Rows with configurable height and borders.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\nconst node1 = doc.typst_layout({ \"border_width\": \"0.5pt\" });\nconst node2 = node1.typst_row({ \"height\": \"18mm\" });\nnode2.typst_cell({ \"content\": \"An 18 mm tall row\" });\nconst node4 = node1.typst_row({  });\nnode4.typst_cell({ \"content\": \"Automatic height\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#block(width: 100%, stroke: 0.5pt + black, grid(columns: (1fr,), grid(columns: (1fr,), rows: (18mm,), inset: 1mm, grid.cell([#\"An 18 mm tall row\"])), grid.hline(stroke: 0.5pt + black), grid(columns: (1fr,), rows: (auto,), inset: 1mm, grid.cell([#\"Automatic height\"]))))\n"
+    },
+    {
+      "id": "cell",
+      "title": "cell",
+      "section": "legacy",
+      "description": "Cells with labels, widths and native content.",
+      "reference": "",
+      "assets": {},
+      "code": "// Cells with labels, widths and native content.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\nconst node1 = doc.typst_layout({ \"border_width\": \"0.5pt\" });\nconst node2 = node1.typst_row({  });\nnode2.typst_cell({ \"content\": \"Customer\", \"lbl\": \"Customer details\", \"width\": 2 });\nconst node4 = node2.typst_cell({ \"lbl\": \"Native content\", \"background\": \"#eeeeee\" });\nnode4.typst_strong({ \"content\": \"Bold\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#block(width: 100%, stroke: 0.5pt + black, grid(columns: (1fr,), grid(columns: (2fr, 1fr,), rows: (auto,), inset: 1mm, grid.cell(stack(spacing: 0.8mm, text(size: 0.7em, fill: luma(90), \"Customer details\"), [#\"Customer\"])), grid.vline(x: 1, stroke: 0.5pt + black), grid.cell(fill: rgb(\"#eeeeee\"), stack(spacing: 0.8mm, text(size: 0.7em, fill: luma(90), \"Native content\"), [#strong([#\"Bold\"])])))))\n"
+    },
+    {
+      "id": "paragraph",
+      "title": "paragraph",
+      "section": "legacy",
+      "description": "Genro paragraph with data binding.",
+      "reference": "",
+      "assets": {},
+      "code": "// Genro paragraph with data binding.\nconst builder = new TypstBuilder();\nconst data0 = new Bag();\ndata0.setItem(\"name\", \"Rossi & Figli\");\nbuilder.data.setItem(\"customer\", data0);\nconst data1 = new Bag();\nconst data2 = new Bag();\ndata2.setItem(\"description\", \"Analysis\");\ndata2.setItem(\"quantity\", 2);\ndata2.setItem(\"amount\", 240);\ndata1.setItem(\"r0\", data2);\nconst data3 = new Bag();\ndata3.setItem(\"description\", \"Template\");\ndata3.setItem(\"quantity\", 3);\ndata3.setItem(\"amount\", 150);\ndata1.setItem(\"r1\", data3);\nbuilder.data.setItem(\"lines\", data1);\nconst doc = builder.root.typst_document({  });\ndoc.typst_paragraph({ \"content\": \"^customer.name\" });\nconst node6 = doc.typst_paragraph({  });\nnode6.typst_strong({ \"content\": \"Native content in a paragraph\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#par(\"Rossi & Figli\")\n#par([#\"\"#strong([#\"Native content in a paragraph\"])])\n"
+    },
+    {
+      "id": "pageNumber",
+      "title": "pageNumber",
+      "section": "legacy",
+      "description": "Automatically updated current and total page numbers.",
+      "reference": "",
+      "assets": {},
+      "code": "// Automatically updated current and total page numbers.\nconst builder = new TypstBuilder();\nconst doc = builder.root.typst_document({  });\ndoc.typst_paragraph({ \"content\": \"Test page 1\" });\ndoc.typst_pageNumber({ \"template\": \"Page {page} of {total}\" });\ndoc.typst_pagebreak({  });\ndoc.typst_paragraph({ \"content\": \"Test page 2\" });\ndoc.typst_pageNumber({ \"template\": \"Page {page} of {total}\" });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#par(\"Test page 1\")\n#context [#\"Page \"#counter(page).display()#\" of \"#counter(page).final().first()]\n#pagebreak()\n#par(\"Test page 2\")\n#context [#\"Page \"#counter(page).display()#\" of \"#counter(page).final().first()]\n"
+    },
+    {
+      "id": "table",
+      "title": "table",
+      "section": "legacy",
+      "description": "Table from Bag data, with headers and totals.",
+      "reference": "",
+      "assets": {},
+      "code": "// Table from Bag data, with headers and totals.\nconst builder = new TypstBuilder();\nconst data0 = new Bag();\ndata0.setItem(\"name\", \"Rossi & Figli\");\nbuilder.data.setItem(\"customer\", data0);\nconst data1 = new Bag();\nconst data2 = new Bag();\ndata2.setItem(\"description\", \"Analysis\");\ndata2.setItem(\"quantity\", 2);\ndata2.setItem(\"amount\", 240);\ndata1.setItem(\"r0\", data2);\nconst data3 = new Bag();\ndata3.setItem(\"description\", \"Template\");\ndata3.setItem(\"quantity\", 3);\ndata3.setItem(\"amount\", 150);\ndata1.setItem(\"r1\", data3);\nbuilder.data.setItem(\"lines\", data1);\nconst doc = builder.root.typst_document({  });\nconst node5 = doc.typst_table({ \"data\": \"^lines\", \"totalize_footer\": \"Total\" });\nnode5.typst_column({ \"field\": \"description\", \"name\": \"Description\", \"width\": 3 });\nnode5.typst_column({ \"field\": \"quantity\", \"name\": \"Quantity\", \"totalize\": true });\nnode5.typst_column({ \"field\": \"amount\", \"name\": \"Amount\", \"totalize\": true });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#table(columns: (3fr, 1fr, 1fr,), align: (auto, auto, auto,), stroke: 0.5pt + black, inset: 1mm, fill: (x, y) => if y == 0 { luma(230) }, table.header(repeat: true, strong(\"Description\"), strong(\"Quantity\"), strong(\"Amount\")), \"Analysis\", \"2\", \"240\", \"Template\", \"3\", \"150\", table.footer(repeat: false, table.cell(colspan: 1, strong(\"Total\")), strong(\"5\"), strong(\"390\")))\n"
+    },
+    {
+      "id": "column",
+      "title": "column",
+      "section": "legacy",
+      "description": "Data table columns: width, alignment and totals.",
+      "reference": "",
+      "assets": {},
+      "code": "// Data table columns: width, alignment and totals.\nconst builder = new TypstBuilder();\nconst data0 = new Bag();\ndata0.setItem(\"name\", \"Rossi & Figli\");\nbuilder.data.setItem(\"customer\", data0);\nconst data1 = new Bag();\nconst data2 = new Bag();\ndata2.setItem(\"description\", \"Analysis\");\ndata2.setItem(\"quantity\", 2);\ndata2.setItem(\"amount\", 240);\ndata1.setItem(\"r0\", data2);\nconst data3 = new Bag();\ndata3.setItem(\"description\", \"Template\");\ndata3.setItem(\"quantity\", 3);\ndata3.setItem(\"amount\", 150);\ndata1.setItem(\"r1\", data3);\nbuilder.data.setItem(\"lines\", data1);\nconst doc = builder.root.typst_document({  });\nconst node5 = doc.typst_table({ \"data\": \"^lines\", \"totalize_footer\": \"Total\" });\nnode5.typst_column({ \"field\": \"description\", \"name\": \"Description\", \"width\": \"80mm\" });\nnode5.typst_column({ \"field\": \"quantity\", \"name\": \"Quantity\", \"align\": \"right\" });\nnode5.typst_column({ \"field\": \"amount\", \"name\": \"Amount\", \"align\": \"right\", \"totalize\": true });\n",
+      "source": "#set page(paper: \"a4\", flipped: false, margin: 15mm)\n#table(columns: (80mm, 1fr, 1fr,), align: (auto, right, right,), stroke: 0.5pt + black, inset: 1mm, fill: (x, y) => if y == 0 { luma(230) }, table.header(repeat: true, strong(\"Description\"), strong(\"Quantity\"), strong(\"Amount\")), \"Analysis\", \"2\", \"240\", \"Template\", \"3\", \"150\", table.footer(repeat: false, table.cell(colspan: 2, strong(\"Total\")), strong(\"390\")))\n"
+    }
+  ]
+}

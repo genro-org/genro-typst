@@ -14,6 +14,7 @@ h1 { margin: 0; font-size: clamp(25px, 2.6vw, 38px); letter-spacing: -.04em; fon
 h1 span { color: #91a386; font-weight: 300; margin: 0 4px; }
 .intro p:last-child { color: #748076; font-size: 13px; margin: 12px 0 0; }
 .actions { display: flex; gap: 10px; }
+.live-option { display: flex; align-items: center; gap: 5px; font-size: 11px; white-space: nowrap; }
 button { cursor: pointer; font: inherit; font-size: 12px; border: 1px solid #284f40; border-radius: 6px; padding: 12px 15px; background: #284f40; color: white; font-weight: 600; }
 button span { margin-left: 12px; font-size: 10px; color: #c0d7c4; }
 button:hover:not(:disabled) { filter: brightness(1.1); }
@@ -43,5 +44,29 @@ textarea:focus { outline: 2px solid #a8bb90; outline-offset: -2px; }
 #error { color: #923a30; background: #fff1eb; padding: 16px; margin: 0; white-space: pre-wrap; overflow-wrap: anywhere; font: 12px/1.5 monospace; }
 footer { max-width: 1100px; margin: 22px 32px 28px; font-size: 10px; line-height: 1.8; color: #85907f; }
 footer strong { font-weight: 600; color: #65755f; }
+.playground { display: grid; grid-template-columns: 190px minmax(0, 1fr); gap: 20px; }
+.collection { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.collection label { font-size: 11px; }
+.collection input, .collection select { width: 100%; padding: 9px; border: 1px solid #cdd5ca; border-radius: 5px; background: #fcfcf8; color: inherit; }
+#example-count, #check-summary { font-size: 11px; color: #64705e; }
+#example-list { display: flex; flex-direction: column; gap: 3px; max-height: 460px; overflow: auto; }
+#example-list button { text-align: left; background: transparent; color: #526459; padding: 8px; border-color: transparent; overflow-wrap: anywhere; }
+#example-list button[aria-pressed="true"] { background: #dfe8d8; border-color: #b6c6ac; color: #243c33; }
+#check-results { font-size: 11px; color: #923a30; padding-left: 16px; max-height: 200px; overflow: auto; overflow-wrap: anywhere; }
+.example-info { min-height: 64px; padding: 0 0 12px; }
+.example-info h2 { font-size: 16px; }
+.example-info p { margin: 6px 0; font-size: 12px; color: #64705e; }
+.example-info #compatibility { color: #92572a; background: #fff1dc; padding: 9px; border-radius: 5px; }
+#assets { font-size: 11px; }
+#assets pre { white-space: pre-wrap; overflow-wrap: anywhere; }
+#assets button { padding: 5px; font-size: 10px; margin-bottom: 8px; }
+.code-editor { min-width: 0; flex: 1; }
+.code-editor .cm-editor { height: 540px; font: 11.5px/1.7 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+.code-editor .cm-scroller { overflow: auto; }
+.code-editor .cm-gutters { background: #f0f2e9; color: #899184; border: 0; }
+.code-editor .cm-content { padding: 16px 0; }
+.code-editor .cm-focused { outline: 2px solid #a8bb90; outline-offset: -2px; }
+@media (max-width: 1200px) { main { padding-left: 18px; padding-right: 18px; } .playground { grid-template-columns: 155px minmax(0, 1fr); gap: 12px; } .panel-title { padding: 12px 8px; flex-wrap: wrap; } }
 @media (max-width: 1050px) { .workspace { grid-template-columns: 1fr 1fr; } .preview-panel { grid-column: 1/-1; border-top: 1px solid #d7ddd3; } #preview img { max-width: 500px; } .intro { flex-wrap: wrap; } }
 @media (max-width: 650px) { main { padding: 22px 12px 0; } header { padding: 0 16px; } .workspace { display: block; } .panel + .panel { border-left: 0; border-top: 1px solid #d7ddd3; } textarea { min-height: 330px; } .statusbar { flex-wrap: wrap; } footer { margin: 20px 16px; } }
+@media (max-width: 650px) { .playground { display: block; } .collection { margin-bottom: 20px; } #example-list { max-height: 160px; } .code-editor .cm-editor { height: 350px; } }

@@ -1,35 +1,35 @@
 // Copyright 2026 Softwell S.r.l. - SPDX-License-Identifier: Apache-2.0
-import { defaultRecipe, recipeSource } from './recipe.js';
+import { recipeSource } from './recipe.js';
+import { examples, sections, filterExamples, RecipeDrafts } from './collection.js';
+import { compileSvg } from './compiler.js';
+import { createEditor } from './editor.js';
 
-const editor = document.querySelector('#recipe');
-const source = document.querySelector('#source');
-const preview = document.querySelector('#preview');
-const status = document.querySelector('#status');
-const error = document.querySelector('#error');
-const run = document.querySelector('#run');
-const reset = document.querySelector('#reset');
-const typDownload = document.querySelector('#download-typ');
-const svgDownload = document.querySelector('#download-svg');
-let compilerPromise;
-let svg = '';
-let previewUrl;
-let busy = false;
-let renderedRecipe = '';
-
-function compiler() {
-    if (!compilerPromise) compilerPromise = import('./vendor/typst.js').then(({ $typst, loadFonts }) => {
-        const fonts = ['Regular', 'Bold', 'Italic', 'BoldItalic'].map(
-            weight => new URL(`./fonts/LibertinusSerif-${weight}.otf`, import.meta.url).href,
-        );
-        $typst.setCompilerInitOptions({
-            getModule: () => window.$wasm$typst_compiler,
-            beforeBuild: [loadFonts(fonts, { assets: false })],
-        });
-        return $typst;
-    }).catch(reason => { compilerPromise = null; throw reason; });
-    return compilerPromise;
+const $ = selector => document.querySelector(selector);
+const preview = $('#preview'), status = $('#status'), error = $('#error');
+const run = $('#run'), reset = $('#reset'), check = $('#check-all');
+const typDownload = $('#download-typ'), svgDownload = $('#download-svg');
+const search = $('#example-search'), category = $('#category'), list = $('#example-list');
+const drafts = new RecipeDrafts();
+let selected = examples[0], svg = '', previewUrl, busy = false, renderedRecipe = '', renderTimer;
+function scheduleRender() {
+    clearTimeout(renderTimer);
+    if ($('#live-preview').checked) renderTimer = setTimeout(render, 650);
 }
+const editor = createEditor($('#recipe'), { label: 'JavaScript recipe', onRun: render, onChange() {
+    drafts.save(selected, editor.value);
+    if (!busy && editor.value !== renderedRecipe) {
+        status.dataset.state = 'changed';
+        status.textContent = 'Recipe changed · run to update';
+    }
+    scheduleRender();
+}});
+const source = createEditor($('#source'), { label: 'Generated Typst source', readOnly: true });
 
+function setBusy(value) {
+    busy = value;
+    run.disabled = reset.disabled = check.disabled = value;
+    for (const button of list.querySelectorAll('button')) button.disabled = value;
+}
 function clearPreview() {
     preview.replaceChildren();
     if (previewUrl) URL.revokeObjectURL(previewUrl);
@@ -37,11 +37,10 @@ function clearPreview() {
     svg = '';
     svgDownload.disabled = true;
 }
-
 async function render() {
     if (busy) return;
-    busy = true;
-    run.disabled = reset.disabled = true;
+    clearTimeout(renderTimer);
+    setBusy(true);
     error.hidden = true;
     status.dataset.state = 'working';
     status.textContent = 'Building document…';
@@ -52,18 +51,8 @@ async function render() {
     try {
         source.value = recipeSource(code);
         typDownload.disabled = false;
-        status.textContent = compilerPromise ? 'Typesetting with Typst…' : 'Loading the local Typst compiler…';
-        const typst = await compiler();
-        const result = await typst.svg({ mainContent: source.value });
-        if (typeof result !== 'string' || !result.includes('<svg')) {
-            throw new Error('Typst could not produce SVG. Check the generated source.');
-        }
-        // typst.ts emits SVG for HTML embedding; serialize it as standalone XML.
-        const parsed = new DOMParser().parseFromString(result, 'text/html');
-        const svgElement = parsed.querySelector('svg');
-        if (!svgElement) throw new Error('Typst returned no SVG element.');
-        svg = new XMLSerializer().serializeToString(svgElement);
-        // An image keeps generated SVG scripts and links out of the page DOM.
+        status.textContent = 'Typesetting with the local Typst compiler…';
+        svg = await compileSvg(source.value, selected.assets);
         previewUrl = URL.createObjectURL(new Blob([svg], { type: 'image/svg+xml' }));
         const image = new Image();
         image.alt = 'Document rendered by Typst';
@@ -85,29 +74,99 @@ async function render() {
         status.dataset.state = 'error';
         status.textContent = 'Could not render · check the error below';
     } finally {
-        busy = false;
-        run.disabled = reset.disabled = false;
+        setBusy(false);
+        if (editor.value !== code) scheduleRender();
     }
 }
-
 function download(content, type, name) {
     const url = URL.createObjectURL(new Blob([content], { type }));
     const link = document.createElement('a');
     link.href = url; link.download = name; link.click();
     setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
+function updateList() {
+    list.replaceChildren();
+    const matches = filterExamples(search.value, category.value);
+    $('#example-count').textContent = `${matches.length} / ${examples.length} examples`;
+    for (const example of matches) {
+        const button = document.createElement('button');
+        button.textContent = example.title + (example.compatibility ? ' ⚠' : '');
+        button.dataset.id = example.id;
+        button.setAttribute('aria-pressed', String(example.id === selected.id));
+        button.disabled = busy;
+        button.addEventListener('click', () => select(example));
+        list.append(button);
+    }
+    if (!matches.length) list.textContent = 'No matching examples.';
+}
+function select(example) {
+    if (busy) return;
+    drafts.save(selected, editor.value);
+    selected = example;
+    editor.value = drafts.read(example);
+    $('#example-title').textContent = example.title;
+    $('#example-description').textContent = example.description;
+    $('#compatibility').textContent = example.compatibility || '';
+    $('#compatibility').hidden = !example.compatibility;
+    const assets = $('#assets');
+    assets.replaceChildren();
+    const files = Object.entries(example.assets);
+    assets.hidden = !files.length;
+    for (const [name, content] of files) {
+        const details = document.createElement('details');
+        const summary = document.createElement('summary');
+        summary.textContent = `Included file: ${name}`;
+        const code = document.createElement('pre'); code.textContent = content;
+        const save = document.createElement('button');
+        save.textContent = 'Download ' + name;
+        save.addEventListener('click', () => download(content, 'text/plain;charset=utf-8', name));
+        details.append(summary, code, save); assets.append(details);
+    }
+    updateList();
+    render();
+}
+for (const [value, title] of Object.entries(sections)) {
+    const option = document.createElement('option'); option.value = value; option.textContent = title;
+    category.append(option);
+}
+search.addEventListener('input', updateList);
+category.addEventListener('change', updateList);
+$('#live-preview').addEventListener('change', scheduleRender);
 run.addEventListener('click', render);
-reset.addEventListener('click', () => { editor.value = defaultRecipe; render(); });
-typDownload.addEventListener('click', () => download(source.value, 'text/plain;charset=utf-8', 'document.typ'));
-svgDownload.addEventListener('click', () => download(svg, 'image/svg+xml', 'document.svg'));
-editor.addEventListener('input', () => {
-    if (!busy && editor.value !== renderedRecipe) {
-        status.dataset.state = 'changed';
-        status.textContent = 'Recipe changed · run to update';
+reset.addEventListener('click', () => { editor.value = drafts.reset(selected); render(); });
+typDownload.addEventListener('click', () => download(source.value, 'text/plain;charset=utf-8', `${selected.id}.typ`));
+svgDownload.addEventListener('click', () => download(svg, 'image/svg+xml', `${selected.id}.svg`));
+check.addEventListener('click', async () => {
+    if (busy) return;
+    setBusy(true);
+    clearTimeout(renderTimer);
+    const results = $('#check-results');
+    results.hidden = false;
+    results.replaceChildren();
+    let passed = 0, unavailable = 0, failed = 0;
+    try {
+        for (const example of examples) {
+            status.dataset.state = 'working';
+            status.textContent = `Checking ${example.title}…`;
+            try {
+                await compileSvg(recipeSource(example.code), example.assets);
+                passed++;
+            } catch (reason) {
+                const message = reason instanceof Error ? reason.message : String(reason);
+                const knownLimit = example.compatibility && message.includes('unknown variable: divider');
+                if (knownLimit) unavailable++; else failed++;
+                const item = document.createElement('li');
+                item.textContent = knownLimit ? example.compatibility : `${example.title}: ${message}`;
+                results.append(item);
+            }
+            $('#check-summary').textContent = `${passed} passed · ${unavailable} unavailable · ${failed} failed · ${examples.length} total`;
+            await new Promise(resolve => setTimeout(resolve, 0));
+        }
+    } finally {
+        setBusy(false);
+        // Restore the selected document and its virtual files after validation.
+        await render();
     }
 });
-editor.addEventListener('keydown', event => {
-    if ((event.ctrlKey || event.metaKey) && event.key === 'Enter') { event.preventDefault(); render(); }
-});
-editor.value = defaultRecipe;
-render();
+editor.value = selected.code;
+select(selected);

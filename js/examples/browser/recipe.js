@@ -1,5 +1,6 @@
 // Copyright 2026 Softwell S.r.l. - SPDX-License-Identifier: Apache-2.0
 import { TypstBuilder, color, expr, label, length, markup } from '../../src/index.js';
+import { Bag } from '@genrojs/bag';
 
 export const defaultRecipe = `const builder = new TypstBuilder();
 const doc = builder.root.document({
@@ -33,9 +34,9 @@ doc.par('Change this recipe and run it again.');`;
 
 export function recipeSource(code) {
     // This local playground deliberately executes the JavaScript the user edits.
-    const execute = new Function('TypstBuilder', 'color', 'expr', 'label', 'length', 'markup',
+    const execute = new Function('TypstBuilder', 'color', 'expr', 'label', 'length', 'markup', 'Bag',
         '"use strict";\n' + code + '\nreturn builder;');
-    const builder = execute(TypstBuilder, color, expr, label, length, markup);
+    const builder = execute(TypstBuilder, color, expr, label, length, markup, Bag);
     if (!(builder instanceof TypstBuilder)) throw new TypeError('Define a TypstBuilder named builder.');
     return builder.render();
 }
