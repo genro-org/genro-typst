@@ -75,6 +75,12 @@ and application data; Typst supplies the document semantics and typesetting.
 also be a writable binary stream. For images or imports, pass a compilation
 `root`; see the [guide](https://genro-typst.readthedocs.io/en/latest/typst-guide.html).
 
+For Python recipes, we recommend the filename **`mydoc.typ.py`**, with
+`mydoc.typ` for generated Typst source and `mydoc.pdf` for the compiled document.
+Run it with `python mydoc.typ.py` and set the output paths explicitly in the
+recipe. This convention is optional; see
+[naming Python recipes](https://genro-typst.readthedocs.io/en/latest/typst-guide.html#naming-python-recipes).
+
 ## What the Python layer provides
 
 | Capability | Genro Typst's role |
