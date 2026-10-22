@@ -77,8 +77,19 @@ also be a writable binary stream. For images or imports, pass a compilation
 
 For Python recipes, we recommend the filename **`mydoc.typ.py`**, with
 `mydoc.typ` for generated Typst source and `mydoc.pdf` for the compiled document.
-Run it with `python mydoc.typ.py` and set the output paths explicitly in the
-recipe. This convention is optional; see
+End the recipe with a guarded call to its builder class:
+
+```python
+if __name__ == "__main__":
+    Report.run()
+```
+
+`python mydoc.typ.py` then generates `mydoc.typ` beside the recipe.
+`python mydoc.typ.py output/document.typ` uses the given destination instead
+(relative to the working directory). This generates Typst source without
+requiring the compiler. Use this entry point in place of the manual
+instantiation and rendering calls above; importing the guarded recipe does
+not write files. The naming convention is optional; see
 [naming Python recipes](https://genro-typst.readthedocs.io/en/latest/typst-guide.html#naming-python-recipes).
 
 ## What the Python layer provides

@@ -1,8 +1,29 @@
 # Complete document examples
 
-Run these scripts from a checkout with the `pdf` extra installed. They save
-Typst source and PDF beside the Python recipe. Generated files are also
-available in the source repository.
+Run these scripts from a repository checkout. The invoice and native report
+examples require the `pdf` extra and save Typst source and PDF beside the
+Python recipe; their generated files are also available in the repository.
+The executable Python recipe below only generates source and needs no compiler.
+
+## Executable Python recipe
+
+A recipe following the `mydoc.typ.py` naming convention, with Python loops
+and a guarded `run()` entry point. Importing it does not write any files.
+
+```bash
+python examples/04_python_recipe/mydoc.typ.py
+python examples/04_python_recipe/mydoc.typ.py output/document.typ
+```
+
+The first command writes `mydoc.typ` beside the recipe. The second uses the
+destination path relative to your working directory. See
+[naming Python recipes](typst-guide.md#naming-python-recipes) for details.
+
+```{literalinclude} ../examples/04_python_recipe/mydoc.typ.py
+:language: python
+```
+
+[Download Python recipe](../examples/04_python_recipe/mydoc.typ.py)
 
 ## Invoice header
 

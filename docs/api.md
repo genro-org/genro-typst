@@ -15,7 +15,16 @@ serialization and scoped styles.
 
 ```{eval-rst}
 .. autoclass:: genro_typst.TypstBuilder
+   :members: run
 ```
+
+For executable recipes, call `MyDocument.run()` inside an
+`if __name__ == "__main__":` guard. It creates the document and writes Typst
+source beside the script, or to the optional positional output path supplied
+on the command line. `run(argv=["output.typ"])` accepts an explicit argument
+list instead of reading `sys.argv[1:]`. See
+[naming Python recipes](typst-guide.md#naming-python-recipes) for a complete
+example. PDF generation remains available through `render(mode="pdf")`.
 
 ## Explicit Typst values
 
