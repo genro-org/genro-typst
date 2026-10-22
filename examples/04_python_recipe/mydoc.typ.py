@@ -1,5 +1,5 @@
 # Copyright 2026 Softwell S.r.l. - SPDX-License-Identifier: Apache-2.0
-"""Run with python mydoc.typ.py [output.typ] to generate Typst source."""
+"""Run with python mydoc.typ.py [output] [--pdf | --svg] to generate a document."""
 
 from genro_typst import TypstBuilder
 

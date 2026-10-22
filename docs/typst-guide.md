@@ -93,6 +93,8 @@ Run the recipe as a normal Python script, with an optional destination path:
 ```bash
 python mydoc.typ.py
 python mydoc.typ.py output/document.typ
+python mydoc.typ.py --pdf
+python mydoc.typ.py --svg -o output/page.svg
 ```
 
 The first command creates `mydoc.typ` beside the recipe, even when launched
@@ -102,14 +104,16 @@ created as needed, and existing output files are replaced. The recipe itself
 cannot be used as its output path.
 
 `run()` creates a builder instance, calls `create()`, and writes UTF-8 Typst
-source. It does not compile a PDF and does not require the optional Typst
-compiler. Use `python mydoc.typ.py --help` for usage. Importing the guarded
-recipe does not generate any files.
+source by default, without needing a compiler. `--pdf` and `--svg` compile via
+the optional `pdf` extra. It supports the same options as the
+[`genro-typst` CLI](cli.md), including `-o`, `--root` and `--builder`, without
+reloading the running recipe. Use `python mydoc.typ.py --help` for usage.
+Importing the guarded recipe does not generate any files.
 
 The filename convention remains optional: `mydoc.py` also defaults to
 `mydoc.typ`. The recipe is Python code; the generated `.typ` file is Typst
 code. Existing recipes using explicit `create()` and `render()` calls remain
-valid. For PDF output or other custom behavior, continue to use those methods:
+valid. For programmatic rendering or other custom behavior, use those methods:
 
 ```python
 document = MyDocument()

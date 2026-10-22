@@ -59,11 +59,21 @@ Save this as `mydoc.typ.py`. Both entry points remain available:
 genro-typst mydoc.typ.py --pdf
 python mydoc.typ.py
 python mydoc.typ.py output/document.typ
+python mydoc.typ.py --pdf
+python mydoc.typ.py --svg -o output/page.svg
+python mydoc.typ.py --pdf --root /path/to/assets -o output/document.pdf
 ```
 
-Direct execution through `MyDocument.run()` keeps its original behavior:
-source generation only, with an optional positional destination. The new
-console command adds PDF/SVG compilation and uses `-o` for the destination.
+Direct execution through `MyDocument.run()` supports the same `--typ`, `--pdf`,
+`--svg`, `-o/--output`, `--root` and `--builder` options as the console command.
+Both entry points share the same generation and delivery code. The legacy
+positional output path remains supported in direct execution, including with
+`--pdf` or `--svg`; supplying it together with `-o` is an error.
+
+Direct execution uses the class whose `run()` method is called, or the class
+named by `--builder` in the running script. It does not load the script again,
+so top-level code runs only once. `run()` returns the first output path and
+prints all generated paths, including every page of multipage SVG.
 
 The CLI does **not** execute the `if __name__ == "__main__":` block, so the
 direct entry point does not run a second time. Other top-level Python
@@ -72,7 +82,7 @@ in the builder and guard any standalone script actions as shown above.
 
 ### Multiple or imported builders
 
-Selection follows this order:
+For the `genro-typst` console command, selection follows this order:
 
 1. `--builder ClassName` selects that recipe namespace entry.
 2. A module-level `BUILDER = MyDocument` selects that class.

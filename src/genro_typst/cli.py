@@ -64,7 +64,7 @@ def default_output(recipe: Path, output_format: str) -> Path:
 
 def check_destination(target: Path, recipe: Path) -> None:
     if target.resolve() == recipe.resolve() or (
-        target.exists() and target.samefile(recipe)
+        target.exists() and recipe.exists() and target.samefile(recipe)
     ):
         raise ValueError("The output path must not overwrite the Python recipe")
     if target.is_dir():
@@ -79,6 +79,15 @@ def generate(
     recipe = recipe.absolute()
     if not recipe.is_file() or recipe.suffix != ".py":
         raise ValueError(f"Expected an existing Python recipe (.py): {recipe}")
+    builder_class = load_builder(recipe, builder_name)
+    return render_recipe(builder_class, recipe, output_format=output_format, output=output, root=root)
+
+
+def render_recipe(
+    builder_class: type[TypstBuilder], recipe: Path, *, output_format: str = "typ",
+    output: Path | None = None, root: Path | None = None,
+) -> list[Path]:
+    """Shared build, compilation and delivery for loaded and directly executed recipes."""
     if output_format not in {"typ", "pdf", "svg"}:
         raise ValueError(f"Unknown output format: {output_format}")
     target = output if output is not None else default_output(recipe, output_format)
@@ -87,7 +96,6 @@ def generate(
     if output_format != "typ" and not compiler_root.is_dir():
         raise ValueError(f"Compilation root is not a directory: {compiler_root}")
     with recipe_environment(recipe):
-        builder_class = load_builder(recipe, builder_name)
         builder = builder_class()
         builder.create()
         source = builder.render()
@@ -115,12 +123,17 @@ def generate(
     return [path for path, _ in files]
 
 
-def main(argv: Sequence[str] | None = None) -> int:
-    """Console entry point. Usage errors exit 2; recipe/render errors return 1."""
+def argument_parser(*, direct: bool = False) -> argparse.ArgumentParser:
+    """Keep format, destination and compilation options identical for both entry points."""
     parser = argparse.ArgumentParser(
-        prog="genro-typst", description="Generate Typst, PDF or SVG from a Python builder recipe."
+        prog=None if direct else "genro-typst",
+        description="Generate Typst, PDF or SVG from a Python builder recipe.",
     )
-    parser.add_argument("recipe", type=Path, help="Python recipe, e.g. mydoc.typ.py")
+    if direct:
+        parser.add_argument("destination", nargs="?", type=Path,
+                            help="legacy positional output path (alternative to -o)")
+    else:
+        parser.add_argument("recipe", type=Path, help="Python recipe, e.g. mydoc.typ.py")
     parser.add_argument("-o", "--output", type=Path, help="output path (default: beside the recipe)")
     formats = parser.add_mutually_exclusive_group()
     for name, help_text in (
@@ -133,6 +146,43 @@ def main(argv: Sequence[str] | None = None) -> int:
     parser.set_defaults(output_format="typ")
     parser.add_argument("--builder", help="name of a TypstBuilder subclass defined or imported by the recipe")
     parser.add_argument("--root", type=Path, help="Typst asset root (default: recipe directory)")
+    return parser
+
+
+def run_recipe(builder_class: type[TypstBuilder], argv: Sequence[str] | None = None) -> Path:
+    """Execute an already defined builder without re-importing its recipe."""
+    parser = argument_parser(direct=True)
+    args = parser.parse_args(argv)
+    if args.output is not None and args.destination is not None:
+        parser.error("use either the positional destination or -o/--output, not both")
+    output = args.output if args.output is not None else args.destination
+    recipe = Path(sys.argv[0]).absolute()
+    if output is None and recipe.suffix != ".py":
+        parser.error("provide an output path when the recipe filename does not end in .py")
+    try:
+        check_destination(output if output is not None else default_output(recipe, args.output_format),
+                          recipe)
+    except ValueError as error:
+        parser.error(str(error))
+    if args.builder:
+        candidate = getattr(sys.modules["__main__"], args.builder, None)
+        if not isinstance(candidate, type) or candidate is TypstBuilder or not issubclass(candidate, TypstBuilder):
+            parser.error(f"{args.builder} must name a TypstBuilder subclass in the running recipe")
+        builder_class = candidate
+    try:
+        paths = render_recipe(builder_class, recipe, output_format=args.output_format,
+                              output=output, root=args.root)
+    except Exception as error:
+        print(f"{parser.prog}: {error}", file=sys.stderr)
+        raise SystemExit(1) from error
+    for path in paths:
+        print(path)
+    return paths[0]
+
+
+def main(argv: Sequence[str] | None = None) -> int:
+    """Console entry point. Usage errors exit 2; recipe/render errors return 1."""
+    parser = argument_parser()
     args = parser.parse_args(argv)
     try:
         paths = generate(args.recipe, output_format=args.output_format, output=args.output,

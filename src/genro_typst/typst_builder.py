@@ -1,8 +1,6 @@
 # Copyright 2026 Softwell S.r.l. - SPDX-License-Identifier: Apache-2.0
 """The standalone Typst document builder."""
 
-import argparse
-import sys
 from collections.abc import Sequence
 from pathlib import Path
 from typing import Any
@@ -23,40 +21,20 @@ class TypstBuilder(BuilderBase, TypstElements, NativeElements):
 
     @classmethod
     def run(cls, argv: Sequence[str] | None = None) -> Path:
-        """Build a recipe and write Typst source to an optional CLI output path.
+        """Run the recipe with the same format and output options as the CLI.
 
-        Call from a script's ``if __name__ == "__main__"`` guard. With no
-        output argument, ``mydoc.typ.py`` and ``mydoc.py`` both produce
-        ``mydoc.typ`` beside the script. Explicit relative paths are resolved
-        from the working directory. Existing output files are replaced.
+        Call from a script's ``if __name__ == "__main__"`` guard. Source output
+        is the default; ``--pdf`` and ``--svg`` compile with Typst. Accepts
+        ``-o/--output``, ``--root``, ``--builder`` and the legacy positional
+        destination. Relative output paths use the working directory.
 
-        ``argv`` defaults to command-line arguments, excluding the script name.
-        The output is always Typst source; no compiler is required.
-        Returns the destination path.
+        Returns the first generated path (the first page for multipage SVG).
+        All generated paths are printed. The calling class is used directly,
+        without loading or executing the recipe again.
         """
-        parser = argparse.ArgumentParser(description="Generate Typst source from a Python recipe.")
-        parser.add_argument(
-            "output", nargs="?", type=Path,
-            help="destination path (default: the recipe path with a .typ extension)",
-        )
-        args = parser.parse_args(argv)
-        recipe = Path(sys.argv[0]).absolute()
-        if args.output is None:
-            if recipe.suffix != ".py":
-                parser.error("provide an output path when the recipe filename does not end in .py")
-            target = recipe.with_suffix("")
-            if target.suffix != ".typ":
-                target = target.with_name(target.name + ".typ")
-        else:
-            target = args.output
-        if target.resolve() == recipe.resolve() or (
-            target.exists() and recipe.exists() and target.samefile(recipe)
-        ):
-            parser.error("the output path must not overwrite the Python recipe")
-        builder = cls()
-        builder.create()
-        builder.render(target=target)
-        return target
+        from genro_typst.cli import run_recipe
+
+        return run_recipe(cls, argv)
 
     def __getattr__(self, name: str) -> Any:
         handler = super().__getattr__(name)

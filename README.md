@@ -109,6 +109,19 @@ or an explicit `BUILDER = MyDocument` / `--builder MyDocument`. It does not run
 the main guard. Existing `python mydoc.typ.py [output.typ]` execution remains
 supported. `python -m genro_typst` is an alternative to the installed command.
 
+Direct execution accepts the same options, using the same rendering code
+without reloading the recipe:
+
+```bash
+python mydoc.typ.py --pdf
+python mydoc.typ.py --svg -o output/page.svg
+python mydoc.typ.py --pdf --root assets -o output/document.pdf
+```
+
+The class calling `run()` is the default; `--builder MyDocument` can select
+another class in the running script. The legacy positional destination and
+`-o` are alternatives and cannot be supplied together.
+
 PDF/SVG require the `pdf` extra and use Typst through its Python binding;
 the official Typst CLI is not required. Multipage SVG files are named
 `page-1.svg`, `page-2.svg`, etc. See the

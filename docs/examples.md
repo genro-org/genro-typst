@@ -3,8 +3,8 @@
 Run these scripts from a repository checkout. The invoice and native report
 examples require the `pdf` extra and save Typst source and PDF beside the
 Python recipe; their generated files are also available in the repository.
-Direct Python execution of the recipe below only generates source and needs no
-compiler; the CLI can additionally compile it to PDF or SVG.
+The recipe below generates source by default without a compiler. Both direct
+execution and the CLI can compile it to PDF or SVG with the `pdf` extra.
 
 ## Executable Python recipe
 
@@ -14,6 +14,7 @@ and a guarded `run()` entry point. Importing it does not write any files.
 ```bash
 python examples/04_python_recipe/mydoc.typ.py
 python examples/04_python_recipe/mydoc.typ.py output/document.typ
+python examples/04_python_recipe/mydoc.typ.py --pdf -o output/direct.pdf
 genro-typst examples/04_python_recipe/mydoc.typ.py --pdf -o output/document.pdf
 genro-typst examples/04_python_recipe/mydoc.typ.py --svg -o output/document.svg
 ```
@@ -21,7 +22,7 @@ genro-typst examples/04_python_recipe/mydoc.typ.py --svg -o output/document.svg
 The first command writes `mydoc.typ` beside the recipe. The second uses the
 destination path relative to your working directory. See
 [naming Python recipes](typst-guide.md#naming-python-recipes) for details.
-The `genro-typst` commands require the `pdf` extra and compile through Typst;
+The `--pdf` and `--svg` commands require the `pdf` extra and compile through Typst;
 see the [CLI guide](cli.md) for builder selection and multipage SVG naming.
 
 ```{literalinclude} ../examples/04_python_recipe/mydoc.typ.py

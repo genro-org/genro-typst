@@ -112,3 +112,109 @@ def test_no_default_for_non_python_entrypoint(monkeypatch, tmp_path):
         Recipe.run([])
     assert error.value.code == 2
     assert Recipe.run([str(tmp_path / "custom.typ")]).is_file()
+
+
+@pytest.mark.parametrize("mode", ["typ", "pdf", "svg"])
+def test_direct_format_options_match_cli_without_reloading(tmp_path, mode):
+    recipe = tmp_path / "document.typ.py"
+    recipe.write_text('''from pathlib import Path
+from genro_typst import TypstBuilder
+marker = Path(__file__).with_name("loads.txt")
+marker.write_text(marker.read_text() + "loaded\\n" if marker.exists() else "loaded\\n")
+class Document(TypstBuilder):
+    def main(self, root):
+        doc = root.document()
+        doc.heading("One")
+        doc.pagebreak()
+        doc.text("Two")
+if __name__ == "__main__":
+    Document.run()
+''')
+    output = tmp_path / "direct" / f"result.{mode}"
+    reference = tmp_path / "cli" / f"result.{mode}"
+    for command, destination in (([sys.executable, str(recipe)], output),
+                                 ([sys.executable, "-m", "genro_typst", str(recipe)], reference)):
+        result = subprocess.run([*command, f"--{mode}", "-o", str(destination)],
+                                capture_output=True, text=True, check=False)
+        assert result.returncode == 0, result.stderr
+    assert (tmp_path / "loads.txt").read_text() == "loaded\nloaded\n"
+    if mode == "svg":
+        for index in (1, 2):
+            name = f"result-{index}.svg"
+            assert (output.parent / name).read_bytes() == (reference.parent / name).read_bytes()
+        assert not output.exists()
+    elif mode == "typ":
+        assert output.read_bytes() == reference.read_bytes()
+    else:
+        assert output.read_bytes().startswith(b"%PDF-")
+        assert reference.read_bytes().startswith(b"%PDF-")
+
+
+@pytest.mark.parametrize("mode", ["pdf", "svg"])
+def test_direct_default_output_assets_and_custom_root(tmp_path, mode):
+    recipe = tmp_path / "recipe" / "document.typ.py"
+    recipe.parent.mkdir()
+    recipe.write_text('''from genro_typst import TypstBuilder
+class Document(TypstBuilder):
+    def main(self, root):
+        root.document().include(path="extra.typ")
+if __name__ == "__main__":
+    Document.run()
+''')
+    (recipe.parent / "extra.typ").write_text("Default asset root")
+    for args in ([], ["--root", str(tmp_path)]):
+        (tmp_path / "extra.typ").write_text("Explicit asset root")
+        result = subprocess.run([sys.executable, str(recipe), f"--{mode}", *args],
+                                cwd=tmp_path, capture_output=True, text=True, check=False)
+        assert result.returncode == 0, result.stderr
+        assert (recipe.parent / f"document.{mode}").is_file()
+        assert not (tmp_path / f"document.{mode}").exists()
+
+
+def test_direct_explicit_builder_selection(tmp_path):
+    recipe = tmp_path / "choice.typ.py"
+    recipe.write_text('''from genro_typst import TypstBuilder
+class First(TypstBuilder):
+    def main(self, root):
+        root.document().text("First")
+class Second(TypstBuilder):
+    def main(self, root):
+        root.document().text("Second")
+if __name__ == "__main__":
+    First.run()
+''')
+    result = subprocess.run([sys.executable, str(recipe), "--builder", "Second"],
+                            capture_output=True, text=True, check=False)
+    assert result.returncode == 0, result.stderr
+    assert '"Second"' in recipe.with_suffix("").read_text()
+    result = subprocess.run([sys.executable, str(recipe), "--builder", "Missing"],
+                            capture_output=True, text=True, check=False)
+    assert result.returncode == 2
+    assert "must name a TypstBuilder" in result.stderr
+
+
+@pytest.mark.parametrize("args", [["a.typ", "-o", "b.typ"], ["--pdf", "--svg"]])
+def test_direct_conflicting_options_fail_without_output(monkeypatch, tmp_path, args):
+    monkeypatch.setattr(sys, "argv", [str(tmp_path / "doc.typ.py")])
+    monkeypatch.chdir(tmp_path)
+    with pytest.raises(SystemExit) as error:
+        Recipe.run(args)
+    assert error.value.code == 2
+    assert list(tmp_path.iterdir()) == []
+
+
+def test_direct_optional_compiler_error_and_legacy_pdf_destination(tmp_path):
+    recipe = tmp_path / "mydoc.typ.py"
+    recipe.write_text(EXAMPLE.read_text(encoding="utf-8"), encoding="utf-8")
+    output = tmp_path / "positional.pdf"
+    result = subprocess.run([sys.executable, str(recipe), str(output), "--pdf"],
+                            capture_output=True, text=True, check=False)
+    assert result.returncode == 0, result.stderr
+    assert output.read_bytes().startswith(b"%PDF-")
+    (tmp_path / "typst.py").write_text("raise ImportError('compiler not installed')\n")
+    result = subprocess.run([sys.executable, str(recipe), "--pdf", "-o", str(output)],
+                            capture_output=True, text=True, check=False)
+    assert result.returncode == 1
+    assert "genro-typst[pdf]" in result.stderr
+    assert "Traceback" not in result.stderr
+    assert output.read_bytes().startswith(b"%PDF-")

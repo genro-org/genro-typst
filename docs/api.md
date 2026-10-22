@@ -4,7 +4,7 @@
 
 For command-line use, see the [`genro-typst` CLI](cli.md): it loads a recipe,
 selects a builder class and generates Typst, PDF or SVG. The direct `run()`
-entry point documented below keeps its source-only behavior.
+entry point documented below accepts the same format and output options.
 
 Import `TypstBuilder` from `genro_typst`, subclass it, and implement
 `main(self, root)`. An optional `setup(self, data)` fills the data Bag.
@@ -24,9 +24,11 @@ serialization and scoped styles.
 
 For executable recipes, call `MyDocument.run()` inside an
 `if __name__ == "__main__":` guard. It creates the document and writes Typst
-source beside the script, or to the optional positional output path supplied
-on the command line. `run(argv=["output.typ"])` accepts an explicit argument
-list instead of reading `sys.argv[1:]`. See
+source by default; `--pdf` and `--svg` select compilation. Output goes beside
+the script or to `-o/--output` (the legacy positional output path also works).
+`run(argv=["--pdf", "-o", "output.pdf"])` accepts an explicit argument list
+instead of reading `sys.argv[1:]`. It returns the first generated path and
+prints all generated paths. See
 [naming Python recipes](typst-guide.md#naming-python-recipes) for a complete
 example. PDF generation remains available through `render(mode="pdf")`.
 
