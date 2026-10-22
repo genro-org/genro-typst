@@ -92,6 +92,29 @@ instantiation and rendering calls above; importing the guarded recipe does
 not write files. The naming convention is optional; see
 [naming Python recipes](https://genro-typst.readthedocs.io/en/latest/typst-guide.html#naming-python-recipes).
 
+## Command-line interface
+
+Installing the package also installs `genro-typst`. Run a Python recipe with
+one format per invocation:
+
+```bash
+genro-typst mydoc.typ.py                          # mydoc.typ beside the recipe
+genro-typst mydoc.typ.py --pdf                    # mydoc.pdf
+genro-typst mydoc.typ.py --svg -o output/page.svg  # one SVG per page
+genro-typst mydoc.typ.py -o output/document.typ   # explicit source destination
+```
+
+The CLI selects the recipe's sole locally defined `TypstBuilder` subclass,
+or an explicit `BUILDER = MyDocument` / `--builder MyDocument`. It does not run
+the main guard. Existing `python mydoc.typ.py [output.typ]` execution remains
+supported. `python -m genro_typst` is an alternative to the installed command.
+
+PDF/SVG require the `pdf` extra and use Typst through its Python binding;
+the official Typst CLI is not required. Multipage SVG files are named
+`page-1.svg`, `page-2.svg`, etc. See the
+[CLI guide](https://genro-typst.readthedocs.io/en/latest/cli.html)
+for paths, assets and recipe conventions.
+
 ## What the Python layer provides
 
 | Capability | Genro Typst's role |
@@ -113,6 +136,7 @@ every parameter combination or every future Typst feature.
 
 - [Getting started and guide](https://genro-typst.readthedocs.io/en/latest/typst-guide.html)
 - [Python API](https://genro-typst.readthedocs.io/en/latest/api.html)
+- [Command-line interface](https://genro-typst.readthedocs.io/en/latest/cli.html)
 - [JavaScript builder](https://genro-typst.readthedocs.io/en/latest/javascript.html)
 - [Native call reference](https://genro-typst.readthedocs.io/en/latest/native-reference.html)
 - [Executable Python and Typst examples](https://genro-typst.readthedocs.io/en/latest/catalog-examples.html)

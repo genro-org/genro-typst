@@ -2,6 +2,10 @@
 
 ## Builder lifecycle
 
+For command-line use, see the [`genro-typst` CLI](cli.md): it loads a recipe,
+selects a builder class and generates Typst, PDF or SVG. The direct `run()`
+entry point documented below keeps its source-only behavior.
+
 Import `TypstBuilder` from `genro_typst`, subclass it, and implement
 `main(self, root)`. An optional `setup(self, data)` fills the data Bag.
 Call `create()` before rendering. `render()` returns Typst source;

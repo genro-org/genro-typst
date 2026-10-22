@@ -66,6 +66,7 @@ official Typst product and is not affiliated with or endorsed by Typst's authors
 :hidden:
 
 typst-guide
+cli
 acknowledgements
 ```
 

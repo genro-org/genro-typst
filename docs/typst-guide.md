@@ -56,6 +56,9 @@ The other current collisions require `typst_columns(...)` and `typst_move(...)`.
 
 ## Naming Python recipes
 
+The installed [`genro-typst` command](cli.md) can generate Typst, PDF and SVG
+from these recipes. Direct Python execution remains supported as shown below.
+
 We recommend naming Python recipes **`mydoc.typ.py`**: the `.typ` part identifies
 the document language being generated, while the final `.py` extension keeps
 the recipe recognizable as Python by editors and tools.
