@@ -27,3 +27,4 @@ jobs:
       - run: python tools/export_js_fixtures.py --check
       - run: pytest -q
       - run: npm test --prefix js
+      - run: npm run build:browser --prefix js

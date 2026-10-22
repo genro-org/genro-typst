@@ -3,12 +3,37 @@
   "version": "0.0.1",
   "description": "Write Typst source in JavaScript using the exported Genro Typst grammar",
   "type": "module",
-  "exports": {".": "./src/index.js", "./grammar": "./src/typst.json"},
-  "files": ["src", "README.md", "LICENSE", "NOTICE"],
-  "scripts": {"test": "node --test tests/*.test.js"},
-  "engines": {"node": ">=22"},
-  "dependencies": {"@genrojs/builders": "0.6.0", "@genrojs/bag": ">=0.11.0"},
+  "exports": {
+    ".": "./src/index.js",
+    "./grammar": "./src/typst.json"
+  },
+  "files": [
+    "src",
+    "README.md",
+    "LICENSE",
+    "NOTICE"
+  ],
+  "scripts": {
+    "test": "node --test tests/*.test.js",
+    "build:browser": "node scripts/build-browser.mjs",
+    "demo": "npm run build:browser && node scripts/serve-browser.mjs"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "dependencies": {
+    "@genrojs/bag": ">=0.11.0",
+    "@genrojs/builders": "0.6.0"
+  },
   "license": "Apache-2.0",
   "author": "Genropy Team",
-  "repository": {"type": "git", "url": "git+https://github.com/genro-org/genro-typst.git", "directory": "js"}
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/genro-org/genro-typst.git",
+    "directory": "js"
+  },
+  "devDependencies": {
+    "@myriaddreamin/typst-all-in-one.ts": "0.7.0",
+    "esbuild": "0.28.2"
+  }
 }

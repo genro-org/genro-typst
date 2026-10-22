@@ -42,6 +42,20 @@ Read the [JavaScript guide](https://genro-typst.readthedocs.io/en/latest/javascr
 for data binding, custom recipes, output delivery, Python equivalence and
 numeric representation limits.
 
+## HTML playground
+
+From this directory, run `npm run demo`, then open
+[localhost:8172](http://127.0.0.1:8172/). Edit the JavaScript recipe and click
+**Run recipe** to see the generated `.typ` source and SVG side by side.
+The example imports this builder and compiles through Typst WebAssembly using
+`typst.ts`. After the first build downloads the bundled fonts, the supplied
+example uses local resources only. The Node process serves static files.
+
+The editable files are in `examples/browser/`; `npm run build:browser` creates
+the self-contained static output in `dist/browser/`. See the
+[browser guide](https://genro-typst.readthedocs.io/en/latest/browser.html)
+for dependencies, limits and upstream credits.
+
 The grammar, native mapping and Python test fixtures are generated. From the
 repository root, use `python tools/export_js.py` and
 `python tools/export_js_fixtures.py`; both support `--check` for CI.

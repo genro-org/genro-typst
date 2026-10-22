@@ -86,6 +86,7 @@ native-reference
 :caption: Examples
 :hidden:
 
+browser
 catalog-examples
 examples
 ```
