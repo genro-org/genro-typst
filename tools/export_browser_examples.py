@@ -9,6 +9,8 @@ from export_app_examples import catalog
 from genro_bag import Bag
 from genro_builders import SourceBag
 
+from genro_typst.native_catalog import AUTHORING_ALIASES
+
 ROOT = Path(__file__).resolve().parents[1]
 
 
@@ -44,7 +46,8 @@ def javascript(builder):
             name = "doc" if node.node_tag == "document" else f"node{sequence}"
             sequence += 1
             attrs = literal(dict(node.attr))
-            call = f"{parent}.typst_{node.node_tag}({attrs})"
+            method = AUTHORING_ALIASES.get(node.node_tag, node.node_tag)
+            call = f"{parent}.{method}({attrs})"
             if isinstance(node.value, SourceBag) and len(node.value):
                 lines.append(f"const {name} = {call};")
                 walk(node.value, name)

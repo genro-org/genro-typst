@@ -149,5 +149,8 @@ all 149 editable recipes and compare their output byte for byte with that
 reference. They also check catalog coverage, search, draft preservation and
 included files. CI checks that the export is current and builds the static
 playground. Use **Check all examples** for actual compilation in the browser.
+Python and JavaScript recipes use the same method names, selected by a shared
+alias table. Only `columns`, `move` and `label` require qualified calls in the
+examples; the other methods keep their short grammar names.
 CodeMirror is distributed under the MIT license; its notice is included with
 the Typst, typst.ts and font acknowledgements in the built page.

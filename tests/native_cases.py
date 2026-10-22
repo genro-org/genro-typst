@@ -8,6 +8,7 @@ from dataclasses import dataclass, field
 from typing import Any
 
 from genro_typst import TypstBuilder, color, expr, label, length, markup
+from genro_typst.native_catalog import AUTHORING_ALIASES
 
 
 @dataclass
@@ -343,7 +344,8 @@ def example_python(builder):
             name = "doc" if node.node_tag == "document" else f"node{sequence}"
             sequence += 1
             args = ", ".join(f"{k}={literal(v)}" for k, v in node.attr.items())
-            call = f"{parent}.typst_{node.node_tag}({args})"
+            method = AUTHORING_ALIASES.get(node.node_tag, node.node_tag)
+            call = f"{parent}.{method}({args})"
             if isinstance(node.value, SourceBag):
                 lines.append(f"{name} = {call}")
                 walk(node.value, name)

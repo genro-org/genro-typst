@@ -80,3 +80,11 @@ SPECIAL = (
 )
 LEGACY_CONTENT = ("layout", "table", "paragraph", "pageNumber")
 CONTENT_TAGS = ",".join((*LEGACY_CONTENT, *NATIVE, *SPECIAL))
+
+# Use the same authoring names in Python and JavaScript, including collisions
+# present in only one runtime. All other elements use their bare grammar name.
+AUTHORING_ALIASES = {
+    "columns": "typst_columns",
+    "move": "typst_move",
+    "label": "typst_label",
+}

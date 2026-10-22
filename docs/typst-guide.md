@@ -53,6 +53,11 @@ elements (`set_rule`, `equation`, `import_module`, etc.) use their declared
 keyword parameters. If a name collides with a Bag/SourceNode property, the
 `typst_` prefix selects the grammar: `doc.typst_label(name="intro")`.
 The other current collisions require `typst_columns(...)` and `typst_move(...)`.
+Examples use these same names in JavaScript, even where only Python has a
+collision. All other elements use their short grammar names: `document`,
+`text`, `native_table`, `table_hline`, and so on. `typst_code` and
+`typst_markup` are actual element names. See the
+[Python/JavaScript comparison](javascript.md) for equivalent calls.
 
 ## Naming Python recipes
 

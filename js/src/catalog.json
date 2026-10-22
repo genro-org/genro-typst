@@ -665,5 +665,10 @@
     "teal",
     "white",
     "yellow"
-  ]
+  ],
+  "authoringAliases": {
+    "columns": "typst_columns",
+    "move": "typst_move",
+    "label": "typst_label"
+  }
 }

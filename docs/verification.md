@@ -47,8 +47,9 @@ Typst references with the required containers.
 - `native_layout` receives an explicit callback; `metadata` inserts invisible
   data. `hide` and structural elements need not produce visible content themselves.
 - `columns`, `move` and `label` collide with SourceBag names: use
-  `typst_columns`, `typst_move` and `typst_label`. Examples consistently use the
-  prefix, which is also valid for other methods.
+  `typst_columns`, `typst_move` and `typst_label` in both Python and JavaScript.
+  Examples use short names for other elements. Qualified aliases remain valid
+  for compatibility; `typst_code` and `typst_markup` are actual grammar names.
 
 ## Language, data and regressions
 

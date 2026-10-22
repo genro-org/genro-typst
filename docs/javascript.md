@@ -76,10 +76,31 @@ doc.math_frac({ args: ['1', '2'] });
 
 Put arrays and dictionaries inside `content` or `args` to distinguish them
 from the attribute object. Initial content is retained when children are
-added. As in Python, use `typst_` to avoid collisions with node properties:
+added. Python and JavaScript use the same element and attribute names:
+
+```python
+table = doc.native_table(columns=2)
+table.table_hline(stroke=expr("2pt + blue"))
+table.text("A")
+table.text("B")
+```
+
+```javascript
+const table = doc.native_table({ columns: 2 });
+table.table_hline({ stroke: expr('2pt + blue') });
+table.text('A');
+table.text('B');
+```
+
+Only the call syntax changes: Python keyword arguments become a JavaScript
+attribute object. Use the same qualified names in both languages when a
+name collides with the container API in either runtime:
 `doc.typst_columns({ args: [2] })`, `doc.typst_move(...)`,
 `doc.typst_label({ name: 'intro' })`. All declared grammar methods are available
-through this prefix.
+through this prefix, but examples prefer the short names everywhere else.
+`typst_code` and `typst_markup` are actual grammar names, so they retain
+`typst_` in both languages. `native_table` and `native_layout` distinguish
+Typst's native elements from the Genro `table` and `layout` elements.
 
 The `expr`, `length`, `color`, `label` and `markup` helpers use the same
 JSON-compatible `{"$typst": "..."}` representation as Python. Plain strings

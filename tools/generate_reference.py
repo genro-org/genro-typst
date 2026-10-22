@@ -128,7 +128,9 @@ def examples() -> str:
         "  date: 2026",
         "```",
         "",
-        "The `typst_` prefix avoids collisions with SourceBag methods/properties.",
+        "Python and JavaScript examples use the same short method names. Only",
+        "`typst_columns`, `typst_move` and `typst_label` need qualification to avoid",
+        "SourceBag collisions. `typst_code` and `typst_markup` are actual element names.",
         "`expr` marks explicit Typst values; dictionaries and lists remain Python data.",
         "",
     ]

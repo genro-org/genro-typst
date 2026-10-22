@@ -8,7 +8,7 @@ from pathlib import Path
 from tempfile import TemporaryDirectory
 
 from genro_typst import TypstBuilder
-from genro_typst.native_catalog import NATIVE
+from genro_typst.native_catalog import AUTHORING_ALIASES, NATIVE
 from genro_typst.typst_values import NAMED_COLORS
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -23,7 +23,7 @@ def main():
         TypstBuilder.to_grammar(path)
         grammar = path.read_text(encoding="utf-8")
     metadata = json.dumps(
-        {"native": NATIVE, "namedColors": sorted(NAMED_COLORS)},
+        {"native": NATIVE, "namedColors": sorted(NAMED_COLORS), "authoringAliases": AUTHORING_ALIASES},
         indent=2, ensure_ascii=False,
     ) + "\n"
     files = {

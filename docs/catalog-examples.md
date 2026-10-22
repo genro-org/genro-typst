@@ -32,7 +32,9 @@ manual:
   date: 2026
 ```
 
-The `typst_` prefix avoids collisions with SourceBag methods/properties.
+Python and JavaScript examples use the same short method names. Only
+`typst_columns`, `typst_move` and `typst_label` need qualification to avoid
+SourceBag collisions. `typst_code` and `typst_markup` are actual element names.
 `expr` marks explicit Typst values; dictionaries and lists remain Python data.
 
 ## text
@@ -43,10 +45,10 @@ Case context: `document`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-doc.typst_text(content='Example')
-doc.typst_text(content='After')
+doc = builder.source.document()
+doc.text(content='Before')
+doc.text(content='Example')
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -68,10 +70,10 @@ Case context: `document`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-doc.typst_underline(content='Example')
-doc.typst_text(content='After')
+doc = builder.source.document()
+doc.text(content='Before')
+doc.underline(content='Example')
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -93,10 +95,10 @@ Case context: `document`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-doc.typst_overline(content='Example')
-doc.typst_text(content='After')
+doc = builder.source.document()
+doc.text(content='Before')
+doc.overline(content='Example')
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -118,10 +120,10 @@ Case context: `document`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-doc.typst_strike(content='Example')
-doc.typst_text(content='After')
+doc = builder.source.document()
+doc.text(content='Before')
+doc.strike(content='Example')
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -143,10 +145,10 @@ Case context: `document`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-doc.typst_highlight(content='Example')
-doc.typst_text(content='After')
+doc = builder.source.document()
+doc.text(content='Before')
+doc.highlight(content='Example')
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -168,10 +170,10 @@ Case context: `document`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-doc.typst_smallcaps(content='Example')
-doc.typst_text(content='After')
+doc = builder.source.document()
+doc.text(content='Before')
+doc.smallcaps(content='Example')
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -193,10 +195,10 @@ Case context: `document`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-doc.typst_sub(content='Example')
-doc.typst_text(content='After')
+doc = builder.source.document()
+doc.text(content='Before')
+doc.sub(content='Example')
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -218,10 +220,10 @@ Case context: `document`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-doc.typst_super(content='Example')
-doc.typst_text(content='After')
+doc = builder.source.document()
+doc.text(content='Before')
+doc.super(content='Example')
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -243,10 +245,10 @@ Case context: `document`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-doc.typst_lower(content='Example')
-doc.typst_text(content='After')
+doc = builder.source.document()
+doc.text(content='Before')
+doc.lower(content='Example')
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -268,10 +270,10 @@ Case context: `document`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-doc.typst_upper(content='Example')
-doc.typst_text(content='After')
+doc = builder.source.document()
+doc.text(content='Before')
+doc.upper(content='Example')
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -293,10 +295,10 @@ Case context: `document`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-doc.typst_raw(content='#literal <x>', lang='typst')
-doc.typst_text(content='After')
+doc = builder.source.document()
+doc.text(content='Before')
+doc.raw(content='#literal <x>', lang='typst')
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -318,10 +320,10 @@ Case context: `document`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-doc.typst_lorem(content=12)
-doc.typst_text(content='After')
+doc = builder.source.document()
+doc.text(content='Before')
+doc.lorem(content=12)
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -343,10 +345,10 @@ Case context: `document`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-doc.typst_linebreak(justify=True)
-doc.typst_text(content='After')
+doc = builder.source.document()
+doc.text(content='Before')
+doc.linebreak(justify=True)
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -368,10 +370,10 @@ Case context: `document`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-doc.typst_smartquote(double=False)
-doc.typst_text(content='After')
+doc = builder.source.document()
+doc.text(content='Before')
+doc.smartquote(double=False)
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -393,10 +395,10 @@ Case context: `document`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-doc.typst_heading(content='Heading', level=2)
-doc.typst_text(content='After')
+doc = builder.source.document()
+doc.text(content='Before')
+doc.heading(content='Heading', level=2)
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -418,10 +420,10 @@ Case context: `document`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-doc.typst_strong(content='Example')
-doc.typst_text(content='After')
+doc = builder.source.document()
+doc.text(content='Before')
+doc.strong(content='Example')
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -443,10 +445,10 @@ Case context: `document`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-doc.typst_emph(content='Example')
-doc.typst_text(content='After')
+doc = builder.source.document()
+doc.text(content='Before')
+doc.emph(content='Example')
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -468,10 +470,10 @@ Case context: `document`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-doc.typst_par(content='Example')
-doc.typst_text(content='After')
+doc = builder.source.document()
+doc.text(content='Before')
+doc.par(content='Example')
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -493,10 +495,10 @@ Case context: `document`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-doc.typst_quote(content='Example')
-doc.typst_text(content='After')
+doc = builder.source.document()
+doc.text(content='Before')
+doc.quote(content='Example')
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -518,11 +520,11 @@ Case context: `document`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-node2 = doc.typst_figure(caption=expr('[Caption\n]'))
-node2.typst_rect(width=expr('10mm'), height=expr('5mm'))
-doc.typst_text(content='After')
+doc = builder.source.document()
+doc.text(content='Before')
+node2 = doc.figure(caption=expr('[Caption\n]'))
+node2.rect(width=expr('10mm'), height=expr('5mm'))
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -544,10 +546,10 @@ Case context: `document`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-doc.typst_footnote(content='Example')
-doc.typst_text(content='After')
+doc = builder.source.document()
+doc.text(content='Before')
+doc.footnote(content='Example')
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -569,10 +571,10 @@ Case context: `document`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-doc.typst_title(content='Example')
-doc.typst_text(content='After')
+doc = builder.source.document()
+doc.text(content='Before')
+doc.title(content='Example')
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -594,10 +596,10 @@ Case context: `document`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-doc.typst_list(args=['One', 'Two'])
-doc.typst_text(content='After')
+doc = builder.source.document()
+doc.text(content='Before')
+doc.list(args=['One', 'Two'])
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -619,10 +621,10 @@ Case context: `document`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-doc.typst_enum(args=['One', 'Two'], start=3)
-doc.typst_text(content='After')
+doc = builder.source.document()
+doc.text(content='Before')
+doc.enum(args=['One', 'Two'], start=3)
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -644,11 +646,11 @@ Case context: `document`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-node2 = doc.typst_terms()
-node2.typst_terms_item(args=['API', 'Interface'])
-doc.typst_text(content='After')
+doc = builder.source.document()
+doc.text(content='Before')
+node2 = doc.terms()
+node2.terms_item(args=['API', 'Interface'])
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -670,11 +672,11 @@ Case context: `list`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-node2 = doc.typst_list()
-node2.typst_list_item(content='Item')
-doc.typst_text(content='After')
+doc = builder.source.document()
+doc.text(content='Before')
+node2 = doc.list()
+node2.list_item(content='Item')
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -696,11 +698,11 @@ Case context: `enum`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-node2 = doc.typst_enum()
-node2.typst_enum_item(content='Item')
-doc.typst_text(content='After')
+doc = builder.source.document()
+doc.text(content='Before')
+node2 = doc.enum()
+node2.enum_item(content='Item')
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -722,11 +724,11 @@ Case context: `terms`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-node2 = doc.typst_terms()
-node2.typst_terms_item(args=['API', 'Interface'])
-doc.typst_text(content='After')
+doc = builder.source.document()
+doc.text(content='Before')
+node2 = doc.terms()
+node2.terms_item(args=['API', 'Interface'])
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -748,11 +750,11 @@ Case context: `document`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-node2 = doc.typst_link(content='https://typst.app')
-node2.typst_text(content='Website')
-doc.typst_text(content='After')
+doc = builder.source.document()
+doc.text(content='Before')
+node2 = doc.link(content='https://typst.app')
+node2.text(content='Website')
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -774,13 +776,13 @@ Case context: `document`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-doc.typst_set_rule(target='heading', numbering='1.')
-doc.typst_heading(content='Target')
+doc = builder.source.document()
+doc.text(content='Before')
+doc.set_rule(target='heading', numbering='1.')
+doc.heading(content='Target')
 doc.typst_label(name='target')
-doc.typst_ref(content=expr('label("target")'))
-doc.typst_text(content='After')
+doc.ref(content=expr('label("target")'))
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -805,11 +807,11 @@ Case context: `document`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-doc.typst_cite(content=expr('label("manual")'))
-doc.typst_bibliography(content='refs.yml')
-doc.typst_text(content='After')
+doc = builder.source.document()
+doc.text(content='Before')
+doc.cite(content=expr('label("manual")'))
+doc.bibliography(content='refs.yml')
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -832,10 +834,10 @@ Case context: `document`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-doc.typst_bibliography(content='refs.yml', full=True)
-doc.typst_text(content='After')
+doc = builder.source.document()
+doc.text(content='Before')
+doc.bibliography(content='refs.yml', full=True)
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -857,10 +859,10 @@ Case context: `document`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-doc.typst_numbering(args=['1.a', 2, 3])
-doc.typst_text(content='After')
+doc = builder.source.document()
+doc.text(content='Before')
+doc.numbering(args=['1.a', 2, 3])
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -882,13 +884,13 @@ Case context: `document`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-doc.typst_set_rule(target='heading', numbering='1.')
-doc.typst_heading(content='Target')
+doc = builder.source.document()
+doc.text(content='Before')
+doc.set_rule(target='heading', numbering='1.')
+doc.heading(content='Target')
 doc.typst_label(name='target')
-doc.typst_outline(title=expr('[Contents\n]'))
-doc.typst_text(content='After')
+doc.outline(title=expr('[Contents\n]'))
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -913,10 +915,10 @@ Case context: `document`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-doc.typst_parbreak()
-doc.typst_text(content='After')
+doc = builder.source.document()
+doc.text(content='Before')
+doc.parbreak()
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -938,10 +940,10 @@ Case context: `document`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-doc.typst_divider()
-doc.typst_text(content='After')
+doc = builder.source.document()
+doc.text(content='Before')
+doc.divider()
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -963,14 +965,14 @@ Case context: `table`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-node2 = doc.typst_native_table(columns=2)
-node3 = node2.typst_table_header()
-node3.typst_table_cell(content='Span', colspan=2)
-node2.typst_text(content='A')
-node2.typst_text(content='B')
-doc.typst_text(content='After')
+doc = builder.source.document()
+doc.text(content='Before')
+node2 = doc.native_table(columns=2)
+node3 = node2.table_header()
+node3.table_cell(content='Span', colspan=2)
+node2.text(content='A')
+node2.text(content='B')
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -992,14 +994,14 @@ Case context: `table`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-node2 = doc.typst_native_table(columns=2)
-node2.typst_text(content='A')
-node2.typst_text(content='B')
-node5 = node2.typst_table_footer()
-node5.typst_table_cell(content='Span', colspan=2)
-doc.typst_text(content='After')
+doc = builder.source.document()
+doc.text(content='Before')
+node2 = doc.native_table(columns=2)
+node2.text(content='A')
+node2.text(content='B')
+node5 = node2.table_footer()
+node5.table_cell(content='Span', colspan=2)
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -1021,13 +1023,13 @@ Case context: `table`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-node2 = doc.typst_native_table(columns=2)
-node2.typst_table_cell(content='Span', colspan=2)
-node2.typst_text(content='A')
-node2.typst_text(content='B')
-doc.typst_text(content='After')
+doc = builder.source.document()
+doc.text(content='Before')
+node2 = doc.native_table(columns=2)
+node2.table_cell(content='Span', colspan=2)
+node2.text(content='A')
+node2.text(content='B')
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -1049,13 +1051,13 @@ Case context: `table`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-node2 = doc.typst_native_table(columns=2)
-node2.typst_table_hline(stroke=expr('2pt + blue'))
-node2.typst_text(content='A')
-node2.typst_text(content='B')
-doc.typst_text(content='After')
+doc = builder.source.document()
+doc.text(content='Before')
+node2 = doc.native_table(columns=2)
+node2.table_hline(stroke=expr('2pt + blue'))
+node2.text(content='A')
+node2.text(content='B')
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -1077,13 +1079,13 @@ Case context: `table`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-node2 = doc.typst_native_table(columns=2)
-node2.typst_table_vline(x=1, stroke=expr('2pt + blue'))
-node2.typst_text(content='A')
-node2.typst_text(content='B')
-doc.typst_text(content='After')
+doc = builder.source.document()
+doc.text(content='Before')
+node2 = doc.native_table(columns=2)
+node2.table_vline(x=1, stroke=expr('2pt + blue'))
+node2.text(content='A')
+node2.text(content='B')
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -1105,10 +1107,10 @@ Case context: `document`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-doc.typst_native_table(columns=2, args=['A', 'B'])
-doc.typst_text(content='After')
+doc = builder.source.document()
+doc.text(content='Before')
+doc.native_table(columns=2, args=['A', 'B'])
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -1130,10 +1132,10 @@ Case context: `document`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-doc.typst_align(args=[expr('center')], content='Example')
-doc.typst_text(content='After')
+doc = builder.source.document()
+doc.text(content='Before')
+doc.align(args=[expr('center')], content='Example')
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -1155,10 +1157,10 @@ Case context: `document`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-doc.typst_block(content='Example', inset=expr('2mm'))
-doc.typst_text(content='After')
+doc = builder.source.document()
+doc.text(content='Before')
+doc.block(content='Example', inset=expr('2mm'))
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -1180,10 +1182,10 @@ Case context: `document`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-doc.typst_box(content='Example', width=expr('30mm'))
-doc.typst_text(content='After')
+doc = builder.source.document()
+doc.text(content='Before')
+doc.box(content='Example', width=expr('30mm'))
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -1205,10 +1207,10 @@ Case context: `document`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
+doc = builder.source.document()
+doc.text(content='Before')
 doc.typst_columns(args=[2], content='Example')
-doc.typst_text(content='After')
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -1230,10 +1232,10 @@ Case context: `document`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-doc.typst_hide(content='Invisible')
-doc.typst_text(content='After')
+doc = builder.source.document()
+doc.text(content='Before')
+doc.hide(content='Invisible')
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -1255,10 +1257,10 @@ Case context: `document`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
+doc = builder.source.document()
+doc.text(content='Before')
 doc.typst_move(content='Example', dx=expr('2mm'))
-doc.typst_text(content='After')
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -1280,10 +1282,10 @@ Case context: `document`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-doc.typst_pad(args=[expr('2mm')], content='Example')
-doc.typst_text(content='After')
+doc = builder.source.document()
+doc.text(content='Before')
+doc.pad(args=[expr('2mm')], content='Example')
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -1305,10 +1307,10 @@ Case context: `document`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-doc.typst_page(content='Example', paper='a5')
-doc.typst_text(content='After')
+doc = builder.source.document()
+doc.text(content='Before')
+doc.page(content='Example', paper='a5')
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -1330,10 +1332,10 @@ Case context: `document`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-doc.typst_place(args=[expr('top + right')], content='Example')
-doc.typst_text(content='After')
+doc = builder.source.document()
+doc.text(content='Before')
+doc.place(args=[expr('top + right')], content='Example')
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -1355,10 +1357,10 @@ Case context: `document`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-doc.typst_repeat(content='.')
-doc.typst_text(content='After')
+doc = builder.source.document()
+doc.text(content='Before')
+doc.repeat(content='.')
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -1380,10 +1382,10 @@ Case context: `document`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-doc.typst_rotate(args=[expr('10deg')], content='Example')
-doc.typst_text(content='After')
+doc = builder.source.document()
+doc.text(content='Before')
+doc.rotate(args=[expr('10deg')], content='Example')
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -1405,10 +1407,10 @@ Case context: `document`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-doc.typst_scale(x=expr('120%'), content='Example')
-doc.typst_text(content='After')
+doc = builder.source.document()
+doc.text(content='Before')
+doc.scale(x=expr('120%'), content='Example')
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -1430,10 +1432,10 @@ Case context: `document`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-doc.typst_skew(ax=expr('10deg'), content='Example')
-doc.typst_text(content='After')
+doc = builder.source.document()
+doc.text(content='Before')
+doc.skew(ax=expr('10deg'), content='Example')
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -1455,10 +1457,10 @@ Case context: `document`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-doc.typst_grid(columns=2, args=['A', 'B'])
-doc.typst_text(content='After')
+doc = builder.source.document()
+doc.text(content='Before')
+doc.grid(columns=2, args=['A', 'B'])
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -1480,10 +1482,10 @@ Case context: `document`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-doc.typst_stack(dir=expr('ltr'), spacing=expr('2mm'), args=['A', 'B'])
-doc.typst_text(content='After')
+doc = builder.source.document()
+doc.text(content='Before')
+doc.stack(dir=expr('ltr'), spacing=expr('2mm'), args=['A', 'B'])
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -1505,14 +1507,14 @@ Case context: `grid`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-node2 = doc.typst_grid(columns=2)
-node3 = node2.typst_grid_header()
-node3.typst_grid_cell(content='Span', colspan=2)
-node2.typst_text(content='A')
-node2.typst_text(content='B')
-doc.typst_text(content='After')
+doc = builder.source.document()
+doc.text(content='Before')
+node2 = doc.grid(columns=2)
+node3 = node2.grid_header()
+node3.grid_cell(content='Span', colspan=2)
+node2.text(content='A')
+node2.text(content='B')
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -1534,14 +1536,14 @@ Case context: `grid`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-node2 = doc.typst_grid(columns=2)
-node2.typst_text(content='A')
-node2.typst_text(content='B')
-node5 = node2.typst_grid_footer()
-node5.typst_grid_cell(content='Span', colspan=2)
-doc.typst_text(content='After')
+doc = builder.source.document()
+doc.text(content='Before')
+node2 = doc.grid(columns=2)
+node2.text(content='A')
+node2.text(content='B')
+node5 = node2.grid_footer()
+node5.grid_cell(content='Span', colspan=2)
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -1563,13 +1565,13 @@ Case context: `grid`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-node2 = doc.typst_grid(columns=2)
-node2.typst_grid_cell(content='Span', colspan=2)
-node2.typst_text(content='A')
-node2.typst_text(content='B')
-doc.typst_text(content='After')
+doc = builder.source.document()
+doc.text(content='Before')
+node2 = doc.grid(columns=2)
+node2.grid_cell(content='Span', colspan=2)
+node2.text(content='A')
+node2.text(content='B')
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -1591,10 +1593,10 @@ Case context: `document`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-doc.typst_pagebreak()
-doc.typst_text(content='After')
+doc = builder.source.document()
+doc.text(content='Before')
+doc.pagebreak()
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -1616,13 +1618,13 @@ Case context: `columns`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
+doc = builder.source.document()
+doc.text(content='Before')
 node2 = doc.typst_columns(args=[2])
-node2.typst_text(content='Left')
-node2.typst_colbreak()
-node2.typst_text(content='Right')
-doc.typst_text(content='After')
+node2.text(content='Left')
+node2.colbreak()
+node2.text(content='Right')
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -1644,13 +1646,13 @@ Case context: `grid`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-node2 = doc.typst_grid(columns=2)
-node2.typst_grid_hline(stroke=expr('2pt + blue'))
-node2.typst_text(content='A')
-node2.typst_text(content='B')
-doc.typst_text(content='After')
+doc = builder.source.document()
+doc.text(content='Before')
+node2 = doc.grid(columns=2)
+node2.grid_hline(stroke=expr('2pt + blue'))
+node2.text(content='A')
+node2.text(content='B')
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -1672,13 +1674,13 @@ Case context: `grid`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-node2 = doc.typst_grid(columns=2)
-node2.typst_grid_vline(x=1, stroke=expr('2pt + blue'))
-node2.typst_text(content='A')
-node2.typst_text(content='B')
-doc.typst_text(content='After')
+doc = builder.source.document()
+doc.text(content='Before')
+node2 = doc.grid(columns=2)
+node2.grid_vline(x=1, stroke=expr('2pt + blue'))
+node2.text(content='A')
+node2.text(content='B')
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -1700,10 +1702,10 @@ Case context: `document`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-doc.typst_h(content=expr('5mm'))
-doc.typst_text(content='After')
+doc = builder.source.document()
+doc.text(content='Before')
+doc.h(content=expr('5mm'))
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -1725,10 +1727,10 @@ Case context: `document`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-doc.typst_v(content=expr('5mm'))
-doc.typst_text(content='After')
+doc = builder.source.document()
+doc.text(content='Before')
+doc.v(content=expr('5mm'))
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -1750,12 +1752,12 @@ Case context: `measure`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-node2 = doc.typst_context()
-node3 = node2.typst_call(function='repr', mode='args')
-node3.typst_measure(content='Example')
-doc.typst_text(content='After')
+doc = builder.source.document()
+doc.text(content='Before')
+node2 = doc.context()
+node3 = node2.call(function='repr', mode='args')
+node3.measure(content='Example')
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -1777,10 +1779,10 @@ Case context: `document`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-doc.typst_native_layout(content=expr('size => [Width: #size.width]'))
-doc.typst_text(content='After')
+doc = builder.source.document()
+doc.text(content='Before')
+doc.native_layout(content=expr('size => [Width: #size.width]'))
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -1802,10 +1804,10 @@ Case context: `document`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-doc.typst_circle(content='G', fill=expr('rgb("#eeeeee")'))
-doc.typst_text(content='After')
+doc = builder.source.document()
+doc.text(content='Before')
+doc.circle(content='G', fill=expr('rgb("#eeeeee")'))
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -1827,10 +1829,10 @@ Case context: `document`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-doc.typst_ellipse(content='G', fill=expr('rgb("#eeeeee")'))
-doc.typst_text(content='After')
+doc = builder.source.document()
+doc.text(content='Before')
+doc.ellipse(content='G', fill=expr('rgb("#eeeeee")'))
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -1852,10 +1854,10 @@ Case context: `document`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-doc.typst_rect(content='G', fill=expr('rgb("#eeeeee")'))
-doc.typst_text(content='After')
+doc = builder.source.document()
+doc.text(content='Before')
+doc.rect(content='G', fill=expr('rgb("#eeeeee")'))
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -1877,10 +1879,10 @@ Case context: `document`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-doc.typst_square(content='G', fill=expr('rgb("#eeeeee")'))
-doc.typst_text(content='After')
+doc = builder.source.document()
+doc.text(content='Before')
+doc.square(content='G', fill=expr('rgb("#eeeeee")'))
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -1902,10 +1904,10 @@ Case context: `document`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-doc.typst_image(content='logo.svg', width=expr('10mm'))
-doc.typst_text(content='After')
+doc = builder.source.document()
+doc.text(content='Before')
+doc.image(content='logo.svg', width=expr('10mm'))
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -1927,10 +1929,10 @@ Case context: `document`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-doc.typst_line(start=[expr('0pt'), expr('0pt')], end=[expr('10mm'), expr('10mm')])
-doc.typst_text(content='After')
+doc = builder.source.document()
+doc.text(content='Before')
+doc.line(start=[expr('0pt'), expr('0pt')], end=[expr('10mm'), expr('10mm')])
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -1952,10 +1954,10 @@ Case context: `document`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-doc.typst_polygon(args=[[expr('0pt'), expr('0pt')], [expr('10mm'), expr('0pt')], [expr('10mm'), expr('10mm')]], fill=expr('blue'))
-doc.typst_text(content='After')
+doc = builder.source.document()
+doc.text(content='Before')
+doc.polygon(args=[[expr('0pt'), expr('0pt')], [expr('10mm'), expr('0pt')], [expr('10mm'), expr('10mm')]], fill=expr('blue'))
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -1977,12 +1979,12 @@ Case context: `document`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-node2 = doc.typst_curve()
-node2.typst_curve_move(args=[[expr('0pt'), expr('0pt')]])
-node2.typst_curve_line(args=[[expr('10mm'), expr('10mm')]])
-doc.typst_text(content='After')
+doc = builder.source.document()
+doc.text(content='Before')
+node2 = doc.curve()
+node2.curve_move(args=[[expr('0pt'), expr('0pt')]])
+node2.curve_line(args=[[expr('10mm'), expr('10mm')]])
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -2004,14 +2006,14 @@ Case context: `curve`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-node2 = doc.typst_curve()
-node2.typst_curve_move(args=[[expr('0pt'), expr('0pt')]])
-node2.typst_curve_line(args=[[expr('10mm'), expr('0pt')]])
-node2.typst_curve_move(args=[[expr('10mm'), expr('0pt')]])
-node2.typst_curve_line(args=[[expr('0pt'), expr('10mm')]])
-doc.typst_text(content='After')
+doc = builder.source.document()
+doc.text(content='Before')
+node2 = doc.curve()
+node2.curve_move(args=[[expr('0pt'), expr('0pt')]])
+node2.curve_line(args=[[expr('10mm'), expr('0pt')]])
+node2.curve_move(args=[[expr('10mm'), expr('0pt')]])
+node2.curve_line(args=[[expr('0pt'), expr('10mm')]])
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -2033,14 +2035,14 @@ Case context: `curve`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-node2 = doc.typst_curve()
-node2.typst_curve_move(args=[[expr('0pt'), expr('0pt')]])
-node2.typst_curve_line(args=[[expr('10mm'), expr('0pt')]])
-node2.typst_curve_line(args=[[expr('10mm'), expr('10mm')]])
-node2.typst_curve_line(args=[[expr('0pt'), expr('10mm')]])
-doc.typst_text(content='After')
+doc = builder.source.document()
+doc.text(content='Before')
+node2 = doc.curve()
+node2.curve_move(args=[[expr('0pt'), expr('0pt')]])
+node2.curve_line(args=[[expr('10mm'), expr('0pt')]])
+node2.curve_line(args=[[expr('10mm'), expr('10mm')]])
+node2.curve_line(args=[[expr('0pt'), expr('10mm')]])
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -2062,14 +2064,14 @@ Case context: `curve`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-node2 = doc.typst_curve()
-node2.typst_curve_move(args=[[expr('0pt'), expr('0pt')]])
-node2.typst_curve_line(args=[[expr('10mm'), expr('0pt')]])
-node2.typst_curve_quad(args=[[expr('10mm'), expr('10mm')], [expr('10mm'), expr('0pt')]])
-node2.typst_curve_line(args=[[expr('0pt'), expr('10mm')]])
-doc.typst_text(content='After')
+doc = builder.source.document()
+doc.text(content='Before')
+node2 = doc.curve()
+node2.curve_move(args=[[expr('0pt'), expr('0pt')]])
+node2.curve_line(args=[[expr('10mm'), expr('0pt')]])
+node2.curve_quad(args=[[expr('10mm'), expr('10mm')], [expr('10mm'), expr('0pt')]])
+node2.curve_line(args=[[expr('0pt'), expr('10mm')]])
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -2091,14 +2093,14 @@ Case context: `curve`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-node2 = doc.typst_curve()
-node2.typst_curve_move(args=[[expr('0pt'), expr('0pt')]])
-node2.typst_curve_line(args=[[expr('10mm'), expr('0pt')]])
-node2.typst_curve_cubic(args=[[expr('10mm'), expr('10mm')], [expr('10mm'), expr('0pt')], [expr('0pt'), expr('10mm')]])
-node2.typst_curve_line(args=[[expr('0pt'), expr('10mm')]])
-doc.typst_text(content='After')
+doc = builder.source.document()
+doc.text(content='Before')
+node2 = doc.curve()
+node2.curve_move(args=[[expr('0pt'), expr('0pt')]])
+node2.curve_line(args=[[expr('10mm'), expr('0pt')]])
+node2.curve_cubic(args=[[expr('10mm'), expr('10mm')], [expr('10mm'), expr('0pt')], [expr('0pt'), expr('10mm')]])
+node2.curve_line(args=[[expr('0pt'), expr('10mm')]])
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -2120,14 +2122,14 @@ Case context: `curve`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-node2 = doc.typst_curve()
-node2.typst_curve_move(args=[[expr('0pt'), expr('0pt')]])
-node2.typst_curve_line(args=[[expr('10mm'), expr('0pt')]])
-node2.typst_curve_close()
-node2.typst_curve_line(args=[[expr('0pt'), expr('10mm')]])
-doc.typst_text(content='After')
+doc = builder.source.document()
+doc.text(content='Before')
+node2 = doc.curve()
+node2.curve_move(args=[[expr('0pt'), expr('0pt')]])
+node2.curve_line(args=[[expr('10mm'), expr('0pt')]])
+node2.curve_close()
+node2.curve_line(args=[[expr('0pt'), expr('10mm')]])
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -2149,10 +2151,10 @@ Case context: `document`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-doc.typst_math_equation(content=expr('[$x + y$\n]'), block=True)
-doc.typst_text(content='After')
+doc = builder.source.document()
+doc.text(content='Before')
+doc.math_equation(content=expr('[$x + y$\n]'), block=True)
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -2174,11 +2176,11 @@ Case context: `math`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-node2 = doc.typst_math_equation(block=True)
-node2.typst_math_upright(content=expr('[$x$\n]'))
-doc.typst_text(content='After')
+doc = builder.source.document()
+doc.text(content='Before')
+node2 = doc.math_equation(block=True)
+node2.math_upright(content=expr('[$x$\n]'))
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -2200,11 +2202,11 @@ Case context: `math`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-node2 = doc.typst_math_equation(block=True)
-node2.typst_math_italic(content=expr('[$x$\n]'))
-doc.typst_text(content='After')
+doc = builder.source.document()
+doc.text(content='Before')
+node2 = doc.math_equation(block=True)
+node2.math_italic(content=expr('[$x$\n]'))
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -2226,11 +2228,11 @@ Case context: `math`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-node2 = doc.typst_math_equation(block=True)
-node2.typst_math_bold(content=expr('[$x$\n]'))
-doc.typst_text(content='After')
+doc = builder.source.document()
+doc.text(content='Before')
+node2 = doc.math_equation(block=True)
+node2.math_bold(content=expr('[$x$\n]'))
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -2252,11 +2254,11 @@ Case context: `math`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-node2 = doc.typst_math_equation(block=True)
-node2.typst_math_serif(content=expr('[$x$\n]'))
-doc.typst_text(content='After')
+doc = builder.source.document()
+doc.text(content='Before')
+node2 = doc.math_equation(block=True)
+node2.math_serif(content=expr('[$x$\n]'))
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -2278,11 +2280,11 @@ Case context: `math`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-node2 = doc.typst_math_equation(block=True)
-node2.typst_math_sans(content=expr('[$x$\n]'))
-doc.typst_text(content='After')
+doc = builder.source.document()
+doc.text(content='Before')
+node2 = doc.math_equation(block=True)
+node2.math_sans(content=expr('[$x$\n]'))
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -2304,11 +2306,11 @@ Case context: `math`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-node2 = doc.typst_math_equation(block=True)
-node2.typst_math_cal(content=expr('[$x$\n]'))
-doc.typst_text(content='After')
+doc = builder.source.document()
+doc.text(content='Before')
+node2 = doc.math_equation(block=True)
+node2.math_cal(content=expr('[$x$\n]'))
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -2330,11 +2332,11 @@ Case context: `math`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-node2 = doc.typst_math_equation(block=True)
-node2.typst_math_frak(content=expr('[$x$\n]'))
-doc.typst_text(content='After')
+doc = builder.source.document()
+doc.text(content='Before')
+node2 = doc.math_equation(block=True)
+node2.math_frak(content=expr('[$x$\n]'))
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -2356,11 +2358,11 @@ Case context: `math`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-node2 = doc.typst_math_equation(block=True)
-node2.typst_math_mono(content=expr('[$x$\n]'))
-doc.typst_text(content='After')
+doc = builder.source.document()
+doc.text(content='Before')
+node2 = doc.math_equation(block=True)
+node2.math_mono(content=expr('[$x$\n]'))
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -2382,11 +2384,11 @@ Case context: `math`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-node2 = doc.typst_math_equation(block=True)
-node2.typst_math_bb(content=expr('[$x$\n]'))
-doc.typst_text(content='After')
+doc = builder.source.document()
+doc.text(content='Before')
+node2 = doc.math_equation(block=True)
+node2.math_bb(content=expr('[$x$\n]'))
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -2408,11 +2410,11 @@ Case context: `math`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-node2 = doc.typst_math_equation(block=True)
-node2.typst_math_display(content=expr('[$x$\n]'))
-doc.typst_text(content='After')
+doc = builder.source.document()
+doc.text(content='Before')
+node2 = doc.math_equation(block=True)
+node2.math_display(content=expr('[$x$\n]'))
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -2434,11 +2436,11 @@ Case context: `math`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-node2 = doc.typst_math_equation(block=True)
-node2.typst_math_inline(content=expr('[$x$\n]'))
-doc.typst_text(content='After')
+doc = builder.source.document()
+doc.text(content='Before')
+node2 = doc.math_equation(block=True)
+node2.math_inline(content=expr('[$x$\n]'))
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -2460,11 +2462,11 @@ Case context: `math`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-node2 = doc.typst_math_equation(block=True)
-node2.typst_math_script(content=expr('[$x$\n]'))
-doc.typst_text(content='After')
+doc = builder.source.document()
+doc.text(content='Before')
+node2 = doc.math_equation(block=True)
+node2.math_script(content=expr('[$x$\n]'))
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -2486,11 +2488,11 @@ Case context: `math`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-node2 = doc.typst_math_equation(block=True)
-node2.typst_math_sscript(content=expr('[$x$\n]'))
-doc.typst_text(content='After')
+doc = builder.source.document()
+doc.text(content='Before')
+node2 = doc.math_equation(block=True)
+node2.math_sscript(content=expr('[$x$\n]'))
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -2512,11 +2514,11 @@ Case context: `math`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-node2 = doc.typst_math_equation(block=True)
-node2.typst_math_frac(args=[expr('[$x$\n]'), expr('[$y$\n]')])
-doc.typst_text(content='After')
+doc = builder.source.document()
+doc.text(content='Before')
+node2 = doc.math_equation(block=True)
+node2.math_frac(args=[expr('[$x$\n]'), expr('[$y$\n]')])
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -2538,11 +2540,11 @@ Case context: `math`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-node2 = doc.typst_math_equation(block=True)
-node2.typst_math_root(args=['3', expr('[$x$\n]')])
-doc.typst_text(content='After')
+doc = builder.source.document()
+doc.text(content='Before')
+node2 = doc.math_equation(block=True)
+node2.math_root(args=['3', expr('[$x$\n]')])
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -2564,11 +2566,11 @@ Case context: `math`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-node2 = doc.typst_math_equation(block=True)
-node2.typst_math_sqrt(args=[expr('[$x$\n]')])
-doc.typst_text(content='After')
+doc = builder.source.document()
+doc.text(content='Before')
+node2 = doc.math_equation(block=True)
+node2.math_sqrt(args=[expr('[$x$\n]')])
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -2590,11 +2592,11 @@ Case context: `math`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-node2 = doc.typst_math_equation(block=True)
-node2.typst_math_binom(args=['n', 'k'])
-doc.typst_text(content='After')
+doc = builder.source.document()
+doc.text(content='Before')
+node2 = doc.math_equation(block=True)
+node2.math_binom(args=['n', 'k'])
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -2616,11 +2618,11 @@ Case context: `math`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-node2 = doc.typst_math_equation(block=True)
-node2.typst_math_vec(args=['1', '2'])
-doc.typst_text(content='After')
+doc = builder.source.document()
+doc.text(content='Before')
+node2 = doc.math_equation(block=True)
+node2.math_vec(args=['1', '2'])
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -2642,11 +2644,11 @@ Case context: `math`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-node2 = doc.typst_math_equation(block=True)
-node2.typst_math_mat(args=[['1', '2'], ['3', '4']])
-doc.typst_text(content='After')
+doc = builder.source.document()
+doc.text(content='Before')
+node2 = doc.math_equation(block=True)
+node2.math_mat(args=[['1', '2'], ['3', '4']])
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -2668,11 +2670,11 @@ Case context: `math`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-node2 = doc.typst_math_equation(block=True)
-node2.typst_math_cases(args=[expr('[$x & x >= 0$\n]'), expr('[$-x & x < 0$\n]')])
-doc.typst_text(content='After')
+doc = builder.source.document()
+doc.text(content='Before')
+node2 = doc.math_equation(block=True)
+node2.math_cases(args=[expr('[$x & x >= 0$\n]'), expr('[$-x & x < 0$\n]')])
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -2694,11 +2696,11 @@ Case context: `math`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-node2 = doc.typst_math_equation(block=True)
-node2.typst_math_lr(args=[expr('[$(x)$\n]')])
-doc.typst_text(content='After')
+doc = builder.source.document()
+doc.text(content='Before')
+node2 = doc.math_equation(block=True)
+node2.math_lr(args=[expr('[$(x)$\n]')])
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -2720,11 +2722,11 @@ Case context: `math`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-node2 = doc.typst_math_equation(block=True)
-node2.typst_math_attach(args=[expr('[$x$\n]')], t=expr('[2\n]'), b=expr('[i\n]'))
-doc.typst_text(content='After')
+doc = builder.source.document()
+doc.text(content='Before')
+node2 = doc.math_equation(block=True)
+node2.math_attach(args=[expr('[$x$\n]')], t=expr('[2\n]'), b=expr('[i\n]'))
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -2746,11 +2748,11 @@ Case context: `math`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-node2 = doc.typst_math_equation(block=True)
-node2.typst_math_accent(args=[expr('[$x$\n]'), '^'])
-doc.typst_text(content='After')
+doc = builder.source.document()
+doc.text(content='Before')
+node2 = doc.math_equation(block=True)
+node2.math_accent(args=[expr('[$x$\n]'), '^'])
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -2772,11 +2774,11 @@ Case context: `math`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-node2 = doc.typst_math_equation(block=True)
-node2.typst_math_cancel(args=[expr('[$x$\n]')])
-doc.typst_text(content='After')
+doc = builder.source.document()
+doc.text(content='Before')
+node2 = doc.math_equation(block=True)
+node2.math_cancel(args=[expr('[$x$\n]')])
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -2798,11 +2800,11 @@ Case context: `math`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-node2 = doc.typst_math_equation(block=True)
-node2.typst_math_class(args=['relation', expr('[$=$\n]')])
-doc.typst_text(content='After')
+doc = builder.source.document()
+doc.text(content='Before')
+node2 = doc.math_equation(block=True)
+node2.math_class(args=['relation', expr('[$=$\n]')])
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -2824,11 +2826,11 @@ Case context: `math`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-node2 = doc.typst_math_equation(block=True)
-node2.typst_math_op(args=['custom'])
-doc.typst_text(content='After')
+doc = builder.source.document()
+doc.text(content='Before')
+node2 = doc.math_equation(block=True)
+node2.math_op(args=['custom'])
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -2850,11 +2852,11 @@ Case context: `math`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-node2 = doc.typst_math_equation(block=True)
-node2.typst_math_limits(args=[expr('sym.sum')])
-doc.typst_text(content='After')
+doc = builder.source.document()
+doc.text(content='Before')
+node2 = doc.math_equation(block=True)
+node2.math_limits(args=[expr('sym.sum')])
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -2876,11 +2878,11 @@ Case context: `math`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-node2 = doc.typst_math_equation(block=True)
-node2.typst_math_scripts(args=[expr('sym.sum')])
-doc.typst_text(content='After')
+doc = builder.source.document()
+doc.text(content='Before')
+node2 = doc.math_equation(block=True)
+node2.math_scripts(args=[expr('sym.sum')])
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -2902,11 +2904,11 @@ Case context: `math`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-node2 = doc.typst_math_equation(block=True)
-node2.typst_math_abs(args=[expr('[$x$\n]')])
-doc.typst_text(content='After')
+doc = builder.source.document()
+doc.text(content='Before')
+node2 = doc.math_equation(block=True)
+node2.math_abs(args=[expr('[$x$\n]')])
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -2928,11 +2930,11 @@ Case context: `math`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-node2 = doc.typst_math_equation(block=True)
-node2.typst_math_norm(args=[expr('[$x$\n]')])
-doc.typst_text(content='After')
+doc = builder.source.document()
+doc.text(content='Before')
+node2 = doc.math_equation(block=True)
+node2.math_norm(args=[expr('[$x$\n]')])
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -2954,11 +2956,11 @@ Case context: `math`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-node2 = doc.typst_math_equation(block=True)
-node2.typst_math_floor(args=[expr('[$x$\n]')])
-doc.typst_text(content='After')
+doc = builder.source.document()
+doc.text(content='Before')
+node2 = doc.math_equation(block=True)
+node2.math_floor(args=[expr('[$x$\n]')])
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -2980,11 +2982,11 @@ Case context: `math`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-node2 = doc.typst_math_equation(block=True)
-node2.typst_math_ceil(args=[expr('[$x$\n]')])
-doc.typst_text(content='After')
+doc = builder.source.document()
+doc.text(content='Before')
+node2 = doc.math_equation(block=True)
+node2.math_ceil(args=[expr('[$x$\n]')])
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -3006,11 +3008,11 @@ Case context: `math`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-node2 = doc.typst_math_equation(block=True)
-node2.typst_math_round(args=[expr('[$x$\n]')])
-doc.typst_text(content='After')
+doc = builder.source.document()
+doc.text(content='Before')
+node2 = doc.math_equation(block=True)
+node2.math_round(args=[expr('[$x$\n]')])
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -3032,11 +3034,11 @@ Case context: `math`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-node2 = doc.typst_math_equation(block=True)
-node2.typst_math_stretch(args=[expr('sym.arrow.r')], size=expr('200%'))
-doc.typst_text(content='After')
+doc = builder.source.document()
+doc.text(content='Before')
+node2 = doc.math_equation(block=True)
+node2.math_stretch(args=[expr('sym.arrow.r')], size=expr('200%'))
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -3058,11 +3060,11 @@ Case context: `math`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-node2 = doc.typst_math_equation(block=True)
-node2.typst_math_underbrace(args=[expr('[$x$\n]')])
-doc.typst_text(content='After')
+doc = builder.source.document()
+doc.text(content='Before')
+node2 = doc.math_equation(block=True)
+node2.math_underbrace(args=[expr('[$x$\n]')])
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -3084,11 +3086,11 @@ Case context: `math`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-node2 = doc.typst_math_equation(block=True)
-node2.typst_math_overbrace(args=[expr('[$x$\n]')])
-doc.typst_text(content='After')
+doc = builder.source.document()
+doc.text(content='Before')
+node2 = doc.math_equation(block=True)
+node2.math_overbrace(args=[expr('[$x$\n]')])
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -3110,11 +3112,11 @@ Case context: `math`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-node2 = doc.typst_math_equation(block=True)
-node2.typst_math_underbracket(args=[expr('[$x$\n]')])
-doc.typst_text(content='After')
+doc = builder.source.document()
+doc.text(content='Before')
+node2 = doc.math_equation(block=True)
+node2.math_underbracket(args=[expr('[$x$\n]')])
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -3136,11 +3138,11 @@ Case context: `math`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-node2 = doc.typst_math_equation(block=True)
-node2.typst_math_overbracket(args=[expr('[$x$\n]')])
-doc.typst_text(content='After')
+doc = builder.source.document()
+doc.text(content='Before')
+node2 = doc.math_equation(block=True)
+node2.math_overbracket(args=[expr('[$x$\n]')])
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -3162,11 +3164,11 @@ Case context: `math`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-node2 = doc.typst_math_equation(block=True)
-node2.typst_math_underline(args=[expr('[$x$\n]')])
-doc.typst_text(content='After')
+doc = builder.source.document()
+doc.text(content='Before')
+node2 = doc.math_equation(block=True)
+node2.math_underline(args=[expr('[$x$\n]')])
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -3188,11 +3190,11 @@ Case context: `math`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-node2 = doc.typst_math_equation(block=True)
-node2.typst_math_overline(args=[expr('[$x$\n]')])
-doc.typst_text(content='After')
+doc = builder.source.document()
+doc.text(content='Before')
+node2 = doc.math_equation(block=True)
+node2.math_overline(args=[expr('[$x$\n]')])
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -3214,11 +3216,11 @@ Case context: `math`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-node2 = doc.typst_math_equation(block=True)
-node2.typst_math_underparen(args=[expr('[$x$\n]')])
-doc.typst_text(content='After')
+doc = builder.source.document()
+doc.text(content='Before')
+node2 = doc.math_equation(block=True)
+node2.math_underparen(args=[expr('[$x$\n]')])
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -3240,11 +3242,11 @@ Case context: `math`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-node2 = doc.typst_math_equation(block=True)
-node2.typst_math_overparen(args=[expr('[$x$\n]')])
-doc.typst_text(content='After')
+doc = builder.source.document()
+doc.text(content='Before')
+node2 = doc.math_equation(block=True)
+node2.math_overparen(args=[expr('[$x$\n]')])
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -3266,11 +3268,11 @@ Case context: `math`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-node2 = doc.typst_math_equation(block=True)
-node2.typst_math_undershell(args=[expr('[$x$\n]')])
-doc.typst_text(content='After')
+doc = builder.source.document()
+doc.text(content='Before')
+node2 = doc.math_equation(block=True)
+node2.math_undershell(args=[expr('[$x$\n]')])
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -3292,11 +3294,11 @@ Case context: `math`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-node2 = doc.typst_math_equation(block=True)
-node2.typst_math_overshell(args=[expr('[$x$\n]')])
-doc.typst_text(content='After')
+doc = builder.source.document()
+doc.text(content='Before')
+node2 = doc.math_equation(block=True)
+node2.math_overshell(args=[expr('[$x$\n]')])
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -3318,11 +3320,11 @@ Case context: `math`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-node2 = doc.typst_math_equation(block=True)
-node2.typst_math_primes(args=[3])
-doc.typst_text(content='After')
+doc = builder.source.document()
+doc.text(content='Before')
+node2 = doc.math_equation(block=True)
+node2.math_primes(args=[3])
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -3344,10 +3346,10 @@ Case context: `document`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-doc.typst_metadata(content={'answer': 42})
-doc.typst_text(content='After')
+doc = builder.source.document()
+doc.text(content='Before')
+doc.metadata(content={'answer': 42})
+doc.text(content='After')
 
 source = builder.render()
 ```
@@ -3369,10 +3371,10 @@ Case context: `document`.
 from genro_typst import TypstBuilder, expr
 
 builder = TypstBuilder()
-doc = builder.source.typst_document()
-doc.typst_text(content='Before')
-doc.typst_pdf_artifact(content='Decoration')
-doc.typst_text(content='After')
+doc = builder.source.document()
+doc.text(content='Before')
+doc.pdf_artifact(content='Decoration')
+doc.text(content='After')
 
 source = builder.render()
 ```
