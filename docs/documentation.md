@@ -4,6 +4,8 @@ Documentation is written in English and built with
 [Sphinx](https://www.sphinx-doc.org/) and [MyST](https://myst-parser.readthedocs.io/).
 Markdown pages remain readable on GitHub; Sphinx adds navigation, search,
 API documentation extracted from Python, and checked internal references.
+The site uses `sphinx_rtd_theme`, matching the documentation of `genro-bag`
+and `genro-builders`, with grouped sidebar navigation and GitHub source links.
 
 ## Build locally
 

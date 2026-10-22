@@ -1,6 +1,10 @@
 # Genro Typst guide
 
-Genro Typst builds a document tree in Python and produces Typst source.
+Genro Typst is a way to write Typst documents in Python: it builds a document
+tree and produces ordinary Typst source. The Typst language, typography, layout
+and compiled output are provided by Typst, created and maintained by its own
+authors and contributors. See [acknowledgements](acknowledgements.md).
+
 The reference compiler is **Typst 0.15.0**. The catalog covers text, document
 structure, layout, native tables, graphics, mathematics and language constructs.
 

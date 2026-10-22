@@ -44,6 +44,10 @@ These helpers are exported from `genro_typst`. Each returns a serializable
 
 ## Compilation and previews
 
+`TypstEngine` is an adapter to the Typst Python binding. Typst's compiler
+performs the typesetting and generates the PDF/SVG output; Genro Typst passes
+the source and compilation options to it.
+
 ```{eval-rst}
 .. autoclass:: genro_typst.compiler.TypstEngine
    :members: compile

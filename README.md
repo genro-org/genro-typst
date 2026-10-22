@@ -1,149 +1,169 @@
 # genro-typst
 
-A standalone Python builder for print documents, using `genro-builders` and
-`genro-bag` to generate Typst source and PDF. Licensed under Apache 2.0.
+[![Documentation](https://readthedocs.org/projects/genro-typst/badge/?version=latest)](https://genro-typst.readthedocs.io/en/latest/)
+[![Documentation build](https://github.com/genro-org/genro-typst/actions/workflows/docs.yml/badge.svg)](https://github.com/genro-org/genro-typst/actions/workflows/docs.yml)
+[![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
+[![License: Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
 
-The library owns the Typst grammar, renderer and compilation API. It has no
-dependency on Genro PDF Builder, HTML/WeasyPrint, Kajenn, Gramlot or an editor.
-The separate **Genro PDF Builder** application depends on this library and
-provides the visual/Python editor, previews and MCP tools.
+**Write Typst documents in Python.** Genro Typst is a Python authoring layer
+built on [genro-builders](https://github.com/genro-org/genro-builders) and
+[genro-bag](https://github.com/genro-org/genro-bag). Python calls, loops and
+functions produce ordinary **Typst source**, which you can read, save, edit
+and compile with Typst.
 
-## Install
+## Built on Typst — with thanks to its authors
 
-Python 3.10+ is supported. Source generation only needs the base dependencies;
-PDF compilation and SVG previews require the `pdf` extra.
+The document language, typesetting engine and PDF/SVG compilation are the work
+of **[Typst](https://typst.app/)**. We gratefully acknowledge **Laurenz Mädje,
+Martin Haug, the Typst team and all Typst contributors** for creating and
+maintaining the technology that makes these documents possible.
+
+Genro Typst's contribution is the Python way of writing that source: builder
+methods, data binding and serialization. When you request a PDF or SVG preview,
+the library delegates compilation to Typst through its Python binding.
+**The typesetting quality and rendered output come from Typst.**
+
+Explore the [Typst documentation](https://typst.app/docs/),
+[compiler source](https://github.com/typst/typst),
+[team](https://typst.app/about/) and [official Typst web app](https://typst.app/).
+See [acknowledgements](https://genro-typst.readthedocs.io/en/latest/acknowledgements.html)
+for the roles of the upstream projects. Genro Typst is an independent Softwell
+project, not an official Typst product or an endorsement by its authors.
+
+## Installation
+
+From a repository checkout, with Python 3.10+:
 
 ```bash
+git clone https://github.com/genro-org/genro-typst.git
+cd genro-typst
 python -m pip install -e ".[pdf]"
 ```
 
-## A document from Python
+The base package generates Typst source. The `pdf` extra installs the Typst
+Python binding, pinned to **0.15.0**, for compilation and previews. To generate
+source without installing the compiler, use `python -m pip install -e .`.
+
+## Quick start
+
+Subclass `TypstBuilder`, describe the document in `main`, and call `create()`:
 
 ```python
 from genro_typst import TypstBuilder
 
-class Invoice(TypstBuilder):
-    def setup(self, data):
-        data["customer.name"] = "Rossi & Figli"
 
+class Report(TypstBuilder):
     def main(self, root):
         doc = root.document(paper="a4", margin="15mm")
-        doc.paragraph(content="Invoice")
-        row = doc.layout(border_width="0.5pt").row()
-        row.cell(content="Softwell S.r.l.", lbl="From")
-        row.cell(content="^customer.name", lbl="Customer")
-        doc.pageNumber(template="Page {page} of {total}")
+        doc.heading("Quarterly report", level=1)
+        for name in ("Research", "Development", "Support"):
+            doc.par(f"Department: {name}")
 
-invoice = Invoice()
-invoice.create()
-source = invoice.render()                     # Typst source string
-invoice.render(target="invoice.typ")
-invoice.render(mode="pdf", target="invoice.pdf")
+
+report = Report()
+report.create()
+print(report.render())                         # Readable Typst source
+report.render(target="report.typ")             # Save the source
+report.render(mode="pdf", target="report.pdf") # Compile with Typst
 ```
 
-`render(mode="pdf")` returns bytes when no target is supplied. It also accepts
-a writable binary stream. The PDF engine is Typst; HTML uses a separate builder
-in the application, with its own grammar.
+The resulting source contains ordinary Typst calls such as
+`#heading(level: 1, [#"Quarterly report"])`. Python supplies the repetition
+and application data; Typst supplies the document semantics and typesetting.
 
-## Grammar and data
+`render(mode="pdf")` returns bytes when no target is supplied. `target` can
+also be a writable binary stream. For images or imports, pass a compilation
+`root`; see the [guide](https://genro-typst.readthedocs.io/en/latest/typst-guide.html).
 
-The grammar now includes **129 native Typst calls**, covering text and styles,
-document structure, layout, native tables, graphics, mathematics and references.
-It also includes explicit set/show rules, scopes, contextual evaluation,
-imports, includes, bindings and access to custom functions and trusted code.
-The original `document`, `layout`, `row`, `cell`, `table`, `column`, `paragraph`
-and `pageNumber` elements remain compatible.
+## What the Python layer provides
 
-Start with the [English guide](docs/typst-guide.md), the generated
-[native API reference](docs/native-reference.md) and the
-[machine-readable catalog](docs/native-catalog.json). The catalog targets Typst
-0.15.0. Native keyword parameters are forwarded to Typst for validation; this
-is not a Python reimplementation of the entire Typst type system.
+| Capability | Genro Typst's role |
+|---|---|
+| Structured authoring | Python methods for 129 native Typst calls, 12 language constructs and eight legacy document elements |
+| Python composition | Use your own loops, conditions and functions to generate source |
+| Application data | Bind attributes to a `Bag` with `^path` pointers |
+| Explicit values | `length`, `color`, `label`, `expr` and `markup` distinguish Typst values from literal strings |
+| Persistence | Save and reload the document tree through TYTX |
+| Compilation access | Pass generated source to Typst for PDF and SVG output |
 
-Every registered native call has an [executable Python example](docs/catalog-examples.md)
-and a handwritten Typst reference. Tests compile both, compare every SVG page,
-check PDF output, TYTX round trips and expected errors. See the
-[verification contract and limits](docs/verification.md).
+Native parameters are forwarded to Typst, which validates their names, types
+and context. The catalog targets Typst 0.15.0; it does not claim coverage of
+every parameter combination or every future Typst feature.
 
-Legacy signatures in [`typst_elements.py`](src/genro_typst/typst_elements.py)
-define their attributes and defaults. Native registration and call conventions
-are defined in `native_elements.py` and `native_catalog.py`.
+## Documentation and examples
 
-Data lives in a `Bag`; `^path` attributes refer to that data. Python loops and
-helper methods can generate any number of elements. Tables support columns,
-headers and totals. Text is emitted as Typst string literals, preserving markup
-characters in business data. SourceBag TYTX serialization is covered by tests.
+**[Read the documentation](https://genro-typst.readthedocs.io/en/latest/)**
 
-Examples with Python, generated Typst and PDF:
+- [Getting started and guide](https://genro-typst.readthedocs.io/en/latest/typst-guide.html)
+- [Python API](https://genro-typst.readthedocs.io/en/latest/api.html)
+- [Native call reference](https://genro-typst.readthedocs.io/en/latest/native-reference.html)
+- [Executable Python and Typst examples](https://genro-typst.readthedocs.io/en/latest/catalog-examples.html)
+- [Verification and limits](https://genro-typst.readthedocs.io/en/latest/verification.html)
+- [Machine-readable catalog](docs/native-catalog.json)
 
-- [Invoice header](examples/01_invoice_header/invoice_header.py): layout, cells,
-  bound data and page numbering.
-- [Invoice lines](examples/02_invoice_lines/invoice_lines.py): table columns and
-  totals.
+Complete examples include an [invoice header](examples/01_invoice_header/invoice_header.py),
+a [multipage invoice](examples/02_invoice_lines/invoice_lines.py) and a
+[native report](examples/03_native_report/report.py) with styles, table spans,
+SVG graphics, mathematics and references. Each includes Python, generated
+Typst and PDF files.
 
-The historical design proposal (2026-10-20, superseded in part by the current guide) is retained in
-[`xmldocs/proposal/typst-backend.md`](xmldocs/proposal/typst-backend.md).
+## Architecture
 
-The [native report](examples/03_native_report/report.py) demonstrates styles,
-inline content, tables with spans, SVG figures, equations, links and references.
-Run `python examples/03_native_report/report.py` to regenerate its Typst, PDF
-and SVG preview. Use `length("12pt")`, `color("navy")`, `label("intro")`,
-`expr("center + horizon")` and `markup("*Caption*")` for explicit Typst values;
-ordinary strings always remain literal text.
+```text
+Your Python recipe and data
+          |
+          v
+Genro Typst builder -> readable .typ source
+                              |
+                              v
+                       Typst compiler
+                              |
+                              v
+                         PDF / SVG
+```
 
-## Compilation and previews
-
-Applications can compile raw Typst through the same independent API:
+`genro-builders` provides the builder infrastructure and `genro-bag` the data
+tree. Genro Typst translates that tree into Typst source. `TypstEngine` is a
+small adapter around the optional Typst Python binding:
 
 ```python
 from genro_typst.compiler import TypstEngine
 
 result = TypstEngine().compile(source, preview=True)
-pdf_bytes = result.pdf
-svg_pages = result.svg_pages
-page_count = result.pages
+# result.pdf: PDF bytes; result.svg_pages: SVG page bytes
 ```
 
-`root=Path(...)` sets Typst's file-access root. PDF and SVG are compiled from
-the same source with a shared timestamp. Without `preview=True`, no SVG pages
-are generated and `pages` is `None`. Importing the library or generating source
-does not import the optional Typst compiler.
+PDF and SVG use the same source and timestamp. Without `preview=True`, no SVG
+pages are generated and `result.pages` is `None`.
 
-## Sphinx documentation
+The separate **Genro PDF Builder** application provides the visual/Python
+editor and MCP services. It depends on this library. See
+[repository boundaries](docs/repository-separation.md) and the
+[historical design proposal](xmldocs/proposal/typst-backend.md), which is partly
+superseded by the current guide.
 
-The [documentation](docs/index.md) is entirely in English: guide, Python API,
-native reference, executable examples and verification contract.
+## Development
 
 ```bash
-python -m pip install -e ".[docs]"
+python -m pip install -e ".[dev,docs]"
+python -m pytest -q
+python -m ruff check src tests tools
+python -m mypy
+python tools/generate_reference.py --check
 python -m sphinx -n -W --keep-going -b html docs docs/_build/html
 ```
 
-Open `docs/_build/html/index.html`. See [documentation development](docs/documentation.md)
-for generated references and the application gallery. CI builds the site with
-warnings treated as errors and uploads the HTML artifact.
-The repository also includes `.readthedocs.yaml`; import `genro-org/genro-typst`
-on Read the Docs to enable hosted documentation builds from `main`.
+Tests execute every documented native recipe, compile with Typst, compare
+SVG pages with independently written Typst references, and check TYTX round
+trips and expected errors. See [documentation development](docs/documentation.md)
+for generated references, the application gallery and Read the Docs builds.
 
-## Development and repository boundary
+## License
 
-```bash
-uv venv venv --python 3.12
-uv pip install --python venv/bin/python -e ".[dev]"
-venv/bin/pytest -q
-venv/bin/ruff check src tests
-venv/bin/mypy
-venv/bin/python tools/generate_reference.py --check
-```
+Genro Typst is licensed under **Apache-2.0**. Copyright 2026 Softwell S.r.l.
+See [LICENSE](LICENSE) and [NOTICE](NOTICE).
 
-This repository contains only the library, documentation, examples and library
-tests. The sibling `genro-pdf-builder` repository owns the CLI, frontend, server,
-application tests and local document workspace. Its package declares
-`genro-typst[pdf]>=0.0.1` as a dependency. See
-[repository separation](docs/repository-separation.md) for migration details.
-
-The Typst binding is pinned to `0.15.0`; `genro-bag>=0.28.0` and
-`genro-builders>=0.29.0` provide the data and builder infrastructure.
-
-Genro Typst is an independent Softwell project and is not affiliated with or
-endorsed by Typst's authors. See [LICENSE](LICENSE) and [NOTICE](NOTICE).
+Typst is a separate project with its own authors and
+[Apache-2.0 license](https://github.com/typst/typst/blob/main/LICENSE).
+Please credit and support the upstream Typst project when sharing work built
+with this library.
