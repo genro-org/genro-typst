@@ -28,4 +28,21 @@ export class RecipeDrafts {
         this.drafts.delete(`${example.id}/${language}`);
         return this.read(example, language);
     }
+    pythonFiles(example) { return ['', ...Object.keys(example.assets).filter(name => name.endsWith('.py')).sort()]; }
+    pythonFileKey(example, path) {
+        if (!this.pythonFiles(example).includes(path)) throw new Error(`Unknown Python file: ${path}`);
+        return `${example.id}/python${path ? ':' + path : ''}`;
+    }
+    readFile(example, path = '') {
+        return this.drafts.get(this.pythonFileKey(example, path)) ?? (path ? example.assets[path] : example.python);
+    }
+    saveFile(example, path, code) { this.drafts.set(this.pythonFileKey(example, path), code); }
+    resetFile(example, path = '') {
+        this.drafts.delete(this.pythonFileKey(example, path));
+        return this.readFile(example, path);
+    }
+    pythonAssets(example) {
+        return Object.fromEntries(Object.entries(example.assets).map(([name, content]) =>
+            [name, name.endsWith('.py') ? this.readFile(example, name) : content]));
+    }
 }

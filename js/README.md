@@ -53,7 +53,10 @@ modules. Search by element or category, edit with CodeMirror and use live
 preview. Each example has Python and JavaScript tabs sharing one preview;
 both recipes are editable and the active tab drives live rendering.
 Switching tabs or examples preserves separate drafts until the page is reloaded.
-Edits in one language do not rewrite the other.
+Edits in one language do not rewrite the other. In Python, the **Python file**
+selector also opens imported modules and data files in CodeMirror. Running
+Python always builds the main recipe with every edited module. Reset and
+download apply to the selected file; module drafts are isolated per example.
 The pinned browser compiler renders 151 of the 152 documents; `divider` is
 marked as requiring a newer compiler. The active language's **Check all** button verifies the collection in your browser.
 The example imports this builder and compiles through Typst WebAssembly using

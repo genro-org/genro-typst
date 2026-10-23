@@ -61,11 +61,12 @@ Python and JavaScript recipes, generated Typst source and SVG preview.
 
 Edits are kept separately for each example and language **during the current
 page session**; switching tabs or examples does not discard them. Reloading
-the page does. **Reset Python** or **Reset JavaScript** restores only the
-active language. Images, bibliographies,
-imports and includes come with their required files: expand **Included file**
-to inspect or download one. These files are loaded into the compiler's virtual
-filesystem and cleared when compiling a different example. When compiling a
+the page does. **Reset Python** restores the main recipe, **Reset module** the
+selected Python module, and **Reset JavaScript** the JavaScript recipe. Other
+files keep their edits. Images, bibliographies, imports and includes come with
+their required files. Python modules appear in the **Python file** selector;
+expand **Included file** to inspect or download the other assets. These files
+are loaded into the compiler's virtual filesystem and cleared when compiling a different example. When compiling a
 downloaded `.typ` outside the browser, download its included files alongside it.
 
 **Check all Python examples** or **Check all JavaScript examples** compiles
@@ -100,7 +101,8 @@ block is not executed. Included files are available in a temporary working
 directory. The resulting Typst source is sent back to the browser, where the
 same Typst WebAssembly compiler produces SVG for both languages.
 
-**Download .typ.py** saves the current Python recipe, including your edits.
+**Download file** saves the selected Python file, including your edits. Select
+the main `.typ.py` entry to download the recipe, or a module to download that file.
 The supplied recipes include a `Document.run()` entry point. With Genro Typst installed, run it locally:
 
 ```bash
@@ -110,6 +112,30 @@ python heading.typ.py --svg
 
 Download any included files alongside the recipe. SVG/PDF compilation requires
 the Python compiler extra (`pip install '.[pdf]'` from this checkout).
+
+## Edit imported Python modules
+
+In the **Python** tab, use **Python file** to select the main recipe or any
+included `.py` file, including package `__init__.py` files and data modules.
+Each file opens in the same CodeMirror editor. **Live preview**, **Run Python**
+and Ctrl+Enter / Command+Enter always execute the main recipe with all edited
+modules, even while a module is displayed. Changing only the displayed file
+does not run a new build or change the preview.
+
+For example, select **Technical proposal** under **Real-world documents**,
+then edit `company_blocks/chrome.py` to change the letterhead or footer, or
+`proposal_data.py` to change quantities and prices. The same document preview
+updates. A fresh Python process loads the complete set of files for each run,
+so imports do not retain an older module from the previous preview.
+
+File drafts and the selected file survive switching examples or language tabs.
+They are scoped to each example: editing a module in Technical proposal does
+not change Service report's copy. **Reset module** restores only the displayed
+module; **Download file** saves its edited content. Downloaded modules must be
+placed under their original relative paths, such as `company_blocks/chrome.py`.
+The selector edits the example's included files; creating new files or editing
+installed third-party packages is not supported. Drafts remain in this page
+session and do not modify repository files; reloading discards them.
 
 ## Edit, run and download
 

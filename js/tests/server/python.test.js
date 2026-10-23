@@ -54,6 +54,26 @@ test('Python module state cannot leak between worker requests', async () => {
     await assert.rejects(executePython({code:withImport,assets:{}}), /ModuleNotFoundError/);
 });
 
+test('editing imported modules and data changes the main recipe on the next run', async () => {
+    const recipe = `from genro_typst import TypstBuilder
+from blocks.header import heading
+from data import TITLE
+class Document(TypstBuilder):
+    def main(self, root):
+        heading(root.document(), TITLE)
+`;
+    const assets = {'blocks/__init__.py': '', 'blocks/header.py':
+        'def heading(parent, title):\n    parent.heading("First: " + title)\n', 'data.py':'TITLE = "Original"'};
+    assert.match(await executePython({code:recipe, assets}), /First: Original/);
+    assets['blocks/header.py'] = 'def heading(parent, title):\n    parent.heading("Edited: " + title)\n';
+    assets['data.py'] = 'TITLE = "Updated"';
+    assert.match(await executePython({code:recipe, assets}), /Edited: Updated/);
+    assets['blocks/header.py'] = 'def invalid(';
+    await assert.rejects(executePython({code:recipe, assets}), /SyntaxError/);
+    assets['blocks/header.py'] = 'def heading(parent, title):\n    parent.heading(title)\n';
+    assert.match(await executePython({code:recipe, assets}), /Updated/);
+});
+
 test('worker preserves Unicode across output chunks and bounds excessive prints', async () => {
     const text = 'Café 世界'.repeat(12000);
     assert.ok((await executePython({code:code.replace('Café 世界',text),assets:{}})).includes(text));

@@ -64,6 +64,41 @@ test('Python and JavaScript drafts and resets are independent for each example',
     assert.equal(drafts.read(b, 'python'), '# Other Python edit');
 });
 
+test('Python modules retain independent drafts and a run receives every edited file', () => {
+    const drafts = new RecipeDrafts();
+    const [proposal, report] = catalog.documents;
+    assert.ok(drafts.pythonFiles(proposal).includes('company_blocks/chrome.py'));
+    drafts.saveFile(proposal, '', '# main recipe draft');
+    drafts.saveFile(proposal, 'company_blocks/chrome.py', '# header draft');
+    drafts.saveFile(proposal, 'proposal_data.py', '# data draft');
+    const snapshot = drafts.pythonAssets(proposal);
+    assert.equal(drafts.read(proposal, 'python'), '# main recipe draft');
+    assert.equal(snapshot['company_blocks/chrome.py'], '# header draft');
+    assert.equal(snapshot['proposal_data.py'], '# data draft');
+    assert.equal(snapshot['company_blocks/theme.py'], proposal.assets['company_blocks/theme.py']);
+    assert.equal(drafts.readFile(report, 'company_blocks/chrome.py'), report.assets['company_blocks/chrome.py']);
+    assert.equal(drafts.read(proposal), proposal.code);
+    assert.equal(drafts.resetFile(proposal, 'company_blocks/chrome.py'), proposal.assets['company_blocks/chrome.py']);
+    assert.equal(snapshot['company_blocks/chrome.py'], '# header draft', 'an in-flight snapshot stays unchanged');
+    assert.equal(drafts.readFile(proposal, 'proposal_data.py'), '# data draft');
+    assert.equal(drafts.readFile(proposal), '# main recipe draft');
+    assert.notEqual(proposal.assets['proposal_data.py'], '# data draft', 'catalog originals are immutable');
+    drafts.resetFile(proposal);
+    assert.equal(drafts.readFile(proposal), proposal.python);
+    assert.equal(drafts.readFile(proposal, 'proposal_data.py'), '# data draft');
+});
+
+test('Python file editing excludes non-Python assets and keeps empty module drafts', () => {
+    const drafts = new RecipeDrafts();
+    const example = {id: 'files', python: '# main', assets: {'helper.py': '# helper', 'image.svg': '<svg/>'}};
+    assert.deepEqual(drafts.pythonFiles(example), ['', 'helper.py']);
+    assert.throws(() => drafts.saveFile(example, 'other.py', 'new'), /Unknown Python file/);
+    assert.throws(() => drafts.readFile(example, 'image.svg'), /Unknown Python file/);
+    drafts.saveFile(example, 'helper.py', '');
+    assert.equal(drafts.pythonAssets(example)['helper.py'], '');
+    assert.equal(drafts.pythonAssets(example)['image.svg'], '<svg/>');
+});
+
 test('asset examples contain the exact files needed by their recipes', () => {
     for (const [id, path] of [['image', 'logo.svg'], ['cite', 'refs.yml'], ['bibliography', 'refs.yml'],
         ['import_module', 'helper.typ'], ['include', 'extra.typ']]) {

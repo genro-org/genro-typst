@@ -8,8 +8,8 @@ functions and data processing; **Typst supplies typography, pagination and rende
 The repository includes a three-page **technical proposal** and a **service report**
 using the same component library. Try both under **Real-world documents** in the
 [browser playground](browser.md). Select Python, change the recipe and watch the
-shared SVG preview. Expand **Included file** to inspect or download the imported
-modules. The JavaScript tab is the expanded equivalent document tree, not a port
+shared SVG preview. Use **Python file** to edit the main recipe or any imported
+module in CodeMirror, and **Download file** to save the selected file. The JavaScript tab is the expanded equivalent document tree, not a port
 of the Python package's component API.
 
 ## Organize a small component library
@@ -37,9 +37,11 @@ genro-typst examples/05_reusable_blocks/service_report.typ.py --svg -o output/se
 
 Install the `pdf` extra for PDF/SVG compilation. Keep the `company_blocks` directory
 and `proposal_data.py` alongside a downloaded recipe, preserving the paths.
-In the playground the modules are included automatically for each Python run;
-they can be viewed and downloaded there, but module editing is currently local
-in your Python editor. The main recipe remains editable in CodeMirror.
+In the playground, every Python run uses the current recipe and all edited
+modules. For example, change `company_blocks/chrome.py` to update the shared
+preview without touching the main recipe. Drafts remain separate for each
+example and last until the page reloads. To change the library for both
+documents permanently, save the module back to the shared local package.
 
 ## Compose documents with functions
 
