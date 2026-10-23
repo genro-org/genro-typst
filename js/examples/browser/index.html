@@ -9,7 +9,7 @@
 <body>
   <header>
     <div class="brand"><span class="mark" aria-hidden="true">g.</span><span>GENRO TYPST <small>PYTHON & JAVASCRIPT</small></span></div>
-    <a href="https://genro-typst.readthedocs.io/en/latest/javascript.html">Documentation ↗</a>
+    <a href="https://genro-typst.readthedocs.io/en/latest/browser.html">Documentation ↗</a>
   </header>
   <main>
     <section class="intro">
@@ -17,6 +17,9 @@
       <p>Edit either recipe. Preview the active language.</p></div>
       <div class="actions"><label class="live-option"><input id="live-preview" type="checkbox" checked> Live preview</label><button id="reset" class="secondary">Reset JavaScript</button><button id="run">Run JavaScript <span>⌘ / Ctrl ↵</span></button></div>
     </section>
+    <p id="online-note" hidden>Python recipes and imported modules are read-only downloads in this online demo.
+      <a href="../browser.html#start-the-example">Run the playground locally</a> to edit and execute Python.
+      The shared preview always follows JavaScript here.</p>
     <div class="statusbar"><span id="status" role="status" aria-live="polite" data-state="working">Starting…</span><span>Local execution · Python and JavaScript</span></div>
     <div class="playground">
     <aside class="collection" aria-label="Example collection">
@@ -39,7 +42,7 @@
         <div id="panel-python" class="recipe-view" role="tabpanel" aria-labelledby="tab-python" hidden>
           <div class="python-files"><label for="python-file">Python file</label><select id="python-file"></select></div>
           <div id="python-recipe" class="code-editor"></div>
-          <div class="panel-foot"><button id="download-python" class="text-button">Download file</button> · Includes edits to this file.</div>
+          <div class="panel-foot"><button id="download-python" class="text-button">Download file</button> · <span id="python-download-note">Includes edits to this file.</span></div>
         </div>
         <div id="panel-javascript" class="recipe-view" role="tabpanel" aria-labelledby="tab-javascript">
           <div id="recipe" class="code-editor"></div>
@@ -57,7 +60,7 @@
   <footer><strong>Built on the work of the Typst community.</strong> The language, typography and rendering are by
     <a href="https://typst.app/about/">Laurenz Mädje, Martin Haug and the Typst team and contributors</a>.
     Browser integration by <a href="https://github.com/Myriad-Dreamin/typst.ts">Myriad-Dreamin / typst.ts</a>.
-    Genro supplies the JavaScript authoring layer. Independent project; not an official Typst product.
+    Genro supplies the Python and JavaScript authoring layers. Independent project; not an official Typst product.
     <a href="./THIRD_PARTY_NOTICES.txt">Third-party notices</a>.
   </footer>
   <script type="module" src="./main.js"></script>

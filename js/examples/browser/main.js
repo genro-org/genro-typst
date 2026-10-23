@@ -5,6 +5,7 @@ import { compileSvg } from './compiler.js';
 import { createEditor } from './editor.js';
 import { pythonSource } from './python.js';
 
+const onlineDemo = __STATIC_PLAYGROUND__;
 const $ = selector => document.querySelector(selector);
 const preview = $('#preview'), status = $('#status'), error = $('#error');
 const run = $('#run'), reset = $('#reset'), check = $('#check-all');
@@ -15,10 +16,11 @@ const pythonFile = $('#python-file'), selectedFiles = new Map();
 let activePythonFile = '';
 let selected = examples[0], svg = '', previewUrl, busy = false, renderTimer, pendingRender = false;
 let activeLanguage = 'javascript';
-const languageName = () => activeLanguage === 'python' ? 'Python' : 'JavaScript';
-const recipeCode = () => drafts.read(selected, activeLanguage);
-const recipeAssets = () => activeLanguage === 'python' ? drafts.pythonAssets(selected) : selected.assets;
-const renderKey = () => JSON.stringify([activeLanguage, recipeCode(), recipeAssets()]);
+const executionLanguage = () => onlineDemo ? 'javascript' : activeLanguage;
+const languageName = () => executionLanguage() === 'python' ? 'Python' : 'JavaScript';
+const recipeCode = () => drafts.read(selected, executionLanguage());
+const recipeAssets = () => executionLanguage() === 'python' ? drafts.pythonAssets(selected) : selected.assets;
+const renderKey = () => JSON.stringify([executionLanguage(), recipeCode(), recipeAssets()]);
 function scheduleRender() {
     clearTimeout(renderTimer);
     if ($('#live-preview').checked) renderTimer = setTimeout(render, 650);
@@ -37,18 +39,23 @@ const editor = createEditor($('#recipe'), { label: 'JavaScript recipe', onRun: r
     onChange: () => recipeChanged('javascript') });
 const source = createEditor($('#source'), { label: 'Generated Typst source', readOnly: true });
 const pythonEditor = createEditor($('#python-recipe'), {
-    label: 'Python file editor', language: 'python', onRun: render,
+    label: 'Python file editor', language: 'python', readOnly: onlineDemo, onRun: render,
     onChange: () => recipeChanged('python'),
 });
+$('#online-note').hidden = !onlineDemo;
+if (onlineDemo) $('#python-download-note').textContent = 'Original example file. Keep its relative path when saving modules.';
 
 function updateRecipeNote() {
-    $('#recipe-mode').textContent = 'EDITABLE';
+    $('#recipe-mode').textContent = onlineDemo && activeLanguage === 'python' ? 'READ ONLY' : 'EDITABLE';
+    reset.hidden = onlineDemo && activeLanguage === 'python';
     run.innerHTML = `Run ${languageName()} <span>⌘ / Ctrl ↵</span>`;
     reset.textContent = activeLanguage === 'python' && activePythonFile ? 'Reset module' : `Reset ${languageName()}`;
     check.textContent = `Check all ${languageName()} examples`;
     $('#recipe-note').textContent = activeLanguage === 'python'
-        ? 'Edit the recipe or an imported module. Run Python executes the main recipe with all your edited files.'
-        : 'JavaScript runs in the browser. This tab drives the shared preview; your Python draft is kept separately.';
+        ? onlineDemo ? 'Original Python recipe and modules for download. The preview follows your JavaScript draft, which may differ.'
+            : 'Edit the recipe or an imported module. Run Python executes the main recipe with all your edited files.'
+        : onlineDemo ? 'JavaScript runs in your browser. Original Python recipes and modules are available in the other tab.'
+            : 'JavaScript runs in the browser. This tab drives the shared preview; your Python draft is kept separately.';
 }
 function selectPythonFile(path) {
     activePythonFile = path;
@@ -69,7 +76,7 @@ function selectLanguage(language) {
     }
     (language === 'python' ? pythonEditor : editor).measure();
     updateRecipeNote();
-    render();
+    if (!onlineDemo) render();
 }
 for (const name of ['python', 'javascript']) {
     const tab = $(`#tab-${name}`);
@@ -107,7 +114,7 @@ async function render() {
     clearPreview();
     source.value = '';
     typDownload.disabled = true;
-    const code = recipeCode(), assets = recipeAssets(), language = activeLanguage, example = selected;
+    const code = recipeCode(), assets = recipeAssets(), language = executionLanguage(), example = selected;
     const key = renderKey();
     const current = () => selected === example && renderKey() === key;
     try {
@@ -115,7 +122,7 @@ async function render() {
         if (!current()) return;
         source.value = generated;
         typDownload.disabled = false;
-        status.textContent = 'Typesetting with the local Typst compiler…';
+        status.textContent = 'Typesetting with Typst in the browser…';
         const rendered = await compileSvg(generated, assets);
         if (!current()) return;
         svg = rendered;
@@ -230,7 +237,7 @@ check.addEventListener('click', async () => {
     if (busy) return;
     setBusy(true);
     clearTimeout(renderTimer);
-    const language = activeLanguage;
+    const language = executionLanguage();
     const results = $('#check-results');
     results.hidden = false;
     results.replaceChildren();

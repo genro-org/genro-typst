@@ -177,7 +177,11 @@ npm test --prefix js
 node js/examples/report.typ.mjs /tmp/report.typ
 ```
 
-To try the Python/JavaScript playground with editable recipes, Typst source and
+[Try the online playground](https://genro-typst.readthedocs.io/en/latest/playground/): edit JavaScript and preview SVG
+without installing anything. Python recipes and imported modules are read-only
+and downloadable in the online demo.
+
+To run the local Python/JavaScript playground with editable recipes, Typst source and
 SVG preview, run `npm run demo --prefix js` and open
 [localhost:8172](http://127.0.0.1:8172/). Compilation runs in the browser with
 Typst WebAssembly. Python recipes execute through the local server using an

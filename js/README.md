@@ -44,6 +44,9 @@ numeric representation limits.
 
 ## HTML playground
 
+[Try the online demo](https://genro-typst.readthedocs.io/en/latest/playground/) with editable JavaScript, SVG preview,
+and read-only Python recipes and modules for download.
+
 From this directory, run `npm run demo`, then open
 [localhost:8172](http://127.0.0.1:8172/). Edit either recipe and click
 **Run Python** or **Run JavaScript** to see the generated `.typ` source and SVG side by side.
@@ -67,8 +70,9 @@ Install Genro Typst into the repository's `venv` first, or set
 Python runs with your user permissions; this server is for local use only.
 
 The editable files are in `examples/browser/`; `npm run build:browser` creates
-the browser output in `dist/browser/`. Static hosting supports JavaScript;
-Python previews require the local server. See the
+the local browser output in `dist/browser/`. `npm run build:playground` builds
+the static online variant in `dist/docs/playground/` for Sphinx/Read the Docs.
+Python execution and module editing require the local server. See the
 [browser guide](https://genro-typst.readthedocs.io/en/latest/browser.html)
 for dependencies, limits and upstream credits.
 

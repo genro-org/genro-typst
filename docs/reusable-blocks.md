@@ -7,13 +7,17 @@ functions and data processing; **Typst supplies typography, pagination and rende
 
 The repository includes a three-page **technical proposal** and a **service report**
 using the same component library. Try both under **Real-world documents** in the
-[browser playground](browser.md). Select Python, change the recipe and watch the
+[local browser playground](browser.md#start-the-example). Select Python, change the recipe and watch the
 shared SVG preview. Use **Python file** to edit the main recipe or any imported
 module in CodeMirror, and **Download file** to save the selected file. The JavaScript tab is the expanded equivalent document tree, not a port
 of the Python package's component API.
 
 For a step-by-step edit of the footer and pricing data, follow the
 [module editor walkthrough](browser.md#walkthrough-change-the-shared-footer).
+
+The [online demo](https://genro-typst.readthedocs.io/en/latest/playground/) also includes both documents, with
+JavaScript execution and read-only, downloadable Python files. Python module
+editing requires the local server.
 
 ## Organize a small component library
 

@@ -13,8 +13,14 @@ From the repository root:
 
 ```bash
 python -m pip install -e ".[docs]"
+npm ci --prefix js --ignore-scripts
+npm run build:playground --prefix js
 python -m sphinx -n -W --keep-going -b html docs docs/_build/html
 ```
+
+Node.js 22 builds the static playground, which Sphinx copies from
+`js/dist/docs/` into the HTML output. For a prose-only build, the npm steps can
+be omitted; the playground is included only when that directory exists.
 
 Open `docs/_build/html/index.html` in a browser. Build output is ignored by Git.
 The `-n -W --keep-going` flags check references and treat warnings as failures,
@@ -26,9 +32,10 @@ its HTML artifact. Hosting/deployment is separate from that build.
 
 ## Publish on Read the Docs
 
-The repository includes `.readthedocs.yaml`, configured for Python 3.12 on
-Ubuntu 24.04. It installs the package with its `docs` extra, checks generated
-references, and builds HTML using `docs/conf.py`. Warnings fail the build,
+The repository includes `.readthedocs.yaml`, configured for Python 3.12 and
+Node.js 22 on Ubuntu 24.04. It installs the package with its `docs` extra, checks
+generated references, builds the static playground with npm, and builds HTML
+using `docs/conf.py`. Warnings fail the build,
 including unresolved references.
 
 The connected project publishes `main` as
@@ -41,7 +48,7 @@ or GitHub Actions Sphinx build alone does not confirm publication on Read the Do
 
 To configure another deployment, connect the GitHub repository, select `main`
 as the default branch and use the same configuration file. Read the Docs serves
-the Sphinx documentation, including the playground guide. It does not host the
+the Sphinx documentation and the static JavaScript playground. It does not host the
 Python execution server: readers start that server locally using the
 [playground setup instructions](browser.md#start-the-example).
 

@@ -5,9 +5,12 @@ build:
   os: ubuntu-24.04
   tools:
     python: "3.12"
+    nodejs: "22"
   jobs:
     pre_build:
       - python tools/generate_reference.py --check
+      - npm ci --prefix js --ignore-scripts
+      - npm run build:playground --prefix js
 
 python:
   install:
