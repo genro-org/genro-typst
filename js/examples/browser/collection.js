@@ -2,10 +2,11 @@
 import catalog from './catalog.json' with { type: 'json' };
 import { defaultRecipe } from './recipe.js';
 
-export const sections = { overview: 'Getting started', ...catalog.sections };
+export const sections = { overview: 'Getting started', documents: 'Real-world documents', ...catalog.sections };
 export const examples = [{ id: 'welcome', title: 'Field notes', section: 'overview',
     description: 'A complete document with a table and a loop in both languages.',
     code: defaultRecipe, ...catalog.welcome, assets: {} },
+...catalog.documents,
 ...catalog.examples.map(example => ({ ...example, compatibility: example.id === 'divider'
     ? 'divider requires a newer Typst compiler than typst.ts 0.7.0 provides. You can edit and download its source, but this browser runtime cannot preview it.'
     : '' }))];

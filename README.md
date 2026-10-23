@@ -192,6 +192,12 @@ Typst remains responsible for compilation. See the
 [JavaScript guide](https://genro-typst.readthedocs.io/en/latest/javascript.html)
 for usage, regeneration and differences between Python and JavaScript values.
 
+The **Real-world documents** collection adds a technical proposal and service
+report built from the same imported Python component library: shared letterheads,
+page footers, themes, priced tables and reusable sections. See
+[Reusable Python blocks](https://genro-typst.readthedocs.io/en/latest/reusable-blocks.html)
+to organize these components as ordinary Python packages.
+
 ## Architecture
 
 ```text

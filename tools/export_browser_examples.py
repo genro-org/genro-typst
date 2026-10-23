@@ -9,6 +9,7 @@ from export_app_examples import catalog
 from genro_bag import Bag
 from genro_builders import SourceBag
 
+from genro_typst.cli import load_builder, recipe_environment
 from genro_typst.native_catalog import AUTHORING_ALIASES
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -79,6 +80,23 @@ def export():
     builder = namespace["Document"]()
     builder.create()
     data["welcome"] = {"python": welcome, "source": builder.render()}
+    folder = ROOT / "examples/05_reusable_blocks"
+    assets = {path.relative_to(folder).as_posix(): path.read_text()
+              for path in sorted(folder.rglob("*.py")) if not path.name.endswith(".typ.py")}
+    data["documents"] = []
+    for name, title, description in [
+        ("proposal", "Technical proposal", "Imported Python blocks: letterhead, page footer, priced tables and approval."),
+        ("service_report", "Service report", "The same Python component library reused with a different document and theme."),
+    ]:
+        recipe = folder / f"{name}.typ.py"
+        with recipe_environment(recipe):
+            builder = load_builder(recipe)()
+            builder.create()
+            data["documents"].append({
+                "id": name, "title": title, "section": "documents", "description": description,
+                "python": recipe.read_text(), "assets": assets, "source": builder.render(),
+                "code": "// Expanded equivalent of the Python component composition.\n" + javascript(builder),
+            })
     return data
 
 

@@ -48,12 +48,13 @@ From this directory, run `npm run demo`, then open
 [localhost:8172](http://127.0.0.1:8172/). Edit either recipe and click
 **Run Python** or **Run JavaScript** to see the generated `.typ` source and SVG side by side.
 The collection includes 149 element recipes plus a complete introductory
-document. Search by element or category, edit with CodeMirror and use live
+document, plus a technical proposal and a service report built from shared Python
+modules. Search by element or category, edit with CodeMirror and use live
 preview. Each example has Python and JavaScript tabs sharing one preview;
 both recipes are editable and the active tab drives live rendering.
 Switching tabs or examples preserves separate drafts until the page is reloaded.
 Edits in one language do not rewrite the other.
-The pinned browser compiler renders 149 of the 150 documents; `divider` is
+The pinned browser compiler renders 151 of the 152 documents; `divider` is
 marked as requiring a newer compiler. The active language's **Check all** button verifies the collection in your browser.
 The example imports this builder and compiles through Typst WebAssembly using
 `typst.ts`. After the first build downloads the bundled fonts, the supplied

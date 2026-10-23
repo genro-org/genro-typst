@@ -15,11 +15,23 @@ test('browser collection covers every native and language element plus Genro doc
     assert.equal(new Set(examples.map(e => e.id)).size, examples.length);
 });
 
-for (const example of catalog.examples) {
+for (const example of [...catalog.examples, ...catalog.documents]) {
     test(`editable browser recipe matches Python: ${example.id}`, () => {
         assert.equal(recipeSource(example.code), example.source);
     });
 }
+
+test('real-world documents include their importable Python component library', () => {
+    assert.deepEqual(catalog.documents.map(example => example.id), ['proposal', 'service_report']);
+    for (const example of catalog.documents) {
+        assert.ok(example.assets['company_blocks/__init__.py']);
+        assert.ok(example.assets['company_blocks/chrome.py']);
+        assert.ok(example.assets['company_blocks/sections.py']);
+        assert.ok(example.assets['proposal_data.py']);
+        assert.match(example.python, /from company_blocks import/);
+        assert.equal(filterExamples(example.title, 'documents')[0].id, example.id);
+    }
+});
 
 test('search combines words with categories and handles no matches', () => {
     assert.ok(filterExamples('MATH frac', 'math').some(e => e.id === 'math_frac'));

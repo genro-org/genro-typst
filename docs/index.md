@@ -44,6 +44,7 @@ graphics, mathematics, references and data binding.
 | A specific Typst function | [Native call reference](native-reference.md) |
 | A recipe beside its Typst equivalent | [Verified catalog examples](catalog-examples.md) |
 | A complete invoice or report | [Document examples](examples.md) |
+| Shared headers, footers and imported Python blocks | [Reusable blocks](reusable-blocks.md) |
 | What is tested and what is not | [Renderer verification](verification.md) |
 
 The catalog targets **Typst 0.15.0** and exposes **129 native calls**, alongside
@@ -89,6 +90,7 @@ native-reference
 browser
 catalog-examples
 examples
+reusable-blocks
 ```
 
 ```{toctree}

@@ -48,9 +48,12 @@ a CDN at runtime.
 
 ## Browse the element collection
 
-The sidebar contains **149 element recipes plus the introductory document**:
+The sidebar contains **149 element recipes, the introductory document and two
+real-world documents**:
 129 native Typst elements, 12 language constructs, and 8 Genro document/data
-elements. This is the complete element catalog supported by this builder,
+elements. The **Real-world documents** category adds a technical proposal and a
+service report using [shared Python blocks](reusable-blocks.md).
+This is the complete element catalog supported by this builder,
 not an inventory of every function in the Typst standard library.
 Search by name or description, or select a category such as Mathematics,
 Page layout or Graphics and images. Selecting an example loads its editable
@@ -69,15 +72,15 @@ downloaded `.typ` outside the browser, download its included files alongside it.
 the original recipes of the active language sequentially, reports
 successes and diagnostics, and then restores your selected recipe and preview.
 It does not overwrite your drafts. With the pinned typst.ts **0.7.0** runtime,
-**149 of the 150 documents render to SVG**. The remaining example, **divider**,
+**151 of the 152 documents render to SVG**. The remaining example, **divider**,
 uses an element unavailable in that browser compiler; it is marked in the list
 and explained above the editor. Its generated source is valid with the
 reference Python Typst **0.15.0** compiler. No substitute element is inserted.
 
 ## Python and JavaScript tabs
 
-Each of the 150 examples, including the introductory document, has **Python**
-and **JavaScript** tabs above one shared Typst source panel and SVG preview.
+Each of the 152 examples, including the introductory and real-world documents,
+has **Python** and **JavaScript** tabs above one shared Typst source panel and SVG preview.
 Switch tabs with a click or the arrow keys. Selecting a tab runs that language's
 recipe and updates the shared preview. The chosen language stays selected
 when you browse another example.
@@ -219,9 +222,9 @@ npm run test:browser-server --prefix js
 ```
 
 The export records each Python-generated Typst source. JavaScript tests execute
-all 149 element recipes plus the introductory document and compare their
-JavaScript output byte for byte with that reference. Python tests execute the
-150 displayed Python recipes and verify the same source, as well as direct
+all 149 element recipes, the introductory document and both real-world documents.
+They compare JavaScript output byte for byte with that reference. Python tests execute the
+152 displayed Python recipes and verify the same source, as well as direct
 execution of a downloaded recipe. They also check catalog coverage, search, draft preservation and
 included files. Server integration tests exercise real Python execution,
 request authorization, errors, timeouts and isolation between runs. CI checks

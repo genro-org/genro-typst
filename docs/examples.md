@@ -1,5 +1,9 @@
 # Complete document examples
 
+For a multipage proposal and a service report sharing imported Python components,
+see [Reusable Python document blocks](reusable-blocks.md). The example covers
+headers, page counters, themes, priced tables and reusable body sections.
+
 Run these scripts from a repository checkout. The invoice and native report
 examples require the `pdf` extra and save Typst source and PDF beside the
 Python recipe; their generated files are also available in the repository.
