@@ -137,6 +137,27 @@ The selector edits the example's included files; creating new files or editing
 installed third-party packages is not supported. Drafts remain in this page
 session and do not modify repository files; reloading discards them.
 
+### Walkthrough: change the shared footer
+
+1. Start the local server as described above and choose **Real-world documents**
+   in **Category**, then **Technical proposal** and the **Python** tab.
+2. In **Python file**, select `company_blocks/chrome.py`. In `page_footer()`,
+   change the text `Technical services` to `Customer support`.
+3. With **Live preview** enabled, wait for **Ready · Python → Typst → SVG**.
+   Scroll the SVG preview to the bottom of a page: the footer uses the new text
+   on every page. With live preview disabled, use **Run Python** or
+   Ctrl+Enter / Command+Enter.
+4. Select `proposal_data.py` and change a quantity or unit price. The line amounts,
+   section totals and proposal total are recalculated without losing the footer
+   change. Select `proposal.typ.py (main recipe)` to inspect the composition.
+5. Return to `company_blocks/chrome.py`. **Reset module** restores its original
+   footer while keeping your data edits. **Download file** saves whichever file
+   is selected, with its current edits.
+
+Syntax errors identify the failing Python file in the preview panel. Fix the
+module or reset it and run again; a failed run clears the old preview. The
+JavaScript tab retains its own recipe and does not translate Python module edits.
+
 ## Edit, run and download
 
 With **Live preview** enabled, edits update Typst and SVG after a short pause.

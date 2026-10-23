@@ -31,11 +31,19 @@ Ubuntu 24.04. It installs the package with its `docs` extra, checks generated
 references, and builds HTML using `docs/conf.py`. Warnings fail the build,
 including unresolved references.
 
-Connect your GitHub account to Read the Docs, import `genro-org/genro-typst`,
-and select `main` as the default branch. Keep the configuration file path at
-`.readthedocs.yaml`. Once the integration is connected, pushes can trigger
-documentation builds automatically. Check the initial build in the Read the
-Docs dashboard before sharing the published URL.
+The connected project publishes `main` as
+[latest](https://genro-typst.readthedocs.io/en/latest/). Keep the configuration
+file path at `.readthedocs.yaml`. Pushes to `main` trigger documentation builds
+through the GitHub integration. After pushing, check the
+[build dashboard](https://app.readthedocs.org/projects/genro-typst/builds/): the
+successful build must reference the commit you just pushed. A successful local
+or GitHub Actions Sphinx build alone does not confirm publication on Read the Docs.
+
+To configure another deployment, connect the GitHub repository, select `main`
+as the default branch and use the same configuration file. Read the Docs serves
+the Sphinx documentation, including the playground guide. It does not host the
+Python execution server: readers start that server locally using the
+[playground setup instructions](browser.md#start-the-example).
 
 See the [Read the Docs configuration reference](https://docs.readthedocs.com/platform/stable/config-file/v2.html).
 
@@ -51,6 +59,27 @@ python tools/generate_reference.py --check
 This generates `native-reference.md`, `catalog-examples.md` and
 `native-catalog.json`, plus `grammar-api.rst` from the grammar declarations. Change prose in the generator rather than editing its
 output. The tests execute the documented recipes; see [verification](verification.md).
+
+## Maintain the browser examples and module guide
+
+The browser collection is separate from the application gallery below. Its
+152 entries include the two recipes and shared modules in
+`examples/05_reusable_blocks/`. After editing those files, regenerate their
+bundled recipes and assets, and verify the result:
+
+```bash
+python tools/export_browser_examples.py
+python tools/export_browser_examples.py --check
+pytest -q tests/test_reusable_blocks.py tests/test_example_naming.py
+npm test --prefix js
+npm run test:browser-server --prefix js
+```
+
+These checks require the Python development dependencies and the JavaScript
+dependencies installed with `npm ci --prefix js`. The Sphinx
+[reusable blocks guide](reusable-blocks.md) includes the example source directly
+with `literalinclude`. Keep the [module editor walkthrough](browser.md#edit-imported-python-modules)
+in sync with file selectors, reset/download controls and draft lifetime.
 
 ## Export the application gallery
 

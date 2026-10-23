@@ -185,7 +185,10 @@ interpreter with Genro Typst installed (`venv/bin/python` by default). See the
 [browser example guide](https://genro-typst.readthedocs.io/en/latest/browser.html).
 The playground includes 149 element recipes, searchable by category, with
 editable Python/JavaScript tabs in CodeMirror and live SVG preview driven by
-the active tab. Both languages keep independent drafts. Browser compiler limitations are
+the active tab. In Python, **Python file** also opens imported modules and data
+files in CodeMirror; every run uses the main recipe with all edited modules.
+Reset and download apply to the selected file. Both languages keep independent
+drafts per example until the page reloads. Browser compiler limitations are
 marked explicitly in the collection.
 
 Typst remains responsible for compilation. See the
@@ -197,6 +200,8 @@ report built from the same imported Python component library: shared letterheads
 page footers, themes, priced tables and reusable sections. See
 [Reusable Python blocks](https://genro-typst.readthedocs.io/en/latest/reusable-blocks.html)
 to organize these components as ordinary Python packages.
+Follow the [module editor walkthrough](https://genro-typst.readthedocs.io/en/latest/browser.html#walkthrough-change-the-shared-footer)
+to change the footer and pricing data directly in the playground.
 
 ## Architecture
 

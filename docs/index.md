@@ -44,6 +44,7 @@ graphics, mathematics, references and data binding.
 | A specific Typst function | [Native call reference](native-reference.md) |
 | A recipe beside its Typst equivalent | [Verified catalog examples](catalog-examples.md) |
 | A complete invoice or report | [Document examples](examples.md) |
+| Edit Python, imported modules or JavaScript and preview SVG | [Local playground](browser.md) |
 | Shared headers, footers and imported Python blocks | [Reusable blocks](reusable-blocks.md) |
 | What is tested and what is not | [Renderer verification](verification.md) |
 
@@ -52,9 +53,28 @@ The catalog targets **Typst 0.15.0** and exposes **129 native calls**, alongside
 validates native parameters and their context; see the verification page for
 coverage and limits.
 
+## Try a complete document
+
+The [local playground](browser.md#start-the-example) includes **152 examples**:
+149 element recipes, an introductory document, a technical proposal and a
+service report. Python and JavaScript tabs share a generated Typst source panel
+and SVG preview; the active language drives the preview.
+
+In **Real-world documents → Technical proposal → Python**, use **Python file**
+to open the recipe or its imported modules in CodeMirror. Edit the letterhead,
+footer, theme or input data and watch the same document update. Runs use the
+main recipe together with all edited modules. Drafts are kept per example until
+the page reloads; download edited files to keep them.
+
+Read [Edit imported Python modules](browser.md#edit-imported-python-modules)
+for a walkthrough, and [Reusable Python blocks](reusable-blocks.md) to share
+components between documents and applications. This documentation site describes
+the playground; start its local server to execute Python recipes on your machine.
+
 ## Project scope
 
-This repository contains the Python library, examples, tests and documentation.
+This repository contains the Python and JavaScript builders, the local example
+playground, tests and documentation.
 The separate Genro PDF Builder application supplies the visual/Python editor
 and MCP services. See [repository boundaries](repository-separation.md).
 

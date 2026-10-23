@@ -12,6 +12,9 @@ shared SVG preview. Use **Python file** to edit the main recipe or any imported
 module in CodeMirror, and **Download file** to save the selected file. The JavaScript tab is the expanded equivalent document tree, not a port
 of the Python package's component API.
 
+For a step-by-step edit of the footer and pricing data, follow the
+[module editor walkthrough](browser.md#walkthrough-change-the-shared-footer).
+
 ## Organize a small component library
 
 ```text
@@ -90,6 +93,13 @@ headings when a long table crosses a page boundary.
 The service report imports the same functions but chooses a different accent
 color and different content. Updating the shared footer changes both documents
 on their next build, without editing either recipe.
+
+Theme values passed explicitly by a recipe override the dataclass defaults.
+For example, the proposal sets its own `company` and `accent`; edit those
+arguments in the main recipe to change them. Its `pale` background and `font`
+come from `company_blocks/theme.py` and can be changed there. Playground drafts
+are isolated per example; changing a shared file in your local package updates
+every recipe that imports it on its next execution.
 
 ```{literalinclude} ../examples/05_reusable_blocks/service_report.typ.py
 :language: python

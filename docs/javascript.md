@@ -33,8 +33,11 @@ npm install /path/to/genro-typst/js
 
 ## Author a document
 
-For an interactive HTML example with an editable JavaScript recipe, generated
-Typst source and SVG preview, see the [browser playground](browser.md).
+For an interactive HTML example with editable JavaScript and Python recipes,
+generated Typst source and a shared SVG preview, see the [browser playground](browser.md).
+The Python tab also edits imported modules through its **Python file** selector.
+JavaScript executes in the browser; Python recipes and modules execute through
+the local server using your installed Python interpreter.
 
 ```javascript
 import { TypstBuilder, length, color } from '@genrojs/typst';
