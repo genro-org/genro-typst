@@ -50,10 +50,19 @@ test('asset examples contain the exact files needed by their recipes', () => {
 
 test('the browser default recipe creates real Typst with its table and explicit lengths', () => {
     const source = recipeSource(defaultRecipe);
+    assert.equal(source, catalog.welcome.source, 'the welcome Python and JavaScript recipes share a preview');
     assert.match(source, /^#set page\(paper: "a5"/);
     assert.match(source, /#v\(5mm\)/);
     assert.match(source, /table\.cell\(\[#"Development"\]\)/);
     assert.equal(recipeSource(defaultRecipe), source);
+});
+
+test('every example has a runnable Python reference for the second tab', () => {
+    for (const example of examples) {
+        assert.match(example.python, /class Document\(TypstBuilder\):/, example.id);
+        assert.match(example.python, /if __name__ == "__main__":\n    Document.run\(\)/, example.id);
+        assert.equal(recipeSource(example.code), example.source, example.id);
+    }
 });
 
 test('editing a recipe changes the generated document, retaining escaping', () => {

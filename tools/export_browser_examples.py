@@ -61,14 +61,24 @@ def javascript(builder):
 def export():
     data = catalog()
     for entry in data["examples"]:
-        namespace = {}
+        python = entry.pop("code").replace(
+            "        # Edit the recipe: the preview updates automatically.\n", ""
+        )
+        entry["python"] = python + '\n\nif __name__ == "__main__":\n    Document.run()\n'
+        namespace = {"__name__": "browser_recipe"}
         # Only execute the repository's own recipes, never external input.
-        exec(entry.pop("code"), namespace)  # noqa: S102 - trusted repository recipes
+        exec(entry["python"], namespace)  # noqa: S102 - trusted repository recipes
         builder = namespace["Document"]()
         builder.create()
         entry["description"] = entry["description"].replace("Python recipe", "JavaScript recipe")
         entry["code"] = "// " + entry["description"] + "\n" + javascript(builder)
         entry["source"] = builder.render()
+    welcome = (ROOT / "js/examples/browser/welcome.typ.py").read_text()
+    namespace = {"__name__": "browser_recipe"}
+    exec(welcome, namespace)  # noqa: S102 - trusted repository recipe
+    builder = namespace["Document"]()
+    builder.create()
+    data["welcome"] = {"python": welcome, "source": builder.render()}
     return data
 
 

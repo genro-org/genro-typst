@@ -46,10 +46,12 @@ numeric representation limits.
 
 From this directory, run `npm run demo`, then open
 [localhost:8172](http://127.0.0.1:8172/). Edit the JavaScript recipe and click
-**Run recipe** to see the generated `.typ` source and SVG side by side.
+**Run JavaScript** to see the generated `.typ` source and SVG side by side.
 The collection includes 149 element recipes plus a complete introductory
 document. Search by element or category, edit with CodeMirror and use live
-preview. Switching examples preserves drafts until the page is reloaded.
+preview. Each example has Python and JavaScript tabs sharing one preview;
+Python is a read-only, downloadable recipe and JavaScript drives live rendering.
+Switching tabs or examples preserves JavaScript drafts until the page is reloaded.
 The pinned browser compiler renders 149 of the 150 documents; `divider` is
 marked as requiring a newer compiler. **Check all examples** verifies the
 collection in your browser.

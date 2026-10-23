@@ -11,12 +11,14 @@ const typDownload = $('#download-typ'), svgDownload = $('#download-svg');
 const search = $('#example-search'), category = $('#category'), list = $('#example-list');
 const drafts = new RecipeDrafts();
 let selected = examples[0], svg = '', previewUrl, busy = false, renderedRecipe = '', renderTimer;
+let activeLanguage = 'javascript';
 function scheduleRender() {
     clearTimeout(renderTimer);
     if ($('#live-preview').checked) renderTimer = setTimeout(render, 650);
 }
 const editor = createEditor($('#recipe'), { label: 'JavaScript recipe', onRun: render, onChange() {
     drafts.save(selected, editor.value);
+    updateRecipeNote();
     if (!busy && editor.value !== renderedRecipe) {
         status.dataset.state = 'changed';
         status.textContent = 'Recipe changed · run to update';
@@ -24,6 +26,42 @@ const editor = createEditor($('#recipe'), { label: 'JavaScript recipe', onRun: r
     scheduleRender();
 }});
 const source = createEditor($('#source'), { label: 'Generated Typst source', readOnly: true });
+const pythonEditor = createEditor($('#python-recipe'), {
+    label: 'Python recipe (read only)', readOnly: true, language: 'python',
+});
+
+function updateRecipeNote() {
+    const changed = editor.value !== selected.code;
+    $('#recipe-mode').textContent = activeLanguage === 'python' ? 'READ ONLY' : 'EDITABLE';
+    $('#recipe-note').textContent = activeLanguage === 'python'
+        ? (changed ? 'Original Python example. The shared preview follows your JavaScript changes.'
+            : 'Python reference · same Typst output and preview as the original JavaScript. Run Python locally.')
+        : (changed ? 'JavaScript draft · Python remains the original example.'
+            : 'Editable JavaScript · the original recipe matches the Python tab.');
+}
+function selectLanguage(language) {
+    activeLanguage = language;
+    for (const name of ['python', 'javascript']) {
+        const active = name === language;
+        $(`#tab-${name}`).setAttribute('aria-selected', String(active));
+        $(`#tab-${name}`).tabIndex = active ? 0 : -1;
+        $(`#panel-${name}`).hidden = !active;
+    }
+    (language === 'python' ? pythonEditor : editor).measure();
+    updateRecipeNote();
+}
+for (const name of ['python', 'javascript']) {
+    const tab = $(`#tab-${name}`);
+    tab.addEventListener('click', () => selectLanguage(name));
+    tab.addEventListener('keydown', event => {
+        if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
+        event.preventDefault();
+        const next = event.key === 'Home' ? 'python' : event.key === 'End' ? 'javascript'
+            : name === 'python' ? 'javascript' : 'python';
+        selectLanguage(next);
+        $(`#tab-${next}`).focus();
+    });
+}
 
 function setBusy(value) {
     busy = value;
@@ -104,6 +142,8 @@ function select(example) {
     drafts.save(selected, editor.value);
     selected = example;
     editor.value = drafts.read(example);
+    pythonEditor.value = example.python;
+    updateRecipeNote();
     $('#example-title').textContent = example.title;
     $('#example-description').textContent = example.description;
     $('#compatibility').textContent = example.compatibility || '';
@@ -133,7 +173,9 @@ search.addEventListener('input', updateList);
 category.addEventListener('change', updateList);
 $('#live-preview').addEventListener('change', scheduleRender);
 run.addEventListener('click', render);
-reset.addEventListener('click', () => { editor.value = drafts.reset(selected); render(); });
+reset.addEventListener('click', () => { editor.value = drafts.reset(selected); updateRecipeNote(); render(); });
+$('#download-python').addEventListener('click', () => download(selected.python,
+    'text/plain;charset=utf-8', `${selected.id}.typ.py`));
 typDownload.addEventListener('click', () => download(source.value, 'text/plain;charset=utf-8', `${selected.id}.typ`));
 svgDownload.addEventListener('click', () => download(svg, 'image/svg+xml', `${selected.id}.svg`));
 check.addEventListener('click', async () => {

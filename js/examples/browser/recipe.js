@@ -13,7 +13,7 @@ doc.text('GENRO / FIELD NOTES', {
   size: length('8pt'), fill: color('#526b60')
 });
 doc.heading('Small ideas,\\nbeautiful documents.', { level: 1 });
-doc.par('Written in JavaScript. Typeset by Typst.');
+doc.par('Written with Genro. Typeset by Typst.');
 doc.v({ content: length('5mm') });
 
 const table = doc.native_table({
