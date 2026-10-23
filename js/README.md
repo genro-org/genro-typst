@@ -45,22 +45,26 @@ numeric representation limits.
 ## HTML playground
 
 From this directory, run `npm run demo`, then open
-[localhost:8172](http://127.0.0.1:8172/). Edit the JavaScript recipe and click
-**Run JavaScript** to see the generated `.typ` source and SVG side by side.
+[localhost:8172](http://127.0.0.1:8172/). Edit either recipe and click
+**Run Python** or **Run JavaScript** to see the generated `.typ` source and SVG side by side.
 The collection includes 149 element recipes plus a complete introductory
 document. Search by element or category, edit with CodeMirror and use live
 preview. Each example has Python and JavaScript tabs sharing one preview;
-Python is a read-only, downloadable recipe and JavaScript drives live rendering.
-Switching tabs or examples preserves JavaScript drafts until the page is reloaded.
+both recipes are editable and the active tab drives live rendering.
+Switching tabs or examples preserves separate drafts until the page is reloaded.
+Edits in one language do not rewrite the other.
 The pinned browser compiler renders 149 of the 150 documents; `divider` is
-marked as requiring a newer compiler. **Check all examples** verifies the
-collection in your browser.
+marked as requiring a newer compiler. The active language's **Check all** button verifies the collection in your browser.
 The example imports this builder and compiles through Typst WebAssembly using
 `typst.ts`. After the first build downloads the bundled fonts, the supplied
-example uses local resources only. The Node process serves static files.
+example uses local resources only. The Node process serves the page and executes trusted Python recipes locally.
+Install Genro Typst into the repository's `venv` first, or set
+`GENRO_TYPST_PYTHON` to an interpreter with the package installed.
+Python runs with your user permissions; this server is for local use only.
 
 The editable files are in `examples/browser/`; `npm run build:browser` creates
-the self-contained static output in `dist/browser/`. See the
+the browser output in `dist/browser/`. Static hosting supports JavaScript;
+Python previews require the local server. See the
 [browser guide](https://genro-typst.readthedocs.io/en/latest/browser.html)
 for dependencies, limits and upstream credits.
 

@@ -39,6 +39,19 @@ test('example drafts survive switching and reset affects only the selected recip
     assert.match(drafts.read(b), /draft B/);
 });
 
+test('Python and JavaScript drafts and resets are independent for each example', () => {
+    const drafts = new RecipeDrafts();
+    const [a, b] = examples;
+    drafts.save(a, '# Python edit', 'python');
+    drafts.save(a, '// JS edit');
+    drafts.save(b, '# Other Python edit', 'python');
+    assert.equal(drafts.read(a, 'python'), '# Python edit');
+    assert.equal(drafts.read(a), '// JS edit');
+    assert.equal(drafts.reset(a, 'python'), a.python);
+    assert.equal(drafts.read(a), '// JS edit');
+    assert.equal(drafts.read(b, 'python'), '# Other Python edit');
+});
+
 test('asset examples contain the exact files needed by their recipes', () => {
     for (const [id, path] of [['image', 'logo.svg'], ['cite', 'refs.yml'], ['bibliography', 'refs.yml'],
         ['import_module', 'helper.typ'], ['include', 'extra.typ']]) {

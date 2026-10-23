@@ -3,6 +3,7 @@ import { recipeSource } from './recipe.js';
 import { examples, sections, filterExamples, RecipeDrafts } from './collection.js';
 import { compileSvg } from './compiler.js';
 import { createEditor } from './editor.js';
+import { pythonSource } from './python.js';
 
 const $ = selector => document.querySelector(selector);
 const preview = $('#preview'), status = $('#status'), error = $('#error');
@@ -10,34 +11,39 @@ const run = $('#run'), reset = $('#reset'), check = $('#check-all');
 const typDownload = $('#download-typ'), svgDownload = $('#download-svg');
 const search = $('#example-search'), category = $('#category'), list = $('#example-list');
 const drafts = new RecipeDrafts();
-let selected = examples[0], svg = '', previewUrl, busy = false, renderedRecipe = '', renderTimer;
+let selected = examples[0], svg = '', previewUrl, busy = false, renderTimer, pendingRender = false;
 let activeLanguage = 'javascript';
+const languageName = () => activeLanguage === 'python' ? 'Python' : 'JavaScript';
+const activeEditor = () => activeLanguage === 'python' ? pythonEditor : editor;
 function scheduleRender() {
     clearTimeout(renderTimer);
     if ($('#live-preview').checked) renderTimer = setTimeout(render, 650);
 }
-const editor = createEditor($('#recipe'), { label: 'JavaScript recipe', onRun: render, onChange() {
-    drafts.save(selected, editor.value);
+function recipeChanged(language) {
+    drafts.save(selected, (language === 'python' ? pythonEditor : editor).value, language);
     updateRecipeNote();
-    if (!busy && editor.value !== renderedRecipe) {
+    if (!busy) {
         status.dataset.state = 'changed';
-        status.textContent = 'Recipe changed · run to update';
+        status.textContent = `${languageName()} changed · run to update`;
     }
     scheduleRender();
-}});
+}
+const editor = createEditor($('#recipe'), { label: 'JavaScript recipe', onRun: render,
+    onChange: () => recipeChanged('javascript') });
 const source = createEditor($('#source'), { label: 'Generated Typst source', readOnly: true });
 const pythonEditor = createEditor($('#python-recipe'), {
-    label: 'Python recipe (read only)', readOnly: true, language: 'python',
+    label: 'Python recipe', language: 'python', onRun: render,
+    onChange: () => recipeChanged('python'),
 });
 
 function updateRecipeNote() {
-    const changed = editor.value !== selected.code;
-    $('#recipe-mode').textContent = activeLanguage === 'python' ? 'READ ONLY' : 'EDITABLE';
+    $('#recipe-mode').textContent = 'EDITABLE';
+    run.innerHTML = `Run ${languageName()} <span>⌘ / Ctrl ↵</span>`;
+    reset.textContent = `Reset ${languageName()}`;
+    check.textContent = `Check all ${languageName()} examples`;
     $('#recipe-note').textContent = activeLanguage === 'python'
-        ? (changed ? 'Original Python example. The shared preview follows your JavaScript changes.'
-            : 'Python reference · same Typst output and preview as the original JavaScript. Run Python locally.')
-        : (changed ? 'JavaScript draft · Python remains the original example.'
-            : 'Editable JavaScript · the original recipe matches the Python tab.');
+        ? 'Python runs locally. This tab drives the shared preview; your JavaScript draft is kept separately.'
+        : 'JavaScript runs in the browser. This tab drives the shared preview; your Python draft is kept separately.';
 }
 function selectLanguage(language) {
     activeLanguage = language;
@@ -49,6 +55,7 @@ function selectLanguage(language) {
     }
     (language === 'python' ? pythonEditor : editor).measure();
     updateRecipeNote();
+    render();
 }
 for (const name of ['python', 'javascript']) {
     const tab = $(`#tab-${name}`);
@@ -76,7 +83,8 @@ function clearPreview() {
     svgDownload.disabled = true;
 }
 async function render() {
-    if (busy) return;
+    if (busy) { pendingRender = true; return; }
+    pendingRender = false;
     clearTimeout(renderTimer);
     setBusy(true);
     error.hidden = true;
@@ -85,12 +93,17 @@ async function render() {
     clearPreview();
     source.value = '';
     typDownload.disabled = true;
-    const code = editor.value;
+    const code = activeEditor().value, language = activeLanguage, example = selected;
+    const current = () => selected === example && activeLanguage === language && activeEditor().value === code;
     try {
-        source.value = recipeSource(code);
+        const generated = language === 'python' ? await pythonSource(code, example.assets) : recipeSource(code);
+        if (!current()) return;
+        source.value = generated;
         typDownload.disabled = false;
         status.textContent = 'Typesetting with the local Typst compiler…';
-        svg = await compileSvg(source.value, selected.assets);
+        const rendered = await compileSvg(generated, example.assets);
+        if (!current()) return;
+        svg = rendered;
         previewUrl = URL.createObjectURL(new Blob([svg], { type: 'image/svg+xml' }));
         const image = new Image();
         image.alt = 'Document rendered by Typst';
@@ -100,12 +113,13 @@ async function render() {
         });
         image.src = previewUrl;
         await loaded;
+        if (!current()) { clearPreview(); return; }
         preview.replaceChildren(image);
         svgDownload.disabled = false;
-        renderedRecipe = code;
         status.dataset.state = 'ready';
-        status.textContent = editor.value === code ? 'Ready · rendered in your browser' : 'Recipe changed · run to update';
+        status.textContent = `Ready · ${languageName()} → Typst → SVG`;
     } catch (reason) {
+        if (!current()) return;
         clearPreview();
         error.textContent = reason instanceof Error ? reason.message : String(reason);
         error.hidden = false;
@@ -113,7 +127,15 @@ async function render() {
         status.textContent = 'Could not render · check the error below';
     } finally {
         setBusy(false);
-        if (editor.value !== code) scheduleRender();
+        if (!current()) {
+            clearPreview();
+            source.value = '';
+            typDownload.disabled = true;
+            status.dataset.state = 'changed';
+            status.textContent = `${languageName()} changed · run to update`;
+        }
+        if (pendingRender) { pendingRender = false; render(); }
+        else if (!current()) scheduleRender();
     }
 }
 function download(content, type, name) {
@@ -140,9 +162,10 @@ function updateList() {
 function select(example) {
     if (busy) return;
     drafts.save(selected, editor.value);
+    drafts.save(selected, pythonEditor.value, 'python');
     selected = example;
     editor.value = drafts.read(example);
-    pythonEditor.value = example.python;
+    pythonEditor.value = drafts.read(example, 'python');
     updateRecipeNote();
     $('#example-title').textContent = example.title;
     $('#example-description').textContent = example.description;
@@ -173,8 +196,8 @@ search.addEventListener('input', updateList);
 category.addEventListener('change', updateList);
 $('#live-preview').addEventListener('change', scheduleRender);
 run.addEventListener('click', render);
-reset.addEventListener('click', () => { editor.value = drafts.reset(selected); updateRecipeNote(); render(); });
-$('#download-python').addEventListener('click', () => download(selected.python,
+reset.addEventListener('click', () => { activeEditor().value = drafts.reset(selected, activeLanguage); updateRecipeNote(); render(); });
+$('#download-python').addEventListener('click', () => download(pythonEditor.value,
     'text/plain;charset=utf-8', `${selected.id}.typ.py`));
 typDownload.addEventListener('click', () => download(source.value, 'text/plain;charset=utf-8', `${selected.id}.typ`));
 svgDownload.addEventListener('click', () => download(svg, 'image/svg+xml', `${selected.id}.svg`));
@@ -182,6 +205,7 @@ check.addEventListener('click', async () => {
     if (busy) return;
     setBusy(true);
     clearTimeout(renderTimer);
+    const language = activeLanguage;
     const results = $('#check-results');
     results.hidden = false;
     results.replaceChildren();
@@ -191,7 +215,9 @@ check.addEventListener('click', async () => {
             status.dataset.state = 'working';
             status.textContent = `Checking ${example.title}…`;
             try {
-                await compileSvg(recipeSource(example.code), example.assets);
+                const generated = language === 'python' ? await pythonSource(example.python, example.assets)
+                    : recipeSource(example.code);
+                await compileSvg(generated, example.assets);
                 passed++;
             } catch (reason) {
                 const message = reason instanceof Error ? reason.message : String(reason);
@@ -211,4 +237,5 @@ check.addEventListener('click', async () => {
     }
 });
 editor.value = selected.code;
+pythonEditor.value = selected.python;
 select(selected);

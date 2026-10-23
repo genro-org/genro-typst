@@ -28,4 +28,5 @@ jobs:
       - run: python tools/export_browser_examples.py --check
       - run: pytest -q
       - run: npm test --prefix js
+      - run: npm run test:browser-server --prefix js
       - run: npm run build:browser --prefix js

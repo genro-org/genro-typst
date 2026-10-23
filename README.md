@@ -177,14 +177,15 @@ npm test --prefix js
 node js/examples/report.typ.mjs /tmp/report.typ
 ```
 
-To try the HTML/JavaScript playground with editable recipes, Typst source and
+To try the Python/JavaScript playground with editable recipes, Typst source and
 SVG preview, run `npm run demo --prefix js` and open
 [localhost:8172](http://127.0.0.1:8172/). Compilation runs in the browser with
-Typst WebAssembly; no Python server is needed. See the
+Typst WebAssembly. Python recipes execute through the local server using an
+interpreter with Genro Typst installed (`venv/bin/python` by default). See the
 [browser example guide](https://genro-typst.readthedocs.io/en/latest/browser.html).
 The playground includes 149 element recipes, searchable by category, with
-Python/JavaScript tabs, CodeMirror editing and live SVG preview. Python is a
-downloadable reference; JavaScript drives the browser preview. Browser compiler limitations are
+editable Python/JavaScript tabs in CodeMirror and live SVG preview driven by
+the active tab. Both languages keep independent drafts. Browser compiler limitations are
 marked explicitly in the collection.
 
 Typst remains responsible for compilation. See the

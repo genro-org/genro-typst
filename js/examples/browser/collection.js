@@ -19,7 +19,12 @@ export function filterExamples(query = '', section = '') {
 // Drafts are scoped to the page session. Switching examples never loses edits.
 export class RecipeDrafts {
     constructor() { this.drafts = new Map(); }
-    read(example) { return this.drafts.get(example.id) ?? example.code; }
-    save(example, code) { this.drafts.set(example.id, code); }
-    reset(example) { this.drafts.delete(example.id); return example.code; }
+    read(example, language = 'javascript') {
+        return this.drafts.get(`${example.id}/${language}`) ?? (language === 'python' ? example.python : example.code);
+    }
+    save(example, code, language = 'javascript') { this.drafts.set(`${example.id}/${language}`, code); }
+    reset(example, language = 'javascript') {
+        this.drafts.delete(`${example.id}/${language}`);
+        return this.read(example, language);
+    }
 }
